@@ -148,7 +148,7 @@ public class Player {
             System.out.println("You duck down and throw a bomb.. ");
             Thread.sleep(200);
             System.out.printf("You deal %d%n", damage);
-
+            enemy.setHealth(enemy.getHealth() - damage);
         } else if(item.equalsIgnoreCase("hPotion")){
 
             if(curr + 55 > max){
