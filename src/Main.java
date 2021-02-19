@@ -146,7 +146,7 @@ public class Main {
             } else {
                 // did not use an item, so either scanned enemy or viewed and exited inventory
                 if (youEffect.equalsIgnoreCase("poison")) {  // temp for undoing the poison damage when you actually did not make a turn
-                    player.updateStat("Health", player.getHealth() + (int) (player.getMaxHealth() * .03));
+                    player.updateStat("Health", player.getHealth() + (int) (player.getMaxHealth() * .05));
                 }
                 fight(player, enemy, battleEffect);
                 return; // return needed to prevent a bubble effect with scanning enemy and finishing the fight, caused multiple victories. finally figured this out
