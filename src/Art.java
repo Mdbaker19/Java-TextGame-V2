@@ -57,6 +57,7 @@ public class Art {
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[G]uard", " ", 50, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[B]ooks", " ", 50, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[F]ade", " ", 50, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[B]omb", " ", 35, " ");
             System.out.printf("|%-20s%-20s%-5s%-24s|%n", " ", "[I]nfo", " ", " ");
             System.out.printf("|%-20s%-20s%-5s%-24s|%n", " ", "[E]xit", " ", " ");
             System.out.printf("|%-69s|%n\033[0;38m", " ");
@@ -111,6 +112,15 @@ public class Art {
             }
             quantity(howMany, 100, player, "Revive");
 
+        } else if (choice.equalsIgnoreCase("b") && value >= 35) {
+            int howMany = sc.getNum("How many would you like?", player.getWallet(), 35);
+            if(howMany < 2) {
+                item = " Bomb";
+            } else {
+                item = " " +howMany + " Bombs";
+            }
+            quantity(howMany, 35, player, "Bomb");
+
         } else if ((choice.equalsIgnoreCase("s") || choice.equalsIgnoreCase("f") || choice.equalsIgnoreCase("g") || choice.equalsIgnoreCase("b")) && value >= 50) {
             int howMany = sc.getNum("How many would you like?", player.getWallet(), 50);
             item = " Booster";
@@ -161,6 +171,7 @@ public class Art {
     public void hud(Player player){
         System.out.printf("\033[0;34m|%-67s|%n", " ");
         System.out.printf("|%-20s%-22s\033[0;31m%-5d / %-17d\033[0;34m|%n", " ", "Health : " , player.getHealth(), player.getMaxHealth());
+        System.out.printf("|\033[0;32m%-20s%-19s%-28s\033[0;34m|%n", " ", "Status: ", player.getState());
         System.out.printf("|%-20s%-19s%-28s|%n", " ", "[A]ttack", " ");
         System.out.printf("|%-20s%-19s%-28s|%n", " ", "[S]pecial", " ");
         System.out.printf("|%-20s%-19s%-28s|%n", " ", "[I]nventory", " ");
@@ -168,12 +179,21 @@ public class Art {
         System.out.printf("|%-67s|%n\033[0;38m", " ");
     }
 
+    public void enemyHud(Enemy enemy, String status){
+        System.out.println();
+        System.out.printf("\033[0;32m|%-20s%-22s\033[0;31m%-5d / %-17d\033[0;32m|%n", " ", "Health : " , enemy.getHealth(), enemy.getMaxHealth());
+        System.out.printf("|%-20s%-19s%-28s|%n\033[0;38m", " ", "Status: ", status);
+        System.out.println();
+    }
+
     public void specials(){
         System.out.printf("\033[0;35m|%-67s|%n", " ");
+        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[M]agic Summon", " ");
         System.out.printf("|%-20s%-19s%-28s|%n", " ", "[S]and", " ");
         System.out.printf("|%-20s%-19s%-28s|%n", " ", "[P]oison", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[R]aise Shield", " ");
+        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[R]ob", " ");
         System.out.printf("|%-20s%-19s%-28s|%n", " ", "[C]onfuse", " ");
+        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[D]efend", " ");
         System.out.printf("|%-67s|%n\033[0;38m", " ");
     }
 
@@ -181,11 +201,11 @@ public class Art {
         int battleNumber = player.getVictories();
         int coins = enemy.getWorth();
         int exp = enemy.getExpValue();
+        Thread.sleep(450);
+        System.out.printf("\033[0;32mEnemy # %d is defeated. You have gained %d coins and %d exp%n\033[0;38m", battleNumber, coins, exp);
+        Thread.sleep(450);
         player.setExp(player.getExp() + exp);
         player.setWallet(player.getWallet() + coins);
-        Thread.sleep(600);
-        System.out.printf("\033[0;32mEnemy # %d is defeated. You have gained %d coins and %d exp%n\033[0;38m", battleNumber, coins, exp);
-        Thread.sleep(600);
     }
 
     private static void info(){

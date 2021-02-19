@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Player {
     private Method m = new Method();
-    private final double levelUpMultiplier = 1.15;
+    private final double levelUpMultiplier = 1.1;
 
     private String name;
     private String type;
@@ -129,7 +129,7 @@ public class Player {
         return items;
     }
 
-    public void useItem(String item){
+    public void useItem(String item, Enemy enemy) throws InterruptedException {
         int max = this.getMaxHealth();
         int curr = this.getHealth();
         if(item.equalsIgnoreCase("potion")){
@@ -144,6 +144,12 @@ public class Player {
         } else if(item.equalsIgnoreCase("antidote")){
             System.out.println("Antidote cures your poison");
             this.setState("normal");
+        } else if(item.equalsIgnoreCase("bomb")){
+            int damage = (int) (enemy.getMaxHealth() * .2);
+            System.out.println("You duck down and throw a bomb.. ");
+            Thread.sleep(200);
+            System.out.printf("You deal %d%n", damage);
+
         } else if(item.equalsIgnoreCase("hPotion")){
 
             if(curr + 55 > max){
@@ -156,6 +162,10 @@ public class Player {
             }
         }
 
+        removeItem(m.cap(item));
+    }
+
+    public void revive(String item){
         removeItem(m.cap(item));
     }
 
