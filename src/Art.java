@@ -62,12 +62,13 @@ public class Art {
             System.out.printf("\033[0;32m|%-69s|%n", " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[P]otion", " ", 10, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[H]igh Potion", " ", 30, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[M]ega Potion", " ", 30, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[A]ntidote", " ", 10, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[B]omb", " ", 35, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[R]evive", " ", 100, " ");
-            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[S]harpen", " ", 50, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[W]eapon", " ", 50, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[G]uard", " ", 50, " ");
-            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[B]ooks", " ", 50, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[S]tudy", " ", 50, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[F]ade", " ", 50, " ");
             System.out.printf("|%-20s%-20s%-5s%-24s|%n", " ", "[I]nfo", " ", " ");
             System.out.printf("|%-20s%-20s%-5s%-24s|%n", " ", "[E]xit", " ", " ");
@@ -132,7 +133,16 @@ public class Art {
             }
             quantity(howMany, 35, player, "Bomb");
 
-        } else if ((choice.equalsIgnoreCase("s") || choice.equalsIgnoreCase("f") || choice.equalsIgnoreCase("g") || choice.equalsIgnoreCase("b")) && value >= 50) {
+        } else if (choice.equalsIgnoreCase("m") && value >= 65) {
+            int howMany = sc.getNum("How many would you like?", player.getWallet(), 65);
+            if(howMany < 2) {
+                item = " Mega Potion";
+            } else {
+                item = " " +howMany + " Mega Potions";
+            }
+            quantity(howMany, 65, player, "Mega");
+
+        } else if ((choice.equalsIgnoreCase("w") || choice.equalsIgnoreCase("f") || choice.equalsIgnoreCase("g") || choice.equalsIgnoreCase("s")) && value >= 50) {
             int howMany = sc.getNum("How many would you like?", player.getWallet(), 50);
             item = " Booster";
             statBooster(howMany, 50, player, choice);
@@ -160,13 +170,13 @@ public class Art {
     }
 
     private void statBooster(int amount, int price, Player player, String statToUpgrade){
-        if(statToUpgrade.equalsIgnoreCase("s")){
+        if(statToUpgrade.equalsIgnoreCase("w")){
             statToUpgrade = "Attack";
         } else if(statToUpgrade.equalsIgnoreCase("g")){
             statToUpgrade = "Defense";
         } else if (statToUpgrade.equalsIgnoreCase("f")){
             statToUpgrade = "Speed";
-        } else if (statToUpgrade.equalsIgnoreCase("b")){
+        } else if (statToUpgrade.equalsIgnoreCase("s")){
             statToUpgrade = "Magic";
         }
         int total = amount * price;
@@ -220,8 +230,8 @@ public class Art {
     }
 
     private static void info(){
-        System.out.println("Potion heals for 25, High Potion heals for 55, Antidote cures poison, Revive cures death, Bomb deals 20% damage, Each of the stat boosters give a +1 permanent boost to that stat");
-        System.out.println("Sharpen boosts attack, Guard boost defense, Fade boost speed, Book boosts magic");
+        System.out.println("Potion heals for 25, High Potion heals for 55, Mega Potion heals 35% max health, Antidote cures poison, Revive cures death, Bomb deals 20% damage, Each of the stat boosters give a +1 permanent boost to that stat");
+        System.out.println("Weapon boosts attack, Guard boost defense, Fade boost speed, Study boosts magic");
         System.out.println("When an item is used, it takes your turn and then the enemy takes their turn even if you did not need to heal.. you should not heal if you do not need to");
     }
 }

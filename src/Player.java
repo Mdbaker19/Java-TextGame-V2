@@ -51,13 +51,12 @@ public class Player {
     public HashMap<String, Integer> getStats() {
         return stats;
     }
-    public void viewStats() throws InterruptedException {
+    public void viewStats() {
         System.out.println("Here are your stats for your class");
         System.out.println("Max health : " + this.getMaxHealth());
         for(Map.Entry<String, Integer> entry : this.getStats().entrySet()){
             System.out.println(entry.getKey() + " : " + entry.getValue());
         }
-        Thread.sleep(600);
         System.out.println("Current level is " +this.getLevel());
         System.out.println("Current EXP: " + this.getExp() +"/"+this.getExpRequirement());
     }
@@ -159,6 +158,16 @@ public class Player {
             } else {
                 System.out.println("High Potion healing for 55 hp");
                 this.updateStat("Health", this.getHealth() + 55);
+            }
+        } else if(item.equalsIgnoreCase("mega")){
+            int amount = (int) (this.getMaxHealth() * .35);
+            if(curr + amount > max){
+                int healing = Math.abs(max - curr);
+                System.out.printf("Potion healing for %d hp%n", healing);
+                this.updateStat("Health", this.getHealth() + healing);
+            } else {
+                System.out.printf("Mega Potion healing for %d hp%n", amount);
+                this.updateStat("Health", this.getHealth() + amount);
             }
         }
 
