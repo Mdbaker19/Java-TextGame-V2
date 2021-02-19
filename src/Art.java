@@ -32,7 +32,7 @@ public class Art {
         }
     }
     public void welcomeOptions(){
-        System.out.printf("%-86s%-50s%-25s%n", " ", "[A]bout", "[S]tart");
+        System.out.printf("%-86s%-25s%-25s%-25s%n", " ", "[A]bout", "[S]tart", "[G]amePlay Help");
     }
     public void about(){
         System.out.println("An RPG game with 3 different classes to choose from, all with different base stats.");
@@ -45,6 +45,16 @@ public class Art {
         System.out.println("Rock paper scissors gives 3x money, Number guesser gives 5x and Coin toss is 2x");
         System.out.println("Good luck player");
     }
+    public void gamePlayInfo(){
+        System.out.println("Special contains a few different options, all of which last through the battle until a new one is successfully cast.");
+        System.out.println("Magic Summon calls an ally into battle that deals 3% of enemy health per turn and has a 20% chance to block for you");
+        System.out.println("Sand increases you dodge rate by 2x");
+        System.out.println("Poison causes 5% enemy damage per turn");
+        System.out.println("If you are poisoned you are indefinitely until an antidote is used");
+        System.out.println("Rob the enemy to steal 50% of their coin reward");
+        System.out.println("Confuse the enemy to have a 35% chance of them hitting themselves");
+        System.out.println("Defend to reduce damage by 1/2");
+    }
 
     public void shopMenu(Player player) throws InterruptedException {
         do {
@@ -52,12 +62,12 @@ public class Art {
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[P]otion", " ", 10, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[H]igh Potion", " ", 30, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[A]ntidote", " ", 10, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[B]omb", " ", 35, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[R]evive", " ", 100, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[S]harpen", " ", 50, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[G]uard", " ", 50, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[B]ooks", " ", 50, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[F]ade", " ", 50, " ");
-            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[B]omb", " ", 35, " ");
             System.out.printf("|%-20s%-20s%-5s%-24s|%n", " ", "[I]nfo", " ", " ");
             System.out.printf("|%-20s%-20s%-5s%-24s|%n", " ", "[E]xit", " ", " ");
             System.out.printf("|%-69s|%n\033[0;38m", " ");
@@ -209,7 +219,7 @@ public class Art {
     }
 
     private static void info(){
-        System.out.println("Potion heals for 25, High Potion heals for 55, Antidote cures poison, Revive cures death, Each of the stat boosters give a +1 permanent boost to that stat");
+        System.out.println("Potion heals for 25, High Potion heals for 55, Antidote cures poison, Revive cures death, Bomb deals 20% damage, Each of the stat boosters give a +1 permanent boost to that stat");
         System.out.println("Sharpen boosts attack, Guard boost defense, Fade boost speed, Book boosts magic");
         System.out.println("When an item is used, it takes your turn and then the enemy takes their turn even if you did not need to heal.. you should not heal if you do not need to");
     }

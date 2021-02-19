@@ -9,7 +9,7 @@ public class Main {
     private static Method m = new Method();
     private static FileReader fileReader;
     private static Gambler gambler = new Gambler();
-    private static ArrayList<String> beginOptions = new ArrayList<>(Arrays.asList("A", "S"));
+    private static ArrayList<String> beginOptions = new ArrayList<>(Arrays.asList("A", "S", "G"));
     static {
         try {
             fileReader = new FileReader("src", "gameLog.txt", "gameLog.txt");
@@ -30,6 +30,9 @@ public class Main {
             switch (choice){
                 case "A":
                     art.about();
+                    break;
+                case "G":
+                    art.gamePlayInfo();
                     break;
             }
         } while (true);
@@ -251,7 +254,7 @@ public class Main {
         } else if (currentAilment.equalsIgnoreCase("shield")){
             extraDefenseMult = 2;
         } else if (currentAilment.equalsIgnoreCase("confuse")){
-            confuseChance = 50;
+            confuseChance = 35;
         }
 
         int damage = m.calcDamage(enemy.getAttack(), player.getStats().get("Defense"));
