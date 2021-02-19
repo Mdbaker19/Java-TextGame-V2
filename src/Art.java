@@ -52,6 +52,7 @@ public class Art {
         System.out.println("Poison causes 5% enemy damage per turn");
         System.out.println("If you are poisoned you are indefinitely until an antidote is used");
         System.out.println("Normal enemies have a 5% chance to poison you, a more venomous enemy, 'cough' has 10x the chance to poison you");
+        System.out.println("Some enemies are smarter than others and it is impossible to dodge them but, they can not poison you");
         System.out.println("Rob the enemy to steal 50% of their coin reward");
         System.out.println("Confuse the enemy to have a 35% chance of them hitting themselves");
         System.out.println("Defend to reduce damage by 1/2");

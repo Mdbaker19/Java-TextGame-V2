@@ -10,6 +10,7 @@ public class Enemy {
     private int worth;
     private int expValue;
     private int infect;
+    private int accuracy = 0;
     private List<String> inventory;
     public Enemy(int number, int randomizer) throws InterruptedException {
         if(randomizer > 95 && number < 8){
@@ -31,9 +32,12 @@ public class Enemy {
         } else if (randomizer < 45) {
             System.out.println("\033[0;36mSomething is different with this one, i think it is all that money he is holding");
             this.worth *= 3.5;
+        } else if (randomizer < 58 && randomizer > 45) {
+            System.out.println("\033[0;32mWeird… this one literally looks sharper");
+            this.infect *= 10;
         } else if (randomizer < 70 && randomizer > 60) {
             System.out.println("\033[0;32m..Cough..Cough.. what is this thing");
-            this.infect *= 10;
+            this.accuracy = 100;
         } else if (randomizer > 80 && randomizer < 95) {
             System.out.println("\033[0;31mLooks like this beast was waiting for you...");
             multiplier *= 1.4;
@@ -136,6 +140,14 @@ public class Enemy {
 
     public void setDefense(int defense) {
         this.defense = defense;
+    }
+
+    public int getAccuracy() {
+        return accuracy;
+    }
+
+    public void setAccuracy(int accuracy) {
+        this.accuracy = accuracy;
     }
 
     public List<String> getInventory() {

@@ -6,6 +6,9 @@ public class Method {
     }
 
     public boolean blocked(int speed){
+        if(speed >= 80){
+            speed = 80;
+        }
         System.out.println("Chance is : " + speed + "%\033[0;38m");
         int ran = (int) Math.floor(Math.random() * 100);
         return speed > ran;
