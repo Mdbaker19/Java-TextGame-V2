@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 public class MiniGamer {
 
-    private Input sc = new Input();
-    private ArrayList<String> rpcOptions = new ArrayList<>(Arrays.asList("r", "p", "s"));
+    private final Input sc = new Input();
+    private final ArrayList<String> rpcOptions = new ArrayList<>(Arrays.asList("r", "p", "s"));
 
     public MiniGamer(){}
 
@@ -16,14 +16,14 @@ public class MiniGamer {
     }
     public boolean coinGame(){
         String[] options = {"h", "t"};
-        String choice = sc.getInput("[h]eads or [t]ails?").toLowerCase();
+        String choice = sc.getInput("[H]eads or [T]ails?").toLowerCase();
         String result = options[(int) Math.floor(Math.random() * 2)];
         return choice.equalsIgnoreCase(result);
     }
 
     public boolean rockPaperScissor() throws InterruptedException {
         String[] options = {"r", "s", "p"};
-        String choice = sc.getInput("[r]ock, [p]aper, [s]cissors?", rpcOptions, false);
+        String choice = sc.getInput("[R]ock, [P]aper, [S]cissors?", rpcOptions, false);
         String result = options[(int) Math.floor(Math.random() * 3)];
         System.out.printf("%s against %s%n", choice, result);
         if(result.equalsIgnoreCase(choice)){

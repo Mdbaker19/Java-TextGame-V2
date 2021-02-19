@@ -4,8 +4,8 @@ import java.util.Arrays;
 public class Gambler {
     private Input sc = new Input();
     private MiniGamer miniGamer = new MiniGamer();
-    private ArrayList<String> options = new ArrayList<>(Arrays.asList("S", "R", "W", "C", "U", "E"));
-    private ArrayList<String> gameOptions = new ArrayList<>(Arrays.asList("R", "C", "N", "E"));
+    private final ArrayList<String> options = new ArrayList<>(Arrays.asList("S", "R", "W", "C", "U", "E"));
+    private final ArrayList<String> gameOptions = new ArrayList<>(Arrays.asList("R", "C", "N", "E"));
 
     private int storage;
     private int level;
@@ -111,7 +111,7 @@ public class Gambler {
         System.out.printf("The current storage contains %d coin%n", this.getStorage());
     }
     private void upgrade(Player player){
-        int cost = this.getLevel() * 25;
+        int cost = (int) ((this.getLevel() * 35) * 1.8);
         int wallet = player.getWallet();
         System.out.printf("Current rate is this : %.3f%n", this.getRate());
         System.out.printf("Cost %d coin to increase%n", cost);
