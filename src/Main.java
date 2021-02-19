@@ -8,6 +8,8 @@ public class Main {
     private static Art art = new Art();
     private static Method m = new Method();
     private static FileReader fileReader;
+    private static Gambler gambler = new Gambler();
+    private static ArrayList<String> beginOptions = new ArrayList<>(Arrays.asList("A", "S"));
     static {
         try {
             fileReader = new FileReader("src", "gameLog.txt", "gameLog.txt");
@@ -17,6 +19,19 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
+        art.welcome();
+        art.welcomeOptions();
+        do{
+            String choice = sc.getInput("...", beginOptions,false).toUpperCase();
+            if(choice.equalsIgnoreCase("s")){
+                break;
+            }
+            switch (choice){
+                case "A":
+                    art.about();
+                    break;
+            }
+        } while (true);
         start();
     }
 
@@ -68,6 +83,9 @@ public class Main {
                         break;
                     case "S":
                         art.shopMenu(player);
+                        break;
+                    case "G":
+                        gambler.gamble(player);
                         break;
                     case "V":
                         player.viewStats();
@@ -221,7 +239,7 @@ public class Main {
             confuseChance = 50;
         }
 
-        int damage = m.calcDamage(enemy.getAttack(), player.getStats().get("Defense") * extraDefenseMult);
+        int damage = m.calcDamage(enemy.getAttack(), player.getStats().get("Defense"));
         damage /= extraDefenseMult;
         System.out.println("\033[0;37mYou attempt to dodge");
         Thread.sleep(600);

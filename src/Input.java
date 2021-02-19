@@ -52,4 +52,34 @@ public class Input {
         }
     }
 
+    public int getNum(String message, int currentWallet) throws InterruptedException {
+        System.out.println(message);
+        Thread.sleep(400);
+        String input = this.sc.next();
+        try {
+            int amountRequested = Integer.parseInt(input);
+            if(amountRequested > currentWallet){
+                return getNum("Sorry, " + amountRequested + " is over current savings of " +currentWallet+" how much would you like to transact?", currentWallet);
+            }
+            return amountRequested;
+        } catch (NumberFormatException e){
+            return getNum("Sorry, not a valid input", currentWallet);
+        }
+    }
+
+    public int getNum(int min, int max, String message) throws InterruptedException {
+        System.out.println(message);
+        Thread.sleep(400);
+        String input = this.sc.next();
+        try {
+            int num = Integer.parseInt(input);
+            if(num > max || num < min){
+                return getNum(min, max, "Not within range");
+            }
+            return num;
+        } catch (NumberFormatException e){
+            return getNum(min, max, "Sorry, not a valid input");
+        }
+    }
+
 }
