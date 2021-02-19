@@ -8,6 +8,8 @@ sleep effect ( 2 - 3 turns ) have an item for it too
 
 options and maybe a load save from file reader ( ? )
 
+allow for multiple battle status
+
 ======ISSUES======
 issue with poison damage even when checking inventory or scanning enemy     ==> quick fix implemented for now ( undo the damage )
 

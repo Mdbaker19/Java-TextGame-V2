@@ -16,7 +16,7 @@ public class MiniGamer {
     }
     public boolean coinGame(){
         String[] options = {"h", "t"};
-        String choice = sc.getInput("[h]eads or [t]ails?");
+        String choice = sc.getInput("[h]eads or [t]ails?").toLowerCase();
         String result = options[(int) Math.floor(Math.random() * 2)];
         return choice.equalsIgnoreCase(result);
     }
