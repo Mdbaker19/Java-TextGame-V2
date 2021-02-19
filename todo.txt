@@ -15,6 +15,4 @@ issue with poison damage even when checking inventory or scanning enemy     ==> 
 
 better stat development ( seems to be okay ish for now ) game needs some balancing, end game is unplayable for both sides haha
 
-some sort of bug in late game with a boss fight ( ? ) confuse was on him but still prompt for you were hit for this much when it was not a miss
-
 stats flow over 100% range
