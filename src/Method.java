@@ -1,4 +1,3 @@
-import java.util.Locale;
 
 public class Method {
     public Method(){}

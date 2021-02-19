@@ -11,13 +11,39 @@ public class Art {
         System.out.printf("\033[0;33m|%-60s|%n", " ");
         System.out.printf("%-20s%s%n", " ", "[B]attle");
         System.out.printf("%-20s%s%n", " ", "[S]hop");
+        System.out.printf("%-20s%s%n", " ", "[G]amble");
         System.out.printf("%-20s%s%n", " ", "[V]iew Stats");
         System.out.printf("%-20s%s%n", " ", "[Q]uit");
         System.out.printf("|%-60s|%n\033[0;38m", " ");
         mainOptions.add("B");
         mainOptions.add("V");
         mainOptions.add("S");
+        mainOptions.add("G");
         mainOptions.add("Q");
+    }
+
+    public void welcome(){
+        for(int i = 0; i < 4; i++){
+            System.out.printf("%-5s|%-219s-|%n", " ", "-");
+        }
+        System.out.printf("%-5s|%-105s %s %-106s|%n"," ", " ", "Welcome", " ");
+        for(int i = 0; i < 4; i++){
+            System.out.printf("%-5s|%-219s-|%n", " ", "-");
+        }
+    }
+    public void welcomeOptions(){
+        System.out.printf("%-86s%-50s%-25s%n", " ", "[A]bout", "[S]tart");
+    }
+    public void about(){
+        System.out.println("An RPG game with 3 different classes to choose from, all with different base stats.");
+        System.out.println("To play the game enter the options as they are presented ( the letter in [ ] or the text after the option 'x' : ");
+        System.out.println("Fight in battles of random enemies to gain exp to level up and coins to spend in the shop");
+        System.out.println("In battle you can use a standard attack, check the enemy stats or try for a special attack that it's success rate is based of your current magic stat");
+        System.out.println("Enemies will progressively get harder and harder with better rewards as well.");
+        System.out.println("If you happen to die and have a revive it is automatically used to give you an extra fighting chance");
+        System.out.println("The gambler is a place to try your luck for some extra coin or save your money and gain some interest on it over every victory in battle");
+        System.out.println("Rock paper scissors gives 3x money, Number guesser gives 5x and Coin toss is 2x");
+        System.out.println("Good luck player");
     }
 
     public void shopMenu(Player player) throws InterruptedException {
@@ -57,6 +83,7 @@ public class Art {
                 item = " " +howMany + " Potions";
             }
             quantity(howMany, 10, player, "Potion");
+
         } else if (choice.equalsIgnoreCase("h") && value >= 30) {
             int howMany = sc.getNum("How many would you like?", player.getWallet(), 30);
             if(howMany < 2) {
@@ -65,6 +92,7 @@ public class Art {
                 item = " " +howMany + " High Potions";
             }
             quantity(howMany, 30, player, "Hpotion");
+
         } else if (choice.equalsIgnoreCase("a") && value >= 10) {
             int howMany = sc.getNum("How many would you like?", player.getWallet(), 10);
             if(howMany < 2) {
@@ -73,6 +101,7 @@ public class Art {
                 item = " " +howMany + " Antidotes";
             }
             quantity(howMany, 10, player, "Antidote");
+
         } else if (choice.equalsIgnoreCase("r") && value >= 100) {
             int howMany = sc.getNum("How many would you like?", player.getWallet(), 100);
             if(howMany < 2) {
@@ -81,10 +110,12 @@ public class Art {
                 item = " " +howMany + " Revives";
             }
             quantity(howMany, 100, player, "Revive");
+
         } else if ((choice.equalsIgnoreCase("s") || choice.equalsIgnoreCase("f") || choice.equalsIgnoreCase("g") || choice.equalsIgnoreCase("b")) && value >= 50) {
             int howMany = sc.getNum("How many would you like?", player.getWallet(), 50);
             item = " Booster";
             statBooster(howMany, 50, player, choice);
+
         } else if (choice.equalsIgnoreCase("i")) {
             info();
             return;
