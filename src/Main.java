@@ -22,7 +22,7 @@ public class Main {
         art.welcome();
         art.welcomeOptions();
         do{
-            String choice = sc.getInput("...", beginOptions,false).toUpperCase();
+            String choice = sc.getInput("…", beginOptions,false).toUpperCase();
             if(choice.equalsIgnoreCase("s")){
                 break;
             }
@@ -160,7 +160,7 @@ public class Main {
                 if(zombieDamage < 1){
                     zombieDamage = 1;
                 }
-                System.out.printf("Agheghegh.. your summon attacks dealing %d damage%n", zombieDamage);
+                System.out.printf("Agheghegh… your summon attacks dealing %d damage%n", zombieDamage);
                 enemy.setHealth(enemy.getHealth() - zombieDamage);
             }
             if (enemy.getHealth() <= 0) {
@@ -215,13 +215,13 @@ public class Main {
 
     public static void attackMade(Player attacker, Enemy defender) throws InterruptedException {
         int damage = m.calcDamage(attacker.getStats().get("Attack"), defender.getDefense());
-        if (m.criticalHit(attacker.getStats().get("Speed"))) {
-            System.out.println("Critical Hit!");
-            damage*=1.5;
-        }
         System.out.println("\033[0;37mEnemy attempts to dodge");
         boolean enemyDodge = m.blocked(defender.getSpeed());
         if(!enemyDodge){
+            if (m.criticalHit(attacker.getStats().get("Speed"))) {
+                System.out.println("Critical Hit!");
+                damage*=1.5;
+            }
             System.out.println("You hit for " + damage + " damage");
             Thread.sleep(600);
             defender.setHealth(defender.getHealth() - damage);
@@ -320,7 +320,7 @@ public class Main {
             return "poison";
         } else if (specialTurn.equalsIgnoreCase("r")){
             int stolenAmount = enemy.getWorth() / 2;
-            System.out.printf("You sneak up and steal %d coin%n", stolenAmount);
+            System.out.printf("You sneak up and steal %d ¢%n", stolenAmount);
             player.setWallet(player.getWallet() + stolenAmount);
             return "robbed";
         } else if (specialTurn.equalsIgnoreCase("d")){

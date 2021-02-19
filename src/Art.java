@@ -74,7 +74,7 @@ public class Art {
             System.out.printf("|%-69s|%n\033[0;38m", " ");
             Thread.sleep(600);
 
-            String option = sc.getInput("Welcome "+player.getName()+", you have "+player.getWallet()+" coins, What would you like?");
+            String option = sc.getInput("Welcome "+player.getName()+", you have "+player.getWallet()+" ¢, What would you like?");
             Thread.sleep(600);
 
             if(option.equalsIgnoreCase("e")) break;
@@ -213,7 +213,7 @@ public class Art {
         int coins = enemy.getWorth();
         int exp = enemy.getExpValue();
         Thread.sleep(450);
-        System.out.printf("\033[0;32mEnemy # %d is defeated. You have gained %d coins and %d exp%n\033[0;38m", battleNumber, coins, exp);
+        System.out.printf("\033[0;32mEnemy # %d is defeated. You have gained %d¢ and %d exp%n\033[0;38m", battleNumber, coins, exp);
         Thread.sleep(450);
         player.setExp(player.getExp() + exp);
         player.setWallet(player.getWallet() + coins);
