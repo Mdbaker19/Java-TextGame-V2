@@ -59,7 +59,7 @@ public class Gambler {
         if(choice.equalsIgnoreCase("e")){
             return;
         }
-        int amount = sc.getNum("How much are we gambling here?", player.getWallet());
+        int amount = sc.getNum("How much are we gambling here? Current wallet : " + player.getWallet(), player.getWallet());
         games(player, choice, amount);
     }
 
