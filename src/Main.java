@@ -288,6 +288,14 @@ public class Main {
                 }
                 player.updateStat("Health", player.getHealth() - damage);
             }
+        } else if (enemy.getAccuracy() > 10) {
+            System.out.println("This one sees through your tricks");
+            if(m.criticalHit(enemy.getSpeed())){
+                System.out.println("Critical Hit!");
+                damage*=1.5;
+            }
+            System.out.println("Enemy hits you for " + damage + " damage");
+            player.updateStat("Health", player.getHealth() - damage);
         } else {
             System.out.println("You have successfully dodged the attack!");
             Thread.sleep(600);
