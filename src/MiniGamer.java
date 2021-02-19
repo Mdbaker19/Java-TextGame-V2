@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class MiniGamer {
 
     private Input sc = new Input();
-    private ArrayList<String> rpcOptions = new ArrayList<>(Arrays.asList("r", "p", "c"));
+    private ArrayList<String> rpcOptions = new ArrayList<>(Arrays.asList("r", "p", "s"));
 
     public MiniGamer(){}
 
