@@ -12,6 +12,9 @@ public class Enemy {
     private int infect;
     private List<String> inventory;
     public Enemy(int number, int randomizer) throws InterruptedException {
+        if(randomizer > 95 && number < 8){
+            randomizer = 95;
+        }
         double multiplier = number * .5;
         this.expValue = (int) ((12 * number) * .85);
         this.worth = number * 5;
@@ -41,7 +44,7 @@ public class Enemy {
             System.out.println("\033[0;31m....");
             Thread.sleep(300);
             System.out.println("\033[0;36m....\033[0;38m");
-            multiplier*= 2.5;
+            multiplier*= 2.25;
             this.expValue *= 3.5;
             this.worth *= 2.5;
         }
