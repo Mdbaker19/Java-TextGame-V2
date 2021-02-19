@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Player {
     private Method m = new Method();
-    private final double levelUpMultiplier = 1.1;
+    private final double levelUpMultiplier = 1.12;
 
     private String name;
     private String type;
@@ -48,9 +48,23 @@ public class Player {
         this.type = type;
     }
 
+    public int getHealth(){
+        return this.stats.get("Health");
+    }
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
     public HashMap<String, Integer> getStats() {
         return stats;
     }
+    public void setStats(HashMap<String, Integer> stats) {
+        this.stats = stats;
+    }
+
     public void viewStats() {
         System.out.println("Here are your stats for your class");
         System.out.println("Max health : " + this.getMaxHealth());
@@ -59,9 +73,6 @@ public class Player {
         }
         System.out.println("Current level is " +this.getLevel());
         System.out.println("Current EXP: " + this.getExp() +"/"+this.getExpRequirement());
-    }
-    public int getHealth(){
-        return this.stats.get("Health");
     }
 
     public void initialStats(String type) {
@@ -74,31 +85,19 @@ public class Player {
             stats.put("Speed", 28);
         } else if (type.equalsIgnoreCase("knight")) {
             stats.put("Health", 155);
-            stats.put("Attack", 18);
-            stats.put("Defense", 15);
-            stats.put("Magic", 8);
+            stats.put("Attack", 17);
+            stats.put("Defense", 14);
+            stats.put("Magic", 9);
             stats.put("Speed", 10);
         } else {
             stats.put("Health", 110);
-            stats.put("Attack", 8);
+            stats.put("Attack", 9);
             stats.put("Defense", 10);
             stats.put("Magic", 28);
             stats.put("Speed", 18);
         }
         this.stats = stats;
         this.maxHealth = stats.get("Health");
-    }
-
-    public int getMaxHealth() {
-        return maxHealth;
-    }
-
-    public void setMaxHealth(int maxHealth) {
-        this.maxHealth = maxHealth;
-    }
-
-    public void setStats(HashMap<String, Integer> stats) {
-        this.stats = stats;
     }
 
     public void updateStat(String stat, int value){ // mainly for healing

@@ -26,7 +26,6 @@ public class Main {
             if(choice.equalsIgnoreCase("s")){
                 break;
             }
-            // will add options and other things
             switch (choice){
                 case "A":
                     art.about();
@@ -80,7 +79,9 @@ public class Main {
                 art.mainScreen();
                 String input = sc.getInput("What would you like to do?", art.getMainOptions(), false).toUpperCase();
                 Thread.sleep(600);
-                if (input.equalsIgnoreCase("q")) break;
+                if (input.equalsIgnoreCase("q") && sc.getInput("Are you sure? [Y]es / [N]o").equalsIgnoreCase("y")) {
+                    break;
+                }
                 switch (input) {
                     case "B":
                         battle(player);
