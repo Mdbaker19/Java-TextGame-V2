@@ -12,6 +12,7 @@ public class Enemy {
     private int expValue;
     private int infect;
     private int accuracy = 0;
+    private int extraHealth = 0;
     private boolean caster = false;
     private boolean healer = false;
     private List<String> ailments;
@@ -50,6 +51,7 @@ public class Enemy {
             System.out.println("\033[0;35mYou hear the clinging of bottles as a beast charges at you");
             this.worth *= 1.2;
             this.healer = true;
+            this.extraHealth = 5 * number;
         } else if (randomizer < 58 && randomizer > 45) {
             System.out.println("\033[0;32mWeird… this one literally looks sharper");
             this.accuracy = 100;
@@ -77,7 +79,7 @@ public class Enemy {
             this.worth *= 2.5;
         }
         Thread.sleep(600);
-        this.health = (int) Math.floor(13 * multiplier);
+        this.health = (int) Math.floor(13 * multiplier) + extraHealth;
         this.maxHealth = this.health;
         this.attack = (int) Math.floor(4 * multiplier);
         this.speed = (int) Math.floor(2 * multiplier);
