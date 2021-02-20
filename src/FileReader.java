@@ -71,6 +71,7 @@ public class FileReader {
         writeToLog(player.getName() + " as a " + player.getType() + " won " + player.getVictories() + " battles at level " + player.getLevel() + " played at : " + new Date());
         writeToLog("You had " + gambler.getStorage() + " saved up");
         writeToLog("Your stats : " + statList.toString());
+        writeToLog("Max Health : " + player.getMaxHealth());
         writeToLog("___________________________________________________________________________________________________________");
     }
 

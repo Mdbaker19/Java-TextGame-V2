@@ -1,0 +1,10 @@
+Matt as a Mage won 28 battles at level 10 played at : Fri Feb 19 22:47:14 CST 2021
+You had 105738 saved up
+Your stats : Speed 60
+Health -12
+Magic 64
+Attack 386
+Defense 825
+Max Health : 297
+
+___________________________________________________________________________________________________________
