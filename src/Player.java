@@ -24,7 +24,7 @@ public class Player {
 
     public Player(String name){
         this.name = name;
-        this.wallet = 1330;
+        this.wallet = 30;
         this.victories = 1;
         this.level = 1;
         this.exp = 0;
