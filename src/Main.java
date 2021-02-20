@@ -10,6 +10,7 @@ public class Main {
     private static FileReader fileReader;
     private static final Gambler gambler = new Gambler();
     private static final ArrayList<String> beginOptions = new ArrayList<>(Arrays.asList("A", "S", "G"));
+    private static final ArrayList<String> classOptions = new ArrayList<>(Arrays.asList("knight", "mage", "thief"));
     static {
         try {
             fileReader = new FileReader("src", "gameLog.txt", "gameLog.txt");
@@ -22,7 +23,7 @@ public class Main {
         art.welcome();
         art.welcomeOptions();
         do{
-            String choice = sc.getInput("…", beginOptions,false).toUpperCase();
+            String choice = sc.getInput("Welcome player, please input an option", beginOptions,false).toUpperCase();
             if(choice.equalsIgnoreCase("s")){
                 break;
             }
@@ -45,10 +46,6 @@ public class Main {
     }
 
     public static void choosePlayerClass(Player player) throws IOException, InterruptedException {
-        List<String> classOptions = new ArrayList<>();
-        classOptions.add("Knight");
-        classOptions.add("Mage");
-        classOptions.add("Thief");
         String type = sc.getInput("What is your Class choice?", classOptions, true);
         player.setType(m.cap(type));
         player.initialStats(player.getType());
@@ -88,7 +85,7 @@ public class Main {
                     case "S":
                         art.shopMenu(player);
                         break;
-                    case "G":
+                    case "A":
                         gambler.account(player);
                         break;
                     case "V":
@@ -103,7 +100,7 @@ public class Main {
         fileReader.saveRecord(player, gambler);
     }
 
-    public static boolean checkRevive(Player player) throws InterruptedException {
+    public static boolean checkRevive(Player player) {
         if(player.getInventory().get("Revive") != null) {
             player.revive("Revive");
             return true;
@@ -124,7 +121,7 @@ public class Main {
     public static void fight(Player player, Enemy enemy) throws InterruptedException {
         List<String> options = new ArrayList<>(Arrays.asList("a", "i", "s", "c"));
         List<String> battleEffects = enemy.getAilments();
-        if (player.getState().contains("sleep")) {  //sleep does not carry over
+        if (player.getState().contains("sleep")) {  //so sleep does not carry over
             List<String> states = player.getState();
             states.remove("sleep");
             player.setState(states);
@@ -133,8 +130,7 @@ public class Main {
             List<String> youEffect = player.getState();
             takeEffect(player);
 
-            if (player.getHealth() <= 0) {
-                // if poison kills you
+            if (player.getHealth() <= 0) { // if poison kills you
                 break;
             }
             art.enemyHud(enemy, battleEffects);
@@ -174,7 +170,7 @@ public class Main {
                 System.out.println("You chase it down as it runs and drinks a potion");
             }
 
-            if (enemy.getHealth() <= 0) {
+            if (enemy.getHealth() <= 0) { // you killed enemy
                 break;
             }
             if (battleEffects.contains("cursed")) {
@@ -185,7 +181,7 @@ public class Main {
                 System.out.printf("Agheghegh… your summon attacks dealing %d damage%n", zombieDamage);
                 enemy.setHealth(enemy.getHealth() - zombieDamage);
             }
-            if (enemy.getHealth() <= 0) {
+            if (enemy.getHealth() <= 0) { // summon killed enemy
                 break;
             }
             else {
@@ -320,10 +316,10 @@ public class Main {
             currentAilments.remove("blind");
         }
 
-        if (enemy.isCaster() && castChance < 45) {
+        if (enemy.isCaster() && castChance < 35) {
             System.out.println("The monster begins to glow as the world fades to darkness…");
             playerStatus.add("sleep");
-        } else if (enemy.isHealer() && healChance < 45) {
+        } else if (enemy.isHealer() && healChance < 35) {
             System.out.println("You blink and it is gone…… you hear the clanging of bottles in the distance and chase it down");
             enemy.setHealth(enemy.getHealth() + (int) (enemy.getMaxHealth() * .25));
         } else {

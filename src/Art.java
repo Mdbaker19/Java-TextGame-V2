@@ -17,9 +17,9 @@ public class Art {
         System.out.printf("%-20s%s%n", " ", "[E]nd Game");
         System.out.printf("|%-60s|%n\033[0;38m", " ");
         mainOptions.add("B");
-        mainOptions.add("V");
         mainOptions.add("S");
         mainOptions.add("A");
+        mainOptions.add("V");
         mainOptions.add("E");
     }
 
@@ -27,7 +27,7 @@ public class Art {
         for(int i = 0; i < 4; i++){
             System.out.printf("%-5s|%-219s-|%n", " ", "-");
         }
-        System.out.printf("%-5s|%-105s %s %-106s|%n"," ", " ", "Welcome", " ");
+        System.out.printf("%-5s|-%-102s %s %-103s-|%n"," ", " ", "JAVENTURE……", " ");
         for(int i = 0; i < 4; i++){
             System.out.printf("%-5s|%-219s-|%n", " ", "-");
         }

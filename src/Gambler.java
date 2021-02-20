@@ -19,6 +19,15 @@ public class Gambler {
         this.checkNumber = 0;
     }
 
+    private void gameMenu(){
+        System.out.printf("\033[0;35m|%-68s|%n", " ");
+        System.out.printf("|%-20s%-20s%-28s|%n", " ", "[N]umber Guess", " ");
+        System.out.printf("|%-20s%-20s%-28s|%n", " ", "[R]ock Paper Scissor", " ");
+        System.out.printf("|%-20s%-20s%-28s|%n", " ", "[C]oin Toss", " ");
+        System.out.printf("|%-20s%-20s%-28s|%n", " ", "[E]xit", " ");
+        System.out.printf("|%-68s|%n\033[0;38m", " ");
+    }
+
     public void account (Player player) throws InterruptedException {
         do {
             welcome();
@@ -84,15 +93,6 @@ public class Gambler {
             player.setWallet(player.getWallet() - bet);
             System.out.println("Try you luck next time");
         }
-    }
-
-    private void gameMenu(){
-        System.out.printf("\033[0;35m|%-68s|%n", " ");
-        System.out.printf("|%-20s%-20s%-28s|%n", " ", "[N]umber Guess", " ");
-        System.out.printf("|%-20s%-20s%-28s|%n", " ", "[R]ock Paper Scissor", " ");
-        System.out.printf("|%-20s%-20s%-28s|%n", " ", "[C]oin Toss", " ");
-        System.out.printf("|%-20s%-20s%-28s|%n", " ", "[E]xit", " ");
-        System.out.printf("|%-68s|%n\033[0;38m", " ");
     }
 
     private void stash(Player player) throws InterruptedException {

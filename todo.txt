@@ -2,11 +2,9 @@ more items from shop ( armour and weapons )
 
 different enemy ( resist to magic or normal attacks )
 
-enemy can heal randomly ( amount based on level ( ? ) low chance every turn, takes its turn )
-
 options and maybe a load save from file reader ( ? )
 
 ======ISSUES======
 issue with poison damage even when checking inventory or scanning enemy     ==> quick fix implemented for now ( undo the damage )
 
-better stat development ( seems to be okay ish for now ) game needs some balancing, end game is unplayable for both sides haha
+better stat development ( seems to be okay ish for now ) game needs some balancing, end game is unplayable for both sides haha => a little better now

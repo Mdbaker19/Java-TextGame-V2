@@ -38,30 +38,28 @@ public class Player {
         HashMap<String, Integer> stats = new HashMap<>();
         if (type.equalsIgnoreCase("thief")) {
             stats.put("Health", 120);
-            stats.put("Attack", 10);
+            stats.put("Attack", 12);
             stats.put("Defense", 10);
-            stats.put("Magic", 18);
+            stats.put("Magic", 15);
             stats.put("Speed", 28);
-            this.mp = 20;
-            this.maxMp = 20;
+            this.mp = 25;
         } else if (type.equalsIgnoreCase("knight")) {
             stats.put("Health", 155);
             stats.put("Attack", 17);
-            stats.put("Defense", 14);
-            stats.put("Magic", 9);
-            stats.put("Speed", 10);
+            stats.put("Defense", 15);
+            stats.put("Magic", 8);
+            stats.put("Speed", 12);
             this.mp = 10;
-            this.maxMp = 10;
         } else {
-            stats.put("Health", 110);
+            stats.put("Health", 95);
             stats.put("Attack", 9);
-            stats.put("Defense", 10);
-            stats.put("Magic", 25);
-            stats.put("Speed", 18);
+            stats.put("Defense", 9);
+            stats.put("Magic", 28);
+            stats.put("Speed", 15);
             this.mp = 100;
-            this.maxMp = 100;
         }
         this.stats = stats;
+        this.maxMp = this.mp;
         this.maxHealth = stats.get("Health");
     }
 
