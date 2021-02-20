@@ -117,13 +117,13 @@ public class Main {
         System.out.printf("Battle # %d%n", wins);
         int randomizer = (int) Math.floor(Math.random() * 100);
         Enemy enemy = new Enemy(wins, randomizer);
-        fight(player, enemy, "normal");
+        fight(player, enemy);
     }
 
 
-    public static void fight(Player player, Enemy enemy, String enemyStatus) throws InterruptedException {
+    public static void fight(Player player, Enemy enemy) throws InterruptedException {
         List<String> options = new ArrayList<>(Arrays.asList("a", "i", "s", "c"));
-        String battleEffect = enemyStatus;
+        List<String> battleEffects = enemy.getAilments();
         do {
             String youEffect = player.getState();
             takeEffect(player);
@@ -132,7 +132,7 @@ public class Main {
                 // if poison kills you
                 break;
             }
-            art.enemyHud(enemy, battleEffect);
+            art.enemyHud(enemy, battleEffects);
             Thread.sleep(600);
             art.hud(player);
 
@@ -141,7 +141,10 @@ public class Main {
             if (result.equalsIgnoreCase("item")) {
                 System.out.println(); // so the turn counts if an item was used or you are asleep
             } else if (result.equalsIgnoreCase("special")) {
-                battleEffect = specialOptions(player, enemy, battleEffect);
+                String specialReturn = specialOptions(player, enemy);
+                if(!specialReturn.equalsIgnoreCase("normal") && !battleEffects.contains(specialReturn)){
+                    battleEffects.add(specialReturn);
+                }
             } else if (result.equalsIgnoreCase("attacking")) {
                 attackMade(player, enemy);
             } else {
@@ -149,14 +152,16 @@ public class Main {
                 if (youEffect.equalsIgnoreCase("poison")) {  // temp for undoing the poison damage when you actually did not make a turn
                     player.updateStat("Health", player.getHealth() + (int) (player.getMaxHealth() * .05));
                 }
-                fight(player, enemy, battleEffect);
+                fight(player, enemy);
                 return; // return needed to prevent a bubble effect with scanning enemy and finishing the fight, caused multiple victories. finally figured this out
             }
+
+            enemy.setAilments(battleEffects);
 
             if (enemy.getHealth() <= 0) {
                 break;
             }
-            if (battleEffect.equalsIgnoreCase("cursed")) {
+            if (battleEffects.contains("cursed")) {
                 int zombieDamage = (int) (enemy.getMaxHealth() * .03);
                 if(zombieDamage < 1){
                     zombieDamage = 1;
@@ -168,7 +173,7 @@ public class Main {
                 break;
             }
             else {
-                enemyTurn(enemy, player, battleEffect);
+                enemyTurn(enemy, player, battleEffects);
             }
 
         } while (player.getHealth() > 0 && enemy.getHealth() > 0);
@@ -246,7 +251,7 @@ public class Main {
             System.out.println("He is too quick, you have missed your attack");
         }
     }
-    public static void enemyTurn(Enemy enemy, Player player, String currentAilment) throws InterruptedException {
+    public static void enemyTurn(Enemy enemy, Player player, List<String> currentAilments) throws InterruptedException {
 
         int extraDefenseMult = 1;
         int extraDodgeMult = 1;
@@ -261,18 +266,21 @@ public class Main {
 
         Thread.sleep(600);
 
-        if (currentAilment.equalsIgnoreCase("sand")) {
+        if (currentAilments.contains("sand")) {
             extraDodgeMult = 2;
-        } else if (currentAilment.equalsIgnoreCase("poison")) {
+        }
+        if (currentAilments.contains("poison")) {
             poisonDamage = (int) (enemy.getMaxHealth() * .05);
             if (poisonDamage < 1) {
                 poisonDamage = 1;
             }
             System.out.println("\033[0;32mEnemy takes poison damage\033[0;38m");
             enemy.setHealth(enemy.getHealth() - poisonDamage);
-        } else if (currentAilment.equalsIgnoreCase("shield")) {
+        }
+        if (currentAilments.contains("shield")) {
             extraDefenseMult = 2;
-        } else if (currentAilment.equalsIgnoreCase("confuse")) {
+        }
+        if (currentAilments.contains("confuse")) {
             confuseChance = 35;
         }
 
@@ -288,11 +296,15 @@ public class Main {
 
             int randomSummonBlock = (int) Math.floor(Math.random() * 100);
 
-            if (ranConfuseHit <= confuseChance && currentAilment.equalsIgnoreCase("confuse")) {
-                System.out.println("Enemy has hit himself for " + enemy.getAttack() / 2);
+            if (ranConfuseHit <= confuseChance && currentAilments.contains("confuse")) {
+                int hitSelf = enemy.getAttack() / 2;
+                if(hitSelf < 1){
+                    hitSelf = 1;
+                }
+                System.out.println("Enemy has hit himself for " + hitSelf);
                 Thread.sleep(600);
+                enemy.setHealth(enemy.getHealth() - hitSelf);
 
-                enemy.setHealth(enemy.getHealth() - enemy.getAttack() / 2);
             } else if (enemy.getAccuracy() > 10) {
                 System.out.println("This one sees through your tricks");
                 if (m.criticalHit(enemy.getSpeed())) {
@@ -302,7 +314,7 @@ public class Main {
                 System.out.println("Enemy hits you for " + damage + " damage");
                 player.updateStat("Health", player.getHealth() - damage);
             } else if (!youDodge) {
-                if (randomSummonBlock < 20 && currentAilment.equalsIgnoreCase("cursed")) {
+                if (randomSummonBlock < 20 && currentAilments.contains("cursed")) {
                     System.out.println("Your summon stumbles.. it falls in front of you and takes the hit");
                 } else {
                     if (m.criticalHit(enemy.getSpeed())) {
@@ -325,9 +337,9 @@ public class Main {
         }
     }
 
-    public static String specialOptions(Player player, Enemy enemy, String currentEnemyStatus) throws InterruptedException {
+    public static String specialOptions(Player player, Enemy enemy) throws InterruptedException {
         List<String> options = new ArrayList<>(Arrays.asList("s", "p", "r", "c", "d", "m"));
-        String result = currentEnemyStatus;
+        String result = "normal";
         art.specials();
         boolean success = m.successfulCast(player.getStats().get("Magic"));
         String specialChoice = sc.getInput("This is the way to fight! How will you win this?", options, false);

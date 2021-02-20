@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Art {
@@ -211,11 +212,17 @@ public class Art {
         System.out.printf("|%-67s|%n\033[0;38m", " ");
     }
 
-    public void enemyHud(Enemy enemy, String status){
+    public void enemyHud(Enemy enemy, List<String> ailments){
         System.out.println();
         System.out.printf("\033[0;32m|%-20s%-22s\033[0;31m%-5d / %-17d\033[0;32m|%n", " ", "Health : " , enemy.getHealth(), enemy.getMaxHealth());
-        System.out.printf("|%-20s%-19s%-28s|%n\033[0;38m", " ", "Status: ", status);
-        System.out.println();
+        if(ailments.size() > 0){
+            for(String a : ailments) {
+                System.out.printf("|%-20s%-19s%-28s|%n", " ", "Condition: ", a);
+            }
+        } else {
+            System.out.printf("|%-20s%-19s%-28s|%n\033[0;38m", " ", "Status: ", "normal");
+        }
+        System.out.println("\033[0;38m");
     }
 
     public void specials(){

@@ -32,6 +32,31 @@ public class Player {
         inventory.put("Potion", 1);
     }
 
+    public void initialStats(String type) {
+        HashMap<String, Integer> stats = new HashMap<>();
+        if (type.equalsIgnoreCase("thief")) {
+            stats.put("Health", 120);
+            stats.put("Attack", 10);
+            stats.put("Defense", 10);
+            stats.put("Magic", 18);
+            stats.put("Speed", 28);
+        } else if (type.equalsIgnoreCase("knight")) {
+            stats.put("Health", 155);
+            stats.put("Attack", 17);
+            stats.put("Defense", 14);
+            stats.put("Magic", 9);
+            stats.put("Speed", 10);
+        } else {
+            stats.put("Health", 110);
+            stats.put("Attack", 9);
+            stats.put("Defense", 10);
+            stats.put("Magic", 25);
+            stats.put("Speed", 18);
+        }
+        this.stats = stats;
+        this.maxHealth = stats.get("Health");
+    }
+
     public String getName() {
         return name;
     }
@@ -75,30 +100,6 @@ public class Player {
         System.out.println("Current EXP: " + this.getExp() +"/"+this.getExpRequirement());
     }
 
-    public void initialStats(String type) {
-        HashMap<String, Integer> stats = new HashMap<>();
-        if (type.equalsIgnoreCase("thief")) {
-            stats.put("Health", 120);
-            stats.put("Attack", 10);
-            stats.put("Defense", 10);
-            stats.put("Magic", 18);
-            stats.put("Speed", 28);
-        } else if (type.equalsIgnoreCase("knight")) {
-            stats.put("Health", 155);
-            stats.put("Attack", 17);
-            stats.put("Defense", 14);
-            stats.put("Magic", 9);
-            stats.put("Speed", 10);
-        } else {
-            stats.put("Health", 110);
-            stats.put("Attack", 9);
-            stats.put("Defense", 10);
-            stats.put("Magic", 28);
-            stats.put("Speed", 18);
-        }
-        this.stats = stats;
-        this.maxHealth = stats.get("Health");
-    }
 
     public void updateStat(String stat, int value){ // mainly for healing
         HashMap<String, Integer> curr = this.getStats();
