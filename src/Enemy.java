@@ -62,7 +62,7 @@ public class Enemy {
         Thread.sleep(600);
         this.health = (int) Math.floor(10 * multiplier);
         this.maxHealth = this.health;
-        this.attack = (int) Math.floor(5 * multiplier);
+        this.attack = (int) Math.floor(4 * multiplier);
         this.speed = (int) Math.floor(2 * multiplier);
         this.magic = (int) Math.floor(2 * multiplier);
         this.defense = (int) Math.floor(3 * multiplier);

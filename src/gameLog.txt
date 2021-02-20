@@ -7,3 +7,4 @@ Matthew as a Thief won 13 battles at level 5 played at : Wed Feb 17 18:02:55 CST
 Matthew as a Knight won 7 battles at level 2 played at : Wed Feb 17 18:30:10 CST 2021
 Matt as a Knight won 16 battles at level 6 played at : Thu Feb 18 00:29:32 CST 2021
 Matt as a Thief won 9 battles at level 4 played at : Thu Feb 18 22:17:48 CST 2021
+Tester as a Knight won 12 battles at level 5 played at : Fri Feb 19 19:36:41 CST 2021
