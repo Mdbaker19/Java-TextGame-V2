@@ -95,94 +95,55 @@ public class Art {
 
 
     public void handleChoice(Player player, String choice) throws InterruptedException {
-        String item;
+        HowMany simplified = null;
         int savings = player.getWallet();
         if (choice.equalsIgnoreCase("p") && savings >= 10) {
-            int howMany = sc.getNum("How many would you like?", player.getWallet(), 10);
-            if(howMany < 2) {
-                item = " Potion";
-            } else {
-                item = " " +howMany + " Potions";
-            }
-            quantity(howMany, 10, player, "Potion");
+            simplified = new HowMany(10, "Potion", player);
+            quantity(simplified.getAmount(), 10, player, "Potion");
 
         } else if (choice.equalsIgnoreCase("h") && savings >= 30) {
-            int howMany = sc.getNum("How many would you like?", player.getWallet(), 30);
-            if(howMany < 2) {
-                item = " High Potion";
-            } else {
-                item = " " +howMany + " High Potions";
-            }
-            quantity(howMany, 30, player, "Hpotion");
+            simplified = new HowMany(30, "High Potion", player);
+            quantity(simplified.getAmount(), 30, player, "Hpotion");
 
         } else if (choice.equalsIgnoreCase("a") && savings >= 10) {
-            int howMany = sc.getNum("How many would you like?", player.getWallet(), 10);
-            if(howMany < 2) {
-                item = " Antidote";
-            } else {
-                item = " " +howMany + " Antidotes";
-            }
-            quantity(howMany, 10, player, "Antidote");
+            simplified = new HowMany(10, "Antidote", player);
+            quantity(simplified.getAmount(), 10, player, "Antidote");
 
         } else if (choice.equalsIgnoreCase("c") && savings >= 15) {
-            int howMany = sc.getNum("How many would you like?", player.getWallet(), 15);
-            if(howMany < 2) {
-                item = " Clock";
-            } else {
-                item = " " +howMany + " Clocks";
-            }
-            quantity(howMany, 15, player, "Clock");
+            simplified = new HowMany(15, "Clock", player);
+            quantity(simplified.getAmount(), 15, player, "Clock");
 
         } else if (choice.equalsIgnoreCase("r") && savings >= 105) {
-            int howMany = sc.getNum("How many would you like?", player.getWallet(), 105);
-            if(howMany < 2) {
-                item = " Revive";
-            } else {
-                item = " " +howMany + " Revives";
-            }
-            quantity(howMany, 105, player, "Revive");
+            simplified = new HowMany(105, "Revive", player);
+            quantity(simplified.getAmount(), 105, player, "Revive");
 
         } else if (choice.equalsIgnoreCase("b") && savings >= 35) {
-            int howMany = sc.getNum("How many would you like?", player.getWallet(), 35);
-            if(howMany < 2) {
-                item = " Bomb";
-            } else {
-                item = " " +howMany + " Bombs";
-            }
-            quantity(howMany, 35, player, "Bomb");
+            simplified = new HowMany(35, "Bomb", player);
+            quantity(simplified.getAmount(), 35, player, "Bomb");
 
         } else if (choice.equalsIgnoreCase("m") && savings >= 65) {
-            int howMany = sc.getNum("How many would you like?", player.getWallet(), 65);
-            if(howMany < 2) {
-                item = " Mega Potion";
-            } else {
-                item = " " +howMany + " Mega Potions";
-            }
-            quantity(howMany, 65, player, "Mega");
+            simplified = new HowMany(65, "Mega Potion", player);
+            quantity(simplified.getAmount(), 65, player, "Mega");
 
         } else if (choice.equalsIgnoreCase("e") && savings >= 25) {
-            int howMany = sc.getNum("How many would you like?", player.getWallet(), 25);
-            if(howMany < 2) {
-                item = " Ether";
-            } else {
-                item = " " +howMany + " Ethers";
-            }
-            quantity(howMany, 25, player, "Ether");
+            simplified = new HowMany(25, "Ether", player);
+            quantity(simplified.getAmount(), 25, player, "Ether");
 
         } else if ((choice.equalsIgnoreCase("d") || choice.equalsIgnoreCase("w") || choice.equalsIgnoreCase("f") || choice.equalsIgnoreCase("g") || choice.equalsIgnoreCase("s") || choice.equalsIgnoreCase("l")) && savings >= 95) {
-            int howMany = sc.getNum("How many would you like?", player.getWallet(), 95);
-            item = " Booster";
-            statBooster(howMany, 95, player, choice);
+            simplified = new HowMany(95, "Booster", player);
+            statBooster(simplified.getAmount(), 95, player, choice);
 
         } else if (choice.equalsIgnoreCase("i")) {
             info();
             return;
+        }
+        if(simplified != null){
+            System.out.println("Sounds good, here is your " + simplified.getItemName());
         } else {
             System.out.println("Do not have it or you can not afford it.");
             Thread.sleep(600);
             return;
         }
-        System.out.println("Sounds good, here is your" + item);
         Thread.sleep(600);
 
     }
