@@ -195,6 +195,7 @@ public class Main {
         if(ranWakeUp >= 50){
             System.out.println("You fall over, as you hit the ground you wake up");
             player.setState("normal");
+            asleep = false;
         }
 
         if(turn.equalsIgnoreCase("i")){
