@@ -401,6 +401,9 @@ public class Main {
             }
             return "slow";
         } else {
+            if(enemyMagician){
+                System.out.println("This one is immune……");
+            }
             return "confuse";
         }
     }
