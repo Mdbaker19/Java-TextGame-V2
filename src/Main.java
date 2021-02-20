@@ -174,6 +174,9 @@ public class Main {
                 if(enemy.getHealth() + turnHeal > enemy.getMaxHealth()){
                     turnHeal = enemy.getMaxHealth() - enemy.getHealth();
                 }
+                if(turnHeal < 1){
+                    turnHeal = 1;
+                }
                 enemy.setHealth(enemy.getHealth() + turnHeal);
                 System.out.printf("You chase it down as it runs and drinks a potion, healing %d%n", turnHeal);
             }

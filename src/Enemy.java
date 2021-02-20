@@ -13,6 +13,7 @@ public class Enemy {
     private int infect;
     private int accuracy = 0;
     private int extraHealth = 0;
+    private int extraSpeed = 0;
     private boolean caster = false;
     private boolean healer = false;
     private List<String> ailments;
@@ -56,6 +57,7 @@ public class Enemy {
             this.accuracy = 100;
             this.worth *= 1.3;
             this.expValue *= 1.3;
+            extraSpeed += 5;
         } else if (randomizer < 71 && randomizer > 58) {
             System.out.println("\033[0;32m…Cough..Cough… what is this thing");
             this.infect *= 10;
@@ -82,7 +84,7 @@ public class Enemy {
         this.health = (int) Math.floor(13 * multiplier) + extraHealth;
         this.maxHealth = this.health;
         this.attack = (int) Math.floor(4 * multiplier);
-        this.speed = (int) Math.floor(2 * multiplier);
+        this.speed = (int) Math.floor(2 * multiplier) + extraSpeed;
         this.magic = (int) Math.floor(2 * multiplier); // for magic enemy damage
         this.defense = (int) Math.floor(3 * multiplier);
         this.ailments = new ArrayList<>();

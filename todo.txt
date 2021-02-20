@@ -4,6 +4,10 @@ different enemy ( resist to magic or normal attacks )
 
 options and maybe a load save from file reader ( ? )
 
+steal speed based ( ? )
+
+mp currently not being used unless successful cast ( ? )
+
 ======ISSUES======
 issue with poison damage even when checking inventory or scanning enemy     ==> quick fix implemented for now ( undo the damage )
 
