@@ -49,15 +49,16 @@ public class Art {
     public void gamePlayInfo(){
         System.out.println("Special contains a few different options, all of which last through the battle if it was a successfully cast.");
         System.out.println("Magic Summon calls an ally into battle that deals 3% of enemy health per turn and has a 20% chance to block for you");
-        System.out.println("Sand increases you dodge rate by 2x");
+        System.out.println("Blind increases you dodge rate by 2x");
         System.out.println("Poison causes 5% enemy damage per turn");
         System.out.println("If you are poisoned you are indefinitely until an antidote is used");
         System.out.println("Normal enemies have a 5% chance to poison you, a more venomous enemy, 'cough' has 10x the chance to poison you");
         System.out.println("Some enemies are smarter than others and it is impossible to dodge them but, they can not poison you");
         System.out.println("Some enemies can put you to sleep, you need a clock to wake up or try you luck every turn with a 35% chance to wake up");
-        System.out.println("Rob the enemy to steal 50% of their coin reward");
+        System.out.println("Steal the enemy to steal 50% of their coin reward, reduces coin reward by 15% each time");
         System.out.println("Confuse the enemy to have a 35% chance of them hitting themselves");
         System.out.println("Defend to reduce damage by 1/2");
+        System.out.println("Time to reduce enemy dodge by 1/2");
     }
 
     public void shopMenu(Player player) throws InterruptedException {
@@ -228,11 +229,12 @@ public class Art {
     public void specials(){
         System.out.printf("\033[0;35m|%-67s|%n", " ");
         System.out.printf("|%-20s%-19s%-28s|%n", " ", "[M]agic Summon", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[S]and", " ");
+        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[B]lind", " ");
         System.out.printf("|%-20s%-19s%-28s|%n", " ", "[P]oison", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[R]ob", " ");
+        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[S]teal", " ");
         System.out.printf("|%-20s%-19s%-28s|%n", " ", "[C]onfuse", " ");
         System.out.printf("|%-20s%-19s%-28s|%n", " ", "[D]efend", " ");
+        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[T]ime", " ");
         System.out.printf("|%-67s|%n\033[0;38m", " ");
     }
 

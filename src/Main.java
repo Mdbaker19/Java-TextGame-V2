@@ -239,7 +239,11 @@ public class Main {
     public static void attackMade(Player attacker, Enemy enemy) throws InterruptedException {
         int damage = m.calcDamage(attacker.getStats().get("Attack"), enemy.getDefense());
         System.out.println("\033[0;37mEnemy attempts to dodge");
-        boolean enemyDodge = m.blocked(enemy.getSpeed());
+        int enemySpeed = enemy.getSpeed();
+        if(enemy.getAilments().contains("slow")){
+            enemySpeed /= 2;
+        }
+        boolean enemyDodge = m.blocked(enemySpeed);
         if(!enemyDodge){
             if (m.criticalHit(attacker.getStats().get("Speed"))) {
                 System.out.println("Critical Hit!");
@@ -270,7 +274,7 @@ public class Main {
 
         Thread.sleep(600);
 
-        if (currentAilments.contains("sand")) {
+        if (currentAilments.contains("blind")) {
             extraDodgeMult = 2;
         }
         if (currentAilments.contains("poison")) {
@@ -289,6 +293,11 @@ public class Main {
         }
         if (currentAilments.contains("confuse")) {
             confuseChance = 35;
+        }
+
+        if(enemy.isCaster()){
+            currentAilments.remove("confuse");
+            currentAilments.remove("blind");
         }
 
         if (enemy.isCaster() && castChance < 45) {
@@ -363,23 +372,34 @@ public class Main {
     }
 
     private static String handleSpecialTurn(String specialTurn, Enemy enemy, Player player){
-        if (specialTurn.equalsIgnoreCase("s")){
-            return "sand";
+        boolean enemyMagician = enemy.isCaster();
+        if (specialTurn.equalsIgnoreCase("b")){
+            if(enemyMagician){
+                System.out.println("This one is immune……");
+            }
+            return "blind";
         } else if (specialTurn.equalsIgnoreCase("p")){
             if(enemy.getInfect() > 49){
                 System.out.println("This one is immune……");
             }
             return "poison";
-        } else if (specialTurn.equalsIgnoreCase("r")){
-            int stolenAmount = enemy.getWorth() / 2;
+        } else if (specialTurn.equalsIgnoreCase("s")){
+            int currWorth = enemy.getWorth();
+            int stolenAmount = currWorth / 2;
+            enemy.setWorth(currWorth - (int) (currWorth * .15));
             System.out.printf("You sneak up and steal %d ¢%n", stolenAmount);
             player.setWallet(player.getWallet() + stolenAmount);
-            return "robbed";
+            return "stolen";
         } else if (specialTurn.equalsIgnoreCase("d")){
             return "shield";
         } else if (specialTurn.equalsIgnoreCase("m")){
             System.out.println("You summon an undead ally");
             return "cursed";
+        } else if (specialTurn.equalsIgnoreCase("t")){
+            if(enemyMagician){
+                System.out.println("This one is immune……");
+            }
+            return "slow";
         } else {
             return "confuse";
         }
