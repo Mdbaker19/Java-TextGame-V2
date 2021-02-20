@@ -153,11 +153,10 @@ public class Gambler {
 
     private static void welcome(){
         System.out.printf("\033[0;36m|%-67s|%n", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "Welcome", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[S]tash", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[R]isk", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[W]ithdraw", " ");
+        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[G]amble", " ");
         System.out.printf("|%-20s%-19s%-28s|%n", " ", "[C]heck", " ");
+        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[S]tash", " ");
+        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[W]ithdraw", " ");
         System.out.printf("|%-20s%-19s%-28s|%n", " ", "[U]pgrade", " ");
         System.out.printf("|%-20s%-19s%-28s|%n", " ", "[E]xit", " ");
         System.out.printf("|%-67s|%n\033[0;38m", " ");
