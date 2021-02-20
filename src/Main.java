@@ -325,6 +325,9 @@ public class Main {
             enemy.setHealth(enemy.getHealth() + turnHeal);
         } else {
             int damage = m.calcDamage(enemy.getAttack(), player.getStats().get("Defense"));
+            if(enemy.isCaster()){
+                damage = m.calcDamage(enemy.getMagic(), player.getStats().get("Defense"));
+            }
             damage /= extraDefenseMult;
             System.out.println("\033[0;37mYou attempt to dodge");
             boolean youDodge = m.blocked(player.getStats().get("Speed") * extraDodgeMult);
