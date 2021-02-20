@@ -71,7 +71,7 @@ public class Main {
                     System.out.println("What!? You do not have any revives.. well...");
                     Thread.sleep(600);
                     System.out.println("Game over");
-                    fileReader.saveRecord(player);
+                    fileReader.saveRecord(player, gambler);
                     return;
                 }
             }
@@ -101,6 +101,7 @@ public class Main {
             }
         } while (true);
         System.out.println("Nice meeting you");
+        fileReader.saveRecord(player, gambler);
     }
 
     public static boolean checkRevive(Player player) throws InterruptedException {
@@ -191,13 +192,13 @@ public class Main {
 
     public static String handleTurn(String turn, Enemy enemy, Player player) throws InterruptedException {
         boolean asleep = player.getState().equalsIgnoreCase("sleep");
-        int ranWakeUp = 0;
+        int ranWakeUp = 100;
         if (asleep) {
             System.out.println("zzz……");
             ranWakeUp = (int) Math.floor(Math.random() * 100);
         }
 
-        if(ranWakeUp >= 50){
+        if(ranWakeUp <= 35){
             System.out.println("You fall over, as you hit the ground you wake up");
             player.setState("normal");
             asleep = false;
@@ -261,6 +262,9 @@ public class Main {
 
         int infectChance = (int) Math.floor(Math.random() * 100);
         int infect = enemy.getInfect();
+        if(infect > 49 && currentAilments.contains("poison")){
+            currentAilments.remove("poison");
+        }
 
         int castChance = (int) Math.floor(Math.random() * 100);
 
@@ -276,6 +280,9 @@ public class Main {
             }
             System.out.println("\033[0;32mEnemy takes poison damage\033[0;38m");
             enemy.setHealth(enemy.getHealth() - poisonDamage);
+            if(enemy.getHealth() <= 0){
+                return;
+            }
         }
         if (currentAilments.contains("shield")) {
             extraDefenseMult = 2;
@@ -284,7 +291,7 @@ public class Main {
             confuseChance = 35;
         }
 
-        if (enemy.isCaster() && castChance < 35) {
+        if (enemy.isCaster() && castChance < 45) {
             System.out.println("The monster begins to glow as the world fades to darkness…");
             player.setState("sleep");
         } else {
@@ -301,7 +308,7 @@ public class Main {
                 if(hitSelf < 1){
                     hitSelf = 1;
                 }
-                System.out.println("Enemy has hit himself for " + hitSelf);
+                System.out.println("Enemy has hit itself for " + hitSelf);
                 Thread.sleep(600);
                 enemy.setHealth(enemy.getHealth() - hitSelf);
 
@@ -359,6 +366,9 @@ public class Main {
         if (specialTurn.equalsIgnoreCase("s")){
             return "sand";
         } else if (specialTurn.equalsIgnoreCase("p")){
+            if(enemy.getInfect() > 49){
+                System.out.println("This one is immune……");
+            }
             return "poison";
         } else if (specialTurn.equalsIgnoreCase("r")){
             int stolenAmount = enemy.getWorth() / 2;

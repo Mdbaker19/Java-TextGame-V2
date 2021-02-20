@@ -47,14 +47,14 @@ public class Art {
         System.out.println("Good luck player");
     }
     public void gamePlayInfo(){
-        System.out.println("Special contains a few different options, all of which last through the battle until a new one is successfully cast.");
+        System.out.println("Special contains a few different options, all of which last through the battle if it was a successfully cast.");
         System.out.println("Magic Summon calls an ally into battle that deals 3% of enemy health per turn and has a 20% chance to block for you");
         System.out.println("Sand increases you dodge rate by 2x");
         System.out.println("Poison causes 5% enemy damage per turn");
         System.out.println("If you are poisoned you are indefinitely until an antidote is used");
         System.out.println("Normal enemies have a 5% chance to poison you, a more venomous enemy, 'cough' has 10x the chance to poison you");
         System.out.println("Some enemies are smarter than others and it is impossible to dodge them but, they can not poison you");
-        System.out.println("Some enemies can put you to sleep, you need a clock to wake up or try you luck every turn with a 50% chance to wake up");
+        System.out.println("Some enemies can put you to sleep, you need a clock to wake up or try you luck every turn with a 35% chance to wake up");
         System.out.println("Rob the enemy to steal 50% of their coin reward");
         System.out.println("Confuse the enemy to have a 35% chance of them hitting themselves");
         System.out.println("Defend to reduce damage by 1/2");
@@ -70,10 +70,10 @@ public class Art {
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[C]lock", " ", 15, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[B]omb", " ", 35, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[R]evive", " ", 100, " ");
-            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[W]eapon", " ", 50, " ");
-            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[G]uard", " ", 50, " ");
-            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[S]tudy", " ", 50, " ");
-            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[F]ade", " ", 50, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[W]eapon", " ", 95, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[G]uard", " ", 95, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[S]tudy", " ", 95, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[F]ade", " ", 95, " ");
             System.out.printf("|%-20s%-20s%-5s%-24s|%n", " ", "[I]nfo", " ", " ");
             System.out.printf("|%-20s%-20s%-5s%-24s|%n", " ", "[E]xit", " ", " ");
             System.out.printf("|%-69s|%n\033[0;38m", " ");
@@ -155,10 +155,10 @@ public class Art {
             }
             quantity(howMany, 65, player, "Mega");
 
-        } else if ((choice.equalsIgnoreCase("w") || choice.equalsIgnoreCase("f") || choice.equalsIgnoreCase("g") || choice.equalsIgnoreCase("s")) && savings >= 50) {
-            int howMany = sc.getNum("How many would you like?", player.getWallet(), 50);
+        } else if ((choice.equalsIgnoreCase("w") || choice.equalsIgnoreCase("f") || choice.equalsIgnoreCase("g") || choice.equalsIgnoreCase("s")) && savings >= 95) {
+            int howMany = sc.getNum("How many would you like?", player.getWallet(), 95);
             item = " Booster";
-            statBooster(howMany, 50, player, choice);
+            statBooster(howMany, 95, player, choice);
 
         } else if (choice.equalsIgnoreCase("i")) {
             info();
