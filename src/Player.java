@@ -104,9 +104,11 @@ public class Player {
         for(Map.Entry<String, Integer> entry : this.getStats().entrySet()){
             System.out.println(entry.getKey() + " : " + entry.getValue());
         }
+        System.out.println("Mp : " + this.getMp() + "/" + this.getMaxMp());
         System.out.println(this.getWallet()+" ¢");
         System.out.println("Current level is " +this.getLevel());
         System.out.println("Current EXP: " + this.getExp() +"/"+this.getExpRequirement());
+        System.out.println("Inventory contains : ");
     }
 
 

@@ -169,6 +169,11 @@ public class Main {
 
             enemy.setAilments(battleEffects);
 
+            if (enemy.isHealer()) {
+                enemy.setHealth(enemy.getHealth() + (int) (enemy.getMaxHealth() * .02));
+                System.out.println("You chase it down as it runs and drinks a potion");
+            }
+
             if (enemy.getHealth() <= 0) {
                 break;
             }
@@ -277,6 +282,8 @@ public class Main {
         int confuseChance = 0;
         int ranConfuseHit = (int) Math.floor(Math.random() * 100);
 
+        int healChance = (int) Math.floor(Math.random() * 100);
+
         int infectChance = (int) Math.floor(Math.random() * 100);
         int infect = enemy.getInfect();
         if(infect > 49){
@@ -316,6 +323,9 @@ public class Main {
         if (enemy.isCaster() && castChance < 45) {
             System.out.println("The monster begins to glow as the world fades to darkness…");
             playerStatus.add("sleep");
+        } else if (enemy.isHealer() && healChance < 45) {
+            System.out.println("You blink and it is gone…… you hear the clanging of bottles in the distance and chase it down");
+            enemy.setHealth(enemy.getHealth() + (int) (enemy.getMaxHealth() * .25));
         } else {
             int damage = m.calcDamage(enemy.getAttack(), player.getStats().get("Defense"));
             damage /= extraDefenseMult;

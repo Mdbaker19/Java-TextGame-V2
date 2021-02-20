@@ -13,6 +13,7 @@ public class Enemy {
     private int infect;
     private int accuracy = 0;
     private boolean caster = false;
+    private boolean healer = false;
     private List<String> ailments;
     public Enemy(int number, int randomizer) throws InterruptedException {
         if(number % 12 == 0){
@@ -38,13 +39,17 @@ public class Enemy {
             System.out.println("\033[0;30mI think it is dead already……");
             multiplier *= .15;
             this.expValue *= .55;
-        } else if (randomizer < 25) {
+        } else if (randomizer < 20) {
             System.out.println("\033[0;34mEnemy caught off guard, you have the edge");
             multiplier *= .75;
             this.expValue *= .95;
-        } else if (randomizer < 45) {
+        } else if (randomizer < 35) {
             System.out.println("\033[0;36mSomething is different with this one, i think it is all that money he is holding");
             this.worth *= 3.5;
+        } else if (randomizer < 45) {
+            System.out.println("\033[0;35mYou hear the clinging of bottles as a beast charges at you");
+            this.worth *= 1.2;
+            this.healer = true;
         } else if (randomizer < 58 && randomizer > 45) {
             System.out.println("\033[0;32mWeird… this one literally looks sharper");
             this.accuracy = 100;
@@ -184,5 +189,13 @@ public class Enemy {
 
     public void setCaster(boolean caster) {
         this.caster = caster;
+    }
+
+    public boolean isHealer() {
+        return healer;
+    }
+
+    public void setHealer(boolean healer) {
+        this.healer = healer;
     }
 }
