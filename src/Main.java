@@ -290,10 +290,6 @@ public class Main {
         int infectChance = (int) Math.floor(Math.random() * 100);
 
         int infect = enemy.getInfect();
-        if(infect > 49){
-            currentAilments.remove("poison");
-        }
-
         Thread.sleep(600);
 
         if (currentAilments.contains("blind")) {
@@ -334,6 +330,7 @@ public class Main {
 
             if (enemy.isCaster() && castChance < 35) {
                 System.out.println("The monster begins to glow as the world fades to darkness…");
+                Thread.sleep(500);
                 if(!playerStatus.contains("sleep")){
                     playerStatus.add("sleep");
                 }
@@ -367,6 +364,7 @@ public class Main {
                 } else if (!youDodge || playerStatus.contains("sleep")) { // to prevent a dodge while asleep
                     if (randomSummonBlock < 20 && currentAilments.contains("cursed")) {
                         System.out.println("Your summon stumbles.. it falls in front of you and takes the hit");
+                        Thread.sleep(300);
                     } else {
                         if (m.criticalHit(enemy.getSpeed())) {
                             System.out.println("Critical Hit!");
@@ -377,7 +375,9 @@ public class Main {
                             Thread.sleep(600);
                             System.out.println("You begin to slowly die");
                             Thread.sleep(600);
-                            playerStatus.add("poison");
+                            if(!playerStatus.contains("poison")){
+                                playerStatus.add("poison");
+                            }
                         }
                         player.updateStat("Health", player.getHealth() - damage);
                     }
