@@ -4,12 +4,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Main {
-    private static Input sc = new Input();
-    private static Art art = new Art();
-    private static Method m = new Method();
+    private static final Input sc = new Input();
+    private static final Art art = new Art();
+    private static final Method m = new Method();
     private static FileReader fileReader;
-    private static Gambler gambler = new Gambler();
-    private static ArrayList<String> beginOptions = new ArrayList<>(Arrays.asList("A", "S", "G"));
+    private static final Gambler gambler = new Gambler();
+    private static final ArrayList<String> beginOptions = new ArrayList<>(Arrays.asList("A", "S", "G"));
     static {
         try {
             fileReader = new FileReader("src", "gameLog.txt", "gameLog.txt");
@@ -78,8 +78,7 @@ public class Main {
             if(player.getHealth() > 0){
                 art.mainScreen();
                 String input = sc.getInput("What would you like to do?", art.getMainOptions(), false).toUpperCase();
-                Thread.sleep(600);
-                if (input.equalsIgnoreCase("q") && sc.getInput("Are you sure? [Y]es / [N]o").equalsIgnoreCase("y")) {
+                if (input.equalsIgnoreCase("e") && sc.getInput("Are you sure? [Y]es / [N]o").equalsIgnoreCase("y")) {
                     break;
                 }
                 switch (input) {
@@ -90,7 +89,7 @@ public class Main {
                         art.shopMenu(player);
                         break;
                     case "G":
-                        gambler.gamble(player);
+                        gambler.account(player);
                         break;
                     case "V":
                         player.viewStats();
@@ -125,8 +124,13 @@ public class Main {
     public static void fight(Player player, Enemy enemy) throws InterruptedException {
         List<String> options = new ArrayList<>(Arrays.asList("a", "i", "s", "c"));
         List<String> battleEffects = enemy.getAilments();
+        if (player.getState().contains("sleep")) {  //sleep does not carry over
+            List<String> states = player.getState();
+            states.remove("sleep");
+            player.setState(states);
+        }
         do {
-            String youEffect = player.getState();
+            List<String> youEffect = player.getState();
             takeEffect(player);
 
             if (player.getHealth() <= 0) {
@@ -143,15 +147,21 @@ public class Main {
                 System.out.println(); // so the turn counts if an item was used or you are asleep
             } else if (result.equalsIgnoreCase("special")) {
                 String specialReturn = specialOptions(player, enemy);
-                if(!specialReturn.equalsIgnoreCase("normal") && !battleEffects.contains(specialReturn)){
+                if(specialReturn.equalsIgnoreCase("quit")){
+                    if (youEffect.contains("poison")) {  // temp for undoing the poison damage when you actually did not make a turn
+                        player.updateStat("Health", player.getHealth() + (int) (player.getMaxHealth() * .05));  // needs to be undone because it poison needs to happen before your turn happens in case it kills you, you would know
+                    }
+                    fight(player, enemy);
+                    return;
+                } else if(!specialReturn.equalsIgnoreCase("normal") && !battleEffects.contains(specialReturn)){
                     battleEffects.add(specialReturn);
                 }
             } else if (result.equalsIgnoreCase("attacking")) {
                 attackMade(player, enemy);
             } else {
                 // did not use an item, so either scanned enemy or viewed and exited inventory
-                if (youEffect.equalsIgnoreCase("poison")) {  // temp for undoing the poison damage when you actually did not make a turn
-                    player.updateStat("Health", player.getHealth() + (int) (player.getMaxHealth() * .05));
+                if (youEffect.contains("poison")) {  // temp for undoing the poison damage when you actually did not make a turn
+                    player.updateStat("Health", player.getHealth() + (int) (player.getMaxHealth() * .05));  // needs to be undone because it poison needs to happen before your turn happens in case it kills you, you would know
                 }
                 fight(player, enemy);
                 return; // return needed to prevent a bubble effect with scanning enemy and finishing the fight, caused multiple victories. finally figured this out
@@ -191,7 +201,8 @@ public class Main {
 
 
     public static String handleTurn(String turn, Enemy enemy, Player player) throws InterruptedException {
-        boolean asleep = player.getState().equalsIgnoreCase("sleep");
+        List<String> playerStates = player.getState();
+        boolean asleep = playerStates.contains("sleep");
         int ranWakeUp = 100;
         if (asleep) {
             System.out.println("zzz……");
@@ -200,7 +211,8 @@ public class Main {
 
         if(ranWakeUp <= 35){
             System.out.println("You fall over, as you hit the ground you wake up");
-            player.setState("normal");
+            playerStates.remove("normal");
+            player.setState(playerStates);
             asleep = false;
         }
 
@@ -257,6 +269,7 @@ public class Main {
         }
     }
     public static void enemyTurn(Enemy enemy, Player player, List<String> currentAilments) throws InterruptedException {
+        List<String> playerStatus = player.getState();
 
         int extraDefenseMult = 1;
         int extraDodgeMult = 1;
@@ -266,7 +279,7 @@ public class Main {
 
         int infectChance = (int) Math.floor(Math.random() * 100);
         int infect = enemy.getInfect();
-        if(infect > 49 && currentAilments.contains("poison")){
+        if(infect > 49){
             currentAilments.remove("poison");
         }
 
@@ -288,7 +301,7 @@ public class Main {
                 return;
             }
         }
-        if (currentAilments.contains("shield")) {
+        if (playerStatus.contains("shield")) {
             extraDefenseMult = 2;
         }
         if (currentAilments.contains("confuse")) {
@@ -302,7 +315,7 @@ public class Main {
 
         if (enemy.isCaster() && castChance < 45) {
             System.out.println("The monster begins to glow as the world fades to darkness…");
-            player.setState("sleep");
+            playerStatus.add("sleep");
         } else {
             int damage = m.calcDamage(enemy.getAttack(), player.getStats().get("Defense"));
             damage /= extraDefenseMult;
@@ -342,7 +355,7 @@ public class Main {
                         Thread.sleep(600);
                         System.out.println("You begin to slowly die");
                         Thread.sleep(600);
-                        player.setState("poison");
+                        playerStatus.add("poison");
                     }
                     player.updateStat("Health", player.getHealth() - damage);
                 }
@@ -351,66 +364,92 @@ public class Main {
                 Thread.sleep(600);
             }
         }
+        player.setState(playerStatus);
     }
 
     public static String specialOptions(Player player, Enemy enemy) throws InterruptedException {
-        List<String> options = new ArrayList<>(Arrays.asList("s", "p", "b", "c", "d", "m", "t"));
+        List<String> options = new ArrayList<>(Arrays.asList("s", "p", "b", "c", "d", "m", "t", "q"));
         String result = "normal";
         art.specials();
         boolean success = m.successfulCast(player.getStats().get("Magic"));
         String specialChoice = sc.getInput("This is the way to fight! How will you win this?", options, false);
+        if(specialChoice.equalsIgnoreCase("q")){
+            return "quit";
+        }
         if(success){
-            System.out.println("Successful cast!");
-            Thread.sleep(600);
             result = handleSpecialTurn(specialChoice, enemy, player);
+            if(result.equalsIgnoreCase("notEnough")){
+                System.out.println("You do not have enough mp to cast this");
+                return "quit";
+            }
+            System.out.println("Successful cast!");
         } else {
             Thread.sleep(600);
             System.out.println("You struggle to remember how to do this...");
-            Thread.sleep(600);
         }
+        Thread.sleep(600);
         return result;
     }
 
     private static String handleSpecialTurn(String specialTurn, Enemy enemy, Player player){
         boolean enemyMagician = enemy.isCaster();
-        if (specialTurn.equalsIgnoreCase("b")){
-            if(enemyMagician){
-                System.out.println("This one is immune……");
-            }
-            return "blind";
-        } else if (specialTurn.equalsIgnoreCase("p")){
-            if(enemy.getInfect() > 49){
-                System.out.println("This one is immune……");
-            }
-            return "poison";
-        } else if (specialTurn.equalsIgnoreCase("s")){
+        int availableMp = player.getMp();
+        boolean small = availableMp >= 15;
+        boolean large = availableMp >= 25;
+        if (specialTurn.equalsIgnoreCase("s")){
             int currWorth = enemy.getWorth();
             int stolenAmount = currWorth / 2;
             enemy.setWorth(currWorth - (int) (currWorth * .15));
             System.out.printf("You sneak up and steal %d ¢%n", stolenAmount);
             player.setWallet(player.getWallet() + stolenAmount);
             return "stolen";
-        } else if (specialTurn.equalsIgnoreCase("d")){
-            return "shield";
-        } else if (specialTurn.equalsIgnoreCase("m")){
-            System.out.println("You summon an undead ally");
-            return "cursed";
-        } else if (specialTurn.equalsIgnoreCase("t")){
-            if(enemyMagician){
-                System.out.println("This one is immune……");
-            }
-            return "slow";
+        } else if ((specialTurn.equalsIgnoreCase("c") || specialTurn.equalsIgnoreCase("d")) && !large) {
+            return "notEnough";
+        } else if (!small) {
+            return "notEnough";
         } else {
-            if(enemyMagician){
-                System.out.println("This one is immune……");
+            if (specialTurn.equalsIgnoreCase("b")) {
+                if (enemyMagician) {
+                    System.out.println("This one is immune……");
+                }
+                player.setMp(availableMp - 15);
+                return "blind";
+            } else if (specialTurn.equalsIgnoreCase("p")) {
+                if (enemy.getInfect() > 49) {
+                    System.out.println("This one is immune……");
+                }
+                player.setMp(availableMp - 15);
+                return "poison";
+            } else if (specialTurn.equalsIgnoreCase("m")) {
+                System.out.println("You summon an undead ally");
+                player.setMp(availableMp - 15);
+                return "cursed";
+            } else if (specialTurn.equalsIgnoreCase("t")) {
+                if (enemyMagician) {
+                    System.out.println("This one is immune……");
+                }
+                player.setMp(availableMp - 15);
+                return "slow";
+            } else if (specialTurn.equalsIgnoreCase("c")){
+                if (enemyMagician) {
+                    System.out.println("This one is immune……");
+                }
+                player.setMp(availableMp - 25);
+                return "confuse";
+            } else if (specialTurn.equalsIgnoreCase("d")) {
+                List<String> currState = player.getState();
+                currState.add("shield");
+                player.setState(currState);
+                player.setMp(availableMp - 25);
+                return "normal";
             }
-            return "confuse";
         }
+        return "quit";
     }
 
     public static void takeEffect(Player player) throws InterruptedException {
-        String currentStatus = player.getState();
-        if(currentStatus.equalsIgnoreCase("poison")){
+        List<String> currentStatus = player.getState();
+        if(currentStatus.contains("poison")){
             int damage = (int) (player.getMaxHealth() * .05);
             System.out.printf("\033[0;32mYou take %d poison damage\033[0;38m%n", damage);
             Thread.sleep(600);

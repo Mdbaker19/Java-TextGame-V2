@@ -12,15 +12,15 @@ public class Art {
         System.out.printf("\033[0;33m|%-60s|%n", " ");
         System.out.printf("%-20s%s%n", " ", "[B]attle");
         System.out.printf("%-20s%s%n", " ", "[S]hop");
-        System.out.printf("%-20s%s%n", " ", "[G]amble");
+        System.out.printf("%-20s%s%n", " ", "[A]ccount");
         System.out.printf("%-20s%s%n", " ", "[V]iew Stats");
-        System.out.printf("%-20s%s%n", " ", "[Q]uit");
+        System.out.printf("%-20s%s%n", " ", "[E]nd Game");
         System.out.printf("|%-60s|%n\033[0;38m", " ");
         mainOptions.add("B");
         mainOptions.add("V");
         mainOptions.add("S");
-        mainOptions.add("G");
-        mainOptions.add("Q");
+        mainOptions.add("A");
+        mainOptions.add("E");
     }
 
     public void welcome(){
@@ -68,6 +68,7 @@ public class Art {
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[H]igh Potion", " ", 30, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[M]ega Potion", " ", 65, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[A]ntidote", " ", 10, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[E]ther", " ", 25, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[C]lock", " ", 15, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[B]omb", " ", 35, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[R]evive", " ", 100, " ");
@@ -75,15 +76,17 @@ public class Art {
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[G]uard", " ", 95, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[S]tudy", " ", 95, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[F]ade", " ", 95, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[L]earn", " ", 95, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[D]evelop", " ", 95, " ");
             System.out.printf("|%-20s%-20s%-5s%-24s|%n", " ", "[I]nfo", " ", " ");
-            System.out.printf("|%-20s%-20s%-5s%-24s|%n", " ", "[E]xit", " ", " ");
+            System.out.printf("|%-20s%-20s%-5s%-24s|%n", " ", "[Q]uit", " ", " ");
             System.out.printf("|%-69s|%n\033[0;38m", " ");
             Thread.sleep(600);
 
             String option = sc.getInput("Welcome "+player.getName()+", you have "+player.getWallet()+" ¢, What would you like?");
             Thread.sleep(600);
 
-            if(option.equalsIgnoreCase("e")) break;
+            if(option.equalsIgnoreCase("q")) break;
             handleChoice(player, option);
         } while (true);
         System.out.println("Thank you "+player.getName());
@@ -156,7 +159,16 @@ public class Art {
             }
             quantity(howMany, 65, player, "Mega");
 
-        } else if ((choice.equalsIgnoreCase("w") || choice.equalsIgnoreCase("f") || choice.equalsIgnoreCase("g") || choice.equalsIgnoreCase("s")) && savings >= 95) {
+        } else if (choice.equalsIgnoreCase("e") && savings >= 25) {
+            int howMany = sc.getNum("How many would you like?", player.getWallet(), 25);
+            if(howMany < 2) {
+                item = " Ether";
+            } else {
+                item = " " +howMany + " Ethers";
+            }
+            quantity(howMany, 25, player, "Ether");
+
+        } else if ((choice.equalsIgnoreCase("d") || choice.equalsIgnoreCase("w") || choice.equalsIgnoreCase("f") || choice.equalsIgnoreCase("g") || choice.equalsIgnoreCase("s") || choice.equalsIgnoreCase("l")) && savings >= 95) {
             int howMany = sc.getNum("How many would you like?", player.getWallet(), 95);
             item = " Booster";
             statBooster(howMany, 95, player, choice);
@@ -191,6 +203,18 @@ public class Art {
             statToUpgrade = "Speed";
         } else if (statToUpgrade.equalsIgnoreCase("s")){
             statToUpgrade = "Magic";
+        } else if (statToUpgrade.equalsIgnoreCase("l")){
+            int currMp = player.getMp();
+            int currMaxMp = player.getMaxMp();
+            player.setMp(currMp + 5);
+            player.setMaxMp(currMaxMp + 5);
+            return;
+        } else if (statToUpgrade.equalsIgnoreCase("d")){
+            int currHp = player.getHealth();
+            int currMaxHp = player.getMaxHealth();
+            player.updateStat("Health", currHp + 5);
+            player.setMaxHealth(currMaxHp + 5);
+            return;
         }
         int total = amount * price;
         player.setWallet(player.getWallet() - total);
@@ -203,39 +227,48 @@ public class Art {
     }
 
     public void hud(Player player){
-        System.out.printf("\033[0;34m|%-67s|%n", " ");
-        System.out.printf("|%-20s%-22s\033[0;31m%-5d / %-17d\033[0;34m|%n", " ", "Health : " , player.getHealth(), player.getMaxHealth());
-        System.out.printf("|\033[0;32m%-20s%-19s%-28s\033[0;34m|%n", " ", "Status: ", player.getState());
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[A]ttack", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[S]pecial", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[I]nventory", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[C]heck Enemy", " ");
-        System.out.printf("|%-67s|%n\033[0;38m", " ");
+        List<String> status = player.getState();
+        System.out.printf("\033[0;34m|%-70s|%n", " ");
+        System.out.printf("|%-20s%-25s\033[0;31m%-5d / %-17d\033[0;34m|%n", " ", "Health : " , player.getHealth(), player.getMaxHealth());
+        System.out.printf("|%-20s%-25s\033[0;34m%-5d / %-17d\033[0;34m|%n", " ", "Mp : " , player.getMp(), player.getMaxMp());
+        if(status.size() > 0){
+            for(String s : status) {
+                System.out.printf("|%-20s%-22s%-28s|%n", " ", "Condition: ", s);
+            }
+        } else {
+            System.out.printf("|\033[0;32m%-20s%-25s%-25s\033[0;34m|%n", " ", "Status: ", "normal");
+        }
+        System.out.printf("|%-20s%-22s%-28s|%n", " ", "[A]ttack", " ");
+        System.out.printf("|%-20s%-22s%-28s|%n", " ", "[S]pecial", " ");
+        System.out.printf("|%-20s%-22s%-28s|%n", " ", "[I]nventory", " ");
+        System.out.printf("|%-20s%-22s%-28s|%n", " ", "[C]heck Enemy", " ");
+        System.out.printf("|%-70s|%n\033[0;38m", " ");
     }
 
     public void enemyHud(Enemy enemy, List<String> ailments){
         System.out.println();
-        System.out.printf("\033[0;32m|%-20s%-22s\033[0;31m%-5d / %-17d\033[0;32m|%n", " ", "Health : " , enemy.getHealth(), enemy.getMaxHealth());
+        System.out.printf("\033[0;32m|%-20s%-25s\033[0;31m%-5d / %-17d\033[0;32m|%n", " ", "Health : " , enemy.getHealth(), enemy.getMaxHealth());
         if(ailments.size() > 0){
             for(String a : ailments) {
-                System.out.printf("|%-20s%-19s%-28s|%n", " ", "Condition: ", a);
+                System.out.printf("|%-20s%-25s%-25s|%n", " ", "Condition: ", a);
             }
         } else {
-            System.out.printf("|%-20s%-19s%-28s|%n\033[0;38m", " ", "Status: ", "normal");
+            System.out.printf("|%-20s%-25s%-25s|%n\033[0;38m", " ", "Status: ", "normal");
         }
         System.out.println("\033[0;38m");
     }
 
     public void specials(){
-        System.out.printf("\033[0;35m|%-67s|%n", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[M]agic Summon", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[B]lind", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[P]oison", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[S]teal", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[C]onfuse", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[D]efend", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[T]ime", " ");
-        System.out.printf("|%-67s|%n\033[0;38m", " ");
+        System.out.printf("\033[0;35m|%-70s|%n", " ");
+        System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[M]agic Summon", 15, " ");
+        System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[B]lind", 15, " ");
+        System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[P]oison", 15, " ");
+        System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[S]teal", 0, " ");
+        System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[C]onfuse", 25, " ");
+        System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[D]efend", 25, " ");
+        System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[T]ime", 15, " ");
+        System.out.printf("|%-20s%-22s%-28s|%n", " ", "[Q]uit", " ");
+        System.out.printf("|%-70s|%n\033[0;38m", " ");
     }
 
     public void victory(Player player, Enemy enemy) throws InterruptedException {
@@ -251,7 +284,9 @@ public class Art {
 
     private static void info(){
         System.out.println("Potion heals for 25, High Potion heals for 55, Mega Potion heals 35% max health, Antidote cures poison, Revive cures death, Bomb deals 20% damage, Each of the stat boosters give a +1 permanent boost to that stat");
+        System.out.println("Ether recovers 35% mp");
         System.out.println("Weapon boosts attack, Guard boost defense, Fade boost speed, Study boosts magic");
+        System.out.println("Learn and increase your max Mp by 5, Develop to increase your max Hp by 5");
         System.out.println("When an item is used, it takes your turn and then the enemy takes their turn even if you did not need to heal.. you should not heal if you do not need to");
     }
 }

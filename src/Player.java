@@ -9,7 +9,7 @@ public class Player {
 
     private String name;
     private String type;
-    private String state;
+    private List<String> state;
     private HashMap<String, Integer> stats;
     private HashMap<String, Integer> inventory = new HashMap<>();
     private int wallet;
@@ -18,6 +18,8 @@ public class Player {
     private int exp;
     private int expRequirement;
     private int maxHealth;
+    private int mp;
+    private int maxMp;
 
 
     public Player(String name){
@@ -27,7 +29,7 @@ public class Player {
         this.level = 1;
         this.exp = 0;
         this.expRequirement = 100;
-        this.state = "normal";
+        this.state = new ArrayList<>();
         inventory.put("Antidote", 1);
         inventory.put("Potion", 1);
     }
@@ -40,18 +42,24 @@ public class Player {
             stats.put("Defense", 10);
             stats.put("Magic", 18);
             stats.put("Speed", 28);
+            this.mp = 20;
+            this.maxMp = 20;
         } else if (type.equalsIgnoreCase("knight")) {
             stats.put("Health", 155);
             stats.put("Attack", 17);
             stats.put("Defense", 14);
             stats.put("Magic", 9);
             stats.put("Speed", 10);
+            this.mp = 10;
+            this.maxMp = 10;
         } else {
             stats.put("Health", 110);
             stats.put("Attack", 9);
             stats.put("Defense", 10);
             stats.put("Magic", 25);
             stats.put("Speed", 18);
+            this.mp = 100;
+            this.maxMp = 100;
         }
         this.stats = stats;
         this.maxHealth = stats.get("Health");
@@ -96,12 +104,13 @@ public class Player {
         for(Map.Entry<String, Integer> entry : this.getStats().entrySet()){
             System.out.println(entry.getKey() + " : " + entry.getValue());
         }
+        System.out.println(this.getWallet()+" ¢");
         System.out.println("Current level is " +this.getLevel());
         System.out.println("Current EXP: " + this.getExp() +"/"+this.getExpRequirement());
     }
 
 
-    public void updateStat(String stat, int value){ // mainly for healing
+    public void updateStat(String stat, int value){
         HashMap<String, Integer> curr = this.getStats();
         curr.put(stat, value);
         this.setStats(curr);
@@ -131,6 +140,10 @@ public class Player {
     public void useItem(String item, Enemy enemy) throws InterruptedException {
         int max = this.getMaxHealth();
         int curr = this.getHealth();
+        int currMp = this.getMp();
+        int maxMp = this.getMaxMp();
+        int recoveredMp = (int) (maxMp * .35);
+        List<String> currState = this.getState();
         if(item.equalsIgnoreCase("potion")){
             if(curr + 25 > max){
                 int healing = Math.abs(max - curr);
@@ -142,16 +155,26 @@ public class Player {
             }
         } else if(item.equalsIgnoreCase("antidote")){
             System.out.println("Antidote cures your poison");
-            this.setState("normal");
+            currState.remove("poison");
         } else if(item.equalsIgnoreCase("clock")){
             System.out.println("A Clock rings in the distance and wakes you up");
-            this.setState("normal");
+            currState.remove("sleep");
         } else if(item.equalsIgnoreCase("bomb")){
             int damage = (int) (enemy.getMaxHealth() * .2);
             System.out.println("You duck down and throw a bomb.. ");
             Thread.sleep(200);
             System.out.printf("You deal %d%n", damage);
             enemy.setHealth(enemy.getHealth() - damage);
+        } else if(item.equalsIgnoreCase("ether")){
+
+            if(currMp + recoveredMp > maxMp){
+                int recover = Math.abs(maxMp - currMp);
+                System.out.printf("Ether recovers for %d mp%n", recover);
+                this.setMp(this.getMp() + recover);
+            } else {
+                System.out.printf("Ether recovers for %d mp%n", recoveredMp);
+                this.setMp(this.getMp() + recoveredMp);
+            }
         } else if(item.equalsIgnoreCase("hPotion")){
 
             if(curr + 55 > max){
@@ -173,7 +196,7 @@ public class Player {
                 this.updateStat("Health", this.getHealth() + amount);
             }
         }
-
+        this.setState(currState);
         removeItem(m.cap(item));
     }
 
@@ -230,6 +253,9 @@ public class Player {
         curr.put("Health", yourHealth); // so you do not heal on level up
         this.setStats(curr);
         this.setLevel(this.getLevel() + 1);
+        int currMpMax = this.getMaxMp();
+        this.setMp(currMpMax);
+        this.setMaxMp((int) (currMpMax * 1.15));
     }
 
     public void setLevel(int level) {
@@ -260,12 +286,27 @@ public class Player {
         this.expRequirement = (int) (this.getExpRequirement() * 1.35);
     }
 
-    public String getState() {
+    public List<String> getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(List<String> state) {
         this.state = state;
     }
 
+    public int getMp() {
+        return mp;
+    }
+
+    public void setMp(int mp) {
+        this.mp = mp;
+    }
+
+    public int getMaxMp() {
+        return maxMp;
+    }
+
+    public void setMaxMp(int maxMp) {
+        this.maxMp = maxMp;
+    }
 }
