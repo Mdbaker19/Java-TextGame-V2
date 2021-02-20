@@ -112,11 +112,9 @@ public class Gambler {
     }
     private void upgrade(Player player){
         int currLVL = this.getLevel();
-        int cost = (int) ((currLVL * 35) * 1.8);
-        if(currLVL >= 10){
-            cost *= 1.8;
-        } else if (currLVL >= 5){
-            cost *= 1.5;
+        int cost = currLVL * 35;
+        for(int i = 0; i < currLVL; i++){
+            cost*=1.4;
         }
         int wallet = player.getWallet();
         System.out.printf("Current rate is this : %.3f%n", this.getRate());
