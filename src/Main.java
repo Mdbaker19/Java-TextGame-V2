@@ -354,7 +354,7 @@ public class Main {
     }
 
     public static String specialOptions(Player player, Enemy enemy) throws InterruptedException {
-        List<String> options = new ArrayList<>(Arrays.asList("s", "p", "r", "c", "d", "m"));
+        List<String> options = new ArrayList<>(Arrays.asList("s", "p", "b", "c", "d", "m", "t"));
         String result = "normal";
         art.specials();
         boolean success = m.successfulCast(player.getStats().get("Magic"));
