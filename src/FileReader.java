@@ -72,6 +72,7 @@ public class FileReader {
         writeToLog("You had " + gambler.getStorage() + " saved up");
         writeToLog("Your stats : " + statList.toString());
         writeToLog("Max Health : " + player.getMaxHealth());
+        writeToLog("Mp : " + player.getMp() + "/" + player.getMaxMp());
         writeToLog("___________________________________________________________________________________________________________");
     }
 

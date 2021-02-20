@@ -18,8 +18,8 @@ public class Enemy {
     public Enemy(int number, int randomizer) throws InterruptedException {
         if(number % 12 == 0){
             randomizer = 99;
-        } else if (randomizer > 95){
-            randomizer = 95;
+        } else if (randomizer > 98){
+            randomizer = 98;
         }
         double multiplier = number * .5;
         if (number > 35) {
@@ -39,13 +39,13 @@ public class Enemy {
             System.out.println("\033[0;30mI think it is dead already……");
             multiplier *= .15;
             this.expValue *= .55;
-        } else if (randomizer < 20) {
+        } else if (randomizer < 15) {
             System.out.println("\033[0;34mEnemy caught off guard, you have the edge");
             multiplier *= .75;
             this.expValue *= .95;
-        } else if (randomizer < 35) {
+        } else if (randomizer < 30) {
             System.out.println("\033[0;36mSomething is different with this one, i think it is all that money he is holding");
-            this.worth *= 3.5;
+            this.worth *= 3;
         } else if (randomizer < 45) {
             System.out.println("\033[0;35mYou hear the clinging of bottles as a beast charges at you");
             this.worth *= 1.2;
@@ -55,18 +55,18 @@ public class Enemy {
             this.accuracy = 100;
             this.worth *= 1.3;
             this.expValue *= 1.3;
-        } else if (randomizer < 70 && randomizer > 58) {
+        } else if (randomizer < 71 && randomizer > 58) {
             System.out.println("\033[0;32m…Cough..Cough… what is this thing");
             this.infect *= 10;
-        } else if (randomizer < 80 && randomizer > 70) {
+        } else if (randomizer < 83 && randomizer > 71) {
             System.out.println("\033[0;34mMmmmaagic");
             this.caster = true;
             this.worth *= 1.3;
-        } else if (randomizer > 80 && randomizer < 95) {
+        } else if (randomizer > 83 && randomizer < 98) {
             System.out.println("\033[0;31mLooks like this beast was waiting for you...");
             multiplier *= 1.4;
             this.expValue *= 1.55;
-        } else if (randomizer > 95) {
+        } else if (randomizer > 98) {
             System.out.println("\033[0;31mThis is it. \033[0;36mThe moment you have trained for");
             Thread.sleep(300);
             System.out.println("\033[0;31m……");
