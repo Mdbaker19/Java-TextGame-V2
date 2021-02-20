@@ -23,6 +23,7 @@ public class Main {
         art.welcome();
         art.welcomeOptions();
         do{
+            System.out.println();
             String choice = sc.getInput("Welcome player, please input an option", beginOptions,false).toUpperCase();
             if(choice.equalsIgnoreCase("s")){
                 break;
@@ -165,14 +166,14 @@ public class Main {
 
             enemy.setAilments(battleEffects);
 
+            if (enemy.getHealth() <= 0) { // you killed enemy
+                break;
+            }
             if (enemy.isHealer()) {
                 enemy.setHealth(enemy.getHealth() + (int) (enemy.getMaxHealth() * .02));
                 System.out.println("You chase it down as it runs and drinks a potion");
             }
 
-            if (enemy.getHealth() <= 0) { // you killed enemy
-                break;
-            }
             if (battleEffects.contains("cursed")) {
                 int zombieDamage = (int) (enemy.getMaxHealth() * .03);
                 if(zombieDamage < 1){
