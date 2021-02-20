@@ -53,6 +53,7 @@ public class Art {
         System.out.println("If you are poisoned you are indefinitely until an antidote is used");
         System.out.println("Normal enemies have a 5% chance to poison you, a more venomous enemy, 'cough' has 10x the chance to poison you");
         System.out.println("Some enemies are smarter than others and it is impossible to dodge them but, they can not poison you");
+        System.out.println("Some enemies can put you to sleep, you need a clock to wake up or try you luck every turn with a 50% chance to wake up");
         System.out.println("Rob the enemy to steal 50% of their coin reward");
         System.out.println("Confuse the enemy to have a 35% chance of them hitting themselves");
         System.out.println("Defend to reduce damage by 1/2");
@@ -63,8 +64,9 @@ public class Art {
             System.out.printf("\033[0;32m|%-69s|%n", " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[P]otion", " ", 10, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[H]igh Potion", " ", 30, " ");
-            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[M]ega Potion", " ", 30, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[M]ega Potion", " ", 65, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[A]ntidote", " ", 10, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[C]lock", " ", 15, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[B]omb", " ", 35, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[R]evive", " ", 100, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[W]eapon", " ", 50, " ");
@@ -88,8 +90,8 @@ public class Art {
 
     public void handleChoice(Player player, String choice) throws InterruptedException {
         String item;
-        int value = player.getWallet();
-        if (choice.equalsIgnoreCase("p") && value >= 10) {
+        int savings = player.getWallet();
+        if (choice.equalsIgnoreCase("p") && savings >= 10) {
             int howMany = sc.getNum("How many would you like?", player.getWallet(), 10);
             if(howMany < 2) {
                 item = " Potion";
@@ -98,7 +100,7 @@ public class Art {
             }
             quantity(howMany, 10, player, "Potion");
 
-        } else if (choice.equalsIgnoreCase("h") && value >= 30) {
+        } else if (choice.equalsIgnoreCase("h") && savings >= 30) {
             int howMany = sc.getNum("How many would you like?", player.getWallet(), 30);
             if(howMany < 2) {
                 item = " High Potion";
@@ -107,7 +109,7 @@ public class Art {
             }
             quantity(howMany, 30, player, "Hpotion");
 
-        } else if (choice.equalsIgnoreCase("a") && value >= 10) {
+        } else if (choice.equalsIgnoreCase("a") && savings >= 10) {
             int howMany = sc.getNum("How many would you like?", player.getWallet(), 10);
             if(howMany < 2) {
                 item = " Antidote";
@@ -116,7 +118,16 @@ public class Art {
             }
             quantity(howMany, 10, player, "Antidote");
 
-        } else if (choice.equalsIgnoreCase("r") && value >= 100) {
+        } else if (choice.equalsIgnoreCase("c") && savings >= 15) {
+            int howMany = sc.getNum("How many would you like?", player.getWallet(), 15);
+            if(howMany < 2) {
+                item = " Clock";
+            } else {
+                item = " " +howMany + " Clocks";
+            }
+            quantity(howMany, 15, player, "Clock");
+
+        } else if (choice.equalsIgnoreCase("r") && savings >= 100) {
             int howMany = sc.getNum("How many would you like?", player.getWallet(), 100);
             if(howMany < 2) {
                 item = " Revive";
@@ -125,7 +136,7 @@ public class Art {
             }
             quantity(howMany, 100, player, "Revive");
 
-        } else if (choice.equalsIgnoreCase("b") && value >= 35) {
+        } else if (choice.equalsIgnoreCase("b") && savings >= 35) {
             int howMany = sc.getNum("How many would you like?", player.getWallet(), 35);
             if(howMany < 2) {
                 item = " Bomb";
@@ -134,7 +145,7 @@ public class Art {
             }
             quantity(howMany, 35, player, "Bomb");
 
-        } else if (choice.equalsIgnoreCase("m") && value >= 65) {
+        } else if (choice.equalsIgnoreCase("m") && savings >= 65) {
             int howMany = sc.getNum("How many would you like?", player.getWallet(), 65);
             if(howMany < 2) {
                 item = " Mega Potion";
@@ -143,7 +154,7 @@ public class Art {
             }
             quantity(howMany, 65, player, "Mega");
 
-        } else if ((choice.equalsIgnoreCase("w") || choice.equalsIgnoreCase("f") || choice.equalsIgnoreCase("g") || choice.equalsIgnoreCase("s")) && value >= 50) {
+        } else if ((choice.equalsIgnoreCase("w") || choice.equalsIgnoreCase("f") || choice.equalsIgnoreCase("g") || choice.equalsIgnoreCase("s")) && savings >= 50) {
             int howMany = sc.getNum("How many would you like?", player.getWallet(), 50);
             item = " Booster";
             statBooster(howMany, 50, player, choice);
@@ -154,7 +165,6 @@ public class Art {
         } else {
             System.out.println("Do not have it or you can not afford it.");
             Thread.sleep(600);
-
             return;
         }
         System.out.println("Sounds good, here is your" + item);
