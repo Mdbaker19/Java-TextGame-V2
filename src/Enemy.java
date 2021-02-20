@@ -14,10 +14,19 @@ public class Enemy {
     private boolean caster = false;
     private List<String> inventory;
     public Enemy(int number, int randomizer) throws InterruptedException {
-        if(randomizer > 95 && number < 8){
+        if (randomizer > 95 && number < 8) {
             randomizer = 95;
         }
         double multiplier = number * .5;
+        if (number > 35) {
+          for(int i = 35; i < number; i++){
+              multiplier*=1.3;
+          }
+        } else if(number >= 25){
+            multiplier *= 1.3;
+        } else if (number >= 15){
+            multiplier *= 1.2;
+        }
         this.expValue = (int) ((12 * number) * .85);
         this.worth = number * 5;
         this.infect = 5;
