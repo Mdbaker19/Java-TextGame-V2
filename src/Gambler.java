@@ -87,12 +87,12 @@ public class Gambler {
     }
 
     private void gameMenu(){
-        System.out.printf("\033[0;35m|%-67s|%n", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[N]umber Guess", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[R]ock Paper Scissor", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[C]oin Toss", " ");
-        System.out.printf("|%-20s%-19s%-28s|%n", " ", "[E]xit", " ");
-        System.out.printf("|%-67s|%n\033[0;38m", " ");
+        System.out.printf("\033[0;35m|%-68s|%n", " ");
+        System.out.printf("|%-20s%-20s%-28s|%n", " ", "[N]umber Guess", " ");
+        System.out.printf("|%-20s%-20s%-28s|%n", " ", "[R]ock Paper Scissor", " ");
+        System.out.printf("|%-20s%-20s%-28s|%n", " ", "[C]oin Toss", " ");
+        System.out.printf("|%-20s%-20s%-28s|%n", " ", "[E]xit", " ");
+        System.out.printf("|%-68s|%n\033[0;38m", " ");
     }
 
     private void stash(Player player) throws InterruptedException {
@@ -111,7 +111,13 @@ public class Gambler {
         System.out.printf("The current storage contains %d coin%n", this.getStorage());
     }
     private void upgrade(Player player){
-        int cost = (int) ((this.getLevel() * 35) * 1.8);
+        int currLVL = this.getLevel();
+        int cost = (int) ((currLVL * 35) * 1.8);
+        if(currLVL >= 10){
+            cost *= 1.8;
+        } else if (currLVL >= 5){
+            cost *= 1.5;
+        }
         int wallet = player.getWallet();
         System.out.printf("Current rate is this : %.3f%n", this.getRate());
         System.out.printf("Cost %d coin to increase%n", cost);
