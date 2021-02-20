@@ -63,8 +63,15 @@ public class FileReader {
             throw new IOException("Unable to write exception message to log file!");
         }
     }
-    public void saveRecord(Player player) throws IOException {
+    public void saveRecord(Player player, Gambler gambler) throws IOException {
+        StringBuilder statList = new StringBuilder();
+        for(Map.Entry<String, Integer> stat : player.getStats().entrySet()){
+            statList.append(stat.getKey()).append(" ").append(stat.getValue()).append("\n");
+        }
         writeToLog(player.getName() + " as a " + player.getType() + " won " + player.getVictories() + " battles at level " + player.getLevel() + " played at : " + new Date());
+        writeToLog("You had " + gambler.getStorage() + " saved up");
+        writeToLog("Your stats : " + statList.toString());
+        writeToLog("___________________________________________________________________________________________________________");
     }
 
     public Path getLogFilePath() {

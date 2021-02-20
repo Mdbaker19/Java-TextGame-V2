@@ -15,7 +15,9 @@ public class Enemy {
     private boolean caster = false;
     private List<String> ailments;
     public Enemy(int number, int randomizer) throws InterruptedException {
-        if (randomizer > 95 && number < 8) {
+        if(number % 12 == 0){
+            randomizer = 99;
+        } else if (randomizer > 95){
             randomizer = 95;
         }
         double multiplier = number * .5;
@@ -70,7 +72,7 @@ public class Enemy {
             this.worth *= 2.5;
         }
         Thread.sleep(600);
-        this.health = (int) Math.floor(10 * multiplier);
+        this.health = (int) Math.floor(13 * multiplier);
         this.maxHealth = this.health;
         this.attack = (int) Math.floor(4 * multiplier);
         this.speed = (int) Math.floor(2 * multiplier);
