@@ -334,7 +334,9 @@ public class Main {
 
             if (enemy.isCaster() && castChance < 35) {
                 System.out.println("The monster begins to glow as the world fades to darkness…");
-                playerStatus.add("sleep");
+                if(!playerStatus.contains("sleep")){
+                    playerStatus.add("sleep");
+                }
             } else if (enemy.isHealer() && healChance < 35) {
                 int turnHeal = (int) (enemy.getMaxHealth() * .20);
                 if (enemy.getHealth() + turnHeal > enemy.getMaxHealth()) {
