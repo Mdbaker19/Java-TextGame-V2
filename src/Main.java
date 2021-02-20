@@ -362,7 +362,7 @@ public class Main {
                     }
                     System.out.println("Enemy hits you for " + damage + " damage");
                     player.updateStat("Health", player.getHealth() - damage);
-                } else if (!youDodge) {
+                } else if (!youDodge || playerStatus.contains("sleep")) { // to prevent a dodge while asleep
                     if (randomSummonBlock < 20 && currentAilments.contains("cursed")) {
                         System.out.println("Your summon stumbles.. it falls in front of you and takes the hit");
                     } else {
