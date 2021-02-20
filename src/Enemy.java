@@ -11,6 +11,7 @@ public class Enemy {
     private int expValue;
     private int infect;
     private int accuracy = 0;
+    private boolean caster = false;
     private List<String> inventory;
     public Enemy(int number, int randomizer) throws InterruptedException {
         if(randomizer > 95 && number < 8){
@@ -22,7 +23,7 @@ public class Enemy {
         this.infect = 5;
         Thread.sleep(600);
         if (randomizer < 5) {
-            System.out.println("\033[0;30mI think it is dead already..");
+            System.out.println("\033[0;30mI think it is dead already……");
             multiplier *= .15;
             this.expValue *= .55;
         } else if (randomizer < 25) {
@@ -34,10 +35,16 @@ public class Enemy {
             this.worth *= 3.5;
         } else if (randomizer < 58 && randomizer > 45) {
             System.out.println("\033[0;32mWeird… this one literally looks sharper");
-            this.infect *= 10;
-        } else if (randomizer < 70 && randomizer > 60) {
-            System.out.println("\033[0;32m..Cough..Cough.. what is this thing");
             this.accuracy = 100;
+            this.worth *= 1.3;
+            this.expValue *= 1.3;
+        } else if (randomizer < 70 && randomizer > 58) {
+            System.out.println("\033[0;32m…Cough..Cough… what is this thing");
+            this.infect *= 10;
+        } else if (randomizer < 80 && randomizer > 70) {
+            System.out.println("\033[0;34mMmmmaagic");
+            this.caster = true;
+            this.worth *= 1.3;
         } else if (randomizer > 80 && randomizer < 95) {
             System.out.println("\033[0;31mLooks like this beast was waiting for you...");
             multiplier *= 1.4;
@@ -45,9 +52,9 @@ public class Enemy {
         } else if (randomizer > 95) {
             System.out.println("\033[0;31mThis is it. \033[0;36mThe moment you have trained for");
             Thread.sleep(300);
-            System.out.println("\033[0;31m....");
+            System.out.println("\033[0;31m……");
             Thread.sleep(300);
-            System.out.println("\033[0;36m....\033[0;38m");
+            System.out.println("\033[0;36m………\033[0;38m");
             multiplier*= 2.25;
             this.expValue *= 3.5;
             this.worth *= 2.5;
@@ -156,5 +163,13 @@ public class Enemy {
 
     public void setInventory(List<String> inventory) {
         this.inventory = inventory;
+    }
+
+    public boolean isCaster() {
+        return caster;
+    }
+
+    public void setCaster(boolean caster) {
+        this.caster = caster;
     }
 }

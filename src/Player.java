@@ -142,6 +142,9 @@ public class Player {
         } else if(item.equalsIgnoreCase("antidote")){
             System.out.println("Antidote cures your poison");
             this.setState("normal");
+        } else if(item.equalsIgnoreCase("clock")){
+            System.out.println("A Clock rings in the distance and wakes you up");
+            this.setState("normal");
         } else if(item.equalsIgnoreCase("bomb")){
             int damage = (int) (enemy.getMaxHealth() * .2);
             System.out.println("You duck down and throw a bomb.. ");

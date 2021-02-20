@@ -139,7 +139,7 @@ public class Main {
             String turn = sc.getInput("\033[0;38mYour move", options, false);
             String result = handleTurn(turn, enemy, player);
             if (result.equalsIgnoreCase("item")) {
-                System.out.println(); // so the turn counts if an item was used
+                System.out.println(); // so the turn counts if an item was used or you are asleep
             } else if (result.equalsIgnoreCase("special")) {
                 battleEffect = specialOptions(player, enemy, battleEffect);
             } else if (result.equalsIgnoreCase("attacking")) {
@@ -185,6 +185,18 @@ public class Main {
 
 
     public static String handleTurn(String turn, Enemy enemy, Player player) throws InterruptedException {
+        boolean asleep = player.getState().equalsIgnoreCase("sleep");
+        int ranWakeUp = 0;
+        if (asleep) {
+            System.out.println("zzz……");
+            ranWakeUp = (int) Math.floor(Math.random() * 100);
+        }
+
+        if(ranWakeUp >= 50){
+            System.out.println("You fall over, as you hit the ground you wake up");
+            player.setState("normal");
+        }
+
         if(turn.equalsIgnoreCase("i")){
             if (player.getInventory().isEmpty()) {
                 System.out.println("You do not have any items");
@@ -193,12 +205,15 @@ public class Main {
             } else if (didUseItem(player, enemy)) {
                 return "item";
             }
+        } else if (asleep){
+            System.out.println("You are dreaming of a fight that you are losing");
+            return "item";
         } else if (turn.equalsIgnoreCase("a")){
             return "attacking";
-        } else if (turn.equalsIgnoreCase("c")){
-            enemy.showStats(player.getVictories());
         } else if (turn.equalsIgnoreCase("s")){
             return "special";
+        } else if (turn.equalsIgnoreCase("c")){
+            enemy.showStats(player.getVictories());
         }
         return "";
     }
@@ -214,10 +229,10 @@ public class Main {
     }
 
 
-    public static void attackMade(Player attacker, Enemy defender) throws InterruptedException {
-        int damage = m.calcDamage(attacker.getStats().get("Attack"), defender.getDefense());
+    public static void attackMade(Player attacker, Enemy enemy) throws InterruptedException {
+        int damage = m.calcDamage(attacker.getStats().get("Attack"), enemy.getDefense());
         System.out.println("\033[0;37mEnemy attempts to dodge");
-        boolean enemyDodge = m.blocked(defender.getSpeed());
+        boolean enemyDodge = m.blocked(enemy.getSpeed());
         if(!enemyDodge){
             if (m.criticalHit(attacker.getStats().get("Speed"))) {
                 System.out.println("Critical Hit!");
@@ -225,7 +240,7 @@ public class Main {
             }
             System.out.println("You hit for " + damage + " damage");
             Thread.sleep(600);
-            defender.setHealth(defender.getHealth() - damage);
+            enemy.setHealth(enemy.getHealth() - damage);
         } else {
             System.out.println("He is too quick, you have missed your attack");
         }
@@ -241,65 +256,71 @@ public class Main {
         int infectChance = (int) Math.floor(Math.random() * 100);
         int infect = enemy.getInfect();
 
+        int castChance = (int) Math.floor(Math.random() * 100);
+
         Thread.sleep(600);
 
-        if (currentAilment.equalsIgnoreCase("sand")){
+        if (currentAilment.equalsIgnoreCase("sand")) {
             extraDodgeMult = 2;
-        } else if (currentAilment.equalsIgnoreCase("poison")){
+        } else if (currentAilment.equalsIgnoreCase("poison")) {
             poisonDamage = (int) (enemy.getMaxHealth() * .05);
-            if(poisonDamage < 1){
+            if (poisonDamage < 1) {
                 poisonDamage = 1;
             }
             System.out.println("\033[0;32mEnemy takes poison damage\033[0;38m");
             enemy.setHealth(enemy.getHealth() - poisonDamage);
-        } else if (currentAilment.equalsIgnoreCase("shield")){
+        } else if (currentAilment.equalsIgnoreCase("shield")) {
             extraDefenseMult = 2;
-        } else if (currentAilment.equalsIgnoreCase("confuse")){
+        } else if (currentAilment.equalsIgnoreCase("confuse")) {
             confuseChance = 35;
         }
 
-        int damage = m.calcDamage(enemy.getAttack(), player.getStats().get("Defense"));
-        damage /= extraDefenseMult;
-        System.out.println("\033[0;37mYou attempt to dodge");
-        boolean youDodge = m.blocked(player.getStats().get("Speed") * extraDodgeMult);
-        Thread.sleep(600);
+        if (enemy.isCaster() && castChance < 35) {
+            System.out.println("The monster begins to glow as the world fades to darkness…");
+            player.setState("sleep");
+        } else {
+            int damage = m.calcDamage(enemy.getAttack(), player.getStats().get("Defense"));
+            damage /= extraDefenseMult;
+            System.out.println("\033[0;37mYou attempt to dodge");
+            boolean youDodge = m.blocked(player.getStats().get("Speed") * extraDodgeMult);
+            Thread.sleep(600);
 
-        int randomSummonBlock = (int) Math.floor(Math.random() * 100);
+            int randomSummonBlock = (int) Math.floor(Math.random() * 100);
 
-        if(!youDodge){
-            if(ranConfuseHit <= confuseChance && currentAilment.equalsIgnoreCase("confuse")){
+            if (ranConfuseHit <= confuseChance && currentAilment.equalsIgnoreCase("confuse")) {
                 System.out.println("Enemy has hit himself for " + enemy.getAttack() / 2);
                 Thread.sleep(600);
 
                 enemy.setHealth(enemy.getHealth() - enemy.getAttack() / 2);
-            } else if (randomSummonBlock < 20 && currentAilment.equalsIgnoreCase("cursed")) {
-                System.out.println("Your summon stumbles.. it falls in front of you and takes the hit");
-            } else {
-                if(m.criticalHit(enemy.getSpeed())){
+            } else if (enemy.getAccuracy() > 10) {
+                System.out.println("This one sees through your tricks");
+                if (m.criticalHit(enemy.getSpeed())) {
                     System.out.println("Critical Hit!");
-                    damage*=1.5;
+                    damage *= 1.5;
                 }
                 System.out.println("Enemy hits you for " + damage + " damage");
-                if(infectChance <= infect){
-                    Thread.sleep(600);
-                    System.out.println("You begin to slowly die");
-                    Thread.sleep(600);
-                    player.setState("poison");
-                }
                 player.updateStat("Health", player.getHealth() - damage);
+            } else if (!youDodge) {
+                if (randomSummonBlock < 20 && currentAilment.equalsIgnoreCase("cursed")) {
+                    System.out.println("Your summon stumbles.. it falls in front of you and takes the hit");
+                } else {
+                    if (m.criticalHit(enemy.getSpeed())) {
+                        System.out.println("Critical Hit!");
+                        damage *= 1.5;
+                    }
+                    System.out.println("Enemy hits you for " + damage + " damage");
+                    if (infectChance <= infect) {
+                        Thread.sleep(600);
+                        System.out.println("You begin to slowly die");
+                        Thread.sleep(600);
+                        player.setState("poison");
+                    }
+                    player.updateStat("Health", player.getHealth() - damage);
+                }
+            } else {
+                System.out.println("You have successfully dodged the attack!");
+                Thread.sleep(600);
             }
-        } else if (enemy.getAccuracy() > 10) {
-            System.out.println("This one sees through your tricks");
-            if(m.criticalHit(enemy.getSpeed())){
-                System.out.println("Critical Hit!");
-                damage*=1.5;
-            }
-            System.out.println("Enemy hits you for " + damage + " damage");
-            player.updateStat("Health", player.getHealth() - damage);
-        } else {
-            System.out.println("You have successfully dodged the attack!");
-            Thread.sleep(600);
-
         }
     }
 
@@ -313,13 +334,12 @@ public class Main {
             System.out.println("Successful cast!");
             Thread.sleep(600);
             result = handleSpecialTurn(specialChoice, enemy, player);
-            return result;
         } else {
             Thread.sleep(600);
             System.out.println("You struggle to remember how to do this...");
             Thread.sleep(600);
-            return result;
         }
+        return result;
     }
 
     private static String handleSpecialTurn(String specialTurn, Enemy enemy, Player player){
