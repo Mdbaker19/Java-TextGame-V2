@@ -247,6 +247,7 @@ public class Art {
 
     public void enemyHud(Enemy enemy, List<String> ailments){
         System.out.println();
+        System.out.printf("\033[0;32m|%-70s|%n", " ");
         System.out.printf("\033[0;32m|%-20s%-25s\033[0;31m%-5d / %-17d\033[0;32m|%n", " ", "Health : " , enemy.getHealth(), enemy.getMaxHealth());
         if(ailments.size() > 0){
             for(String a : ailments) {
@@ -255,6 +256,7 @@ public class Art {
         } else {
             System.out.printf("|%-20s%-25s%-25s|%n\033[0;38m", " ", "Status: ", "normal");
         }
+        System.out.printf("\033[0;32m|%-70s|%n", " ");
         System.out.println("\033[0;38m");
     }
 
@@ -283,10 +285,12 @@ public class Art {
     }
 
     private static void info(){
-        System.out.println("Potion heals for 25, High Potion heals for 55, Mega Potion heals 35% max health, Antidote cures poison, Revive cures death, Bomb deals 20% damage, Each of the stat boosters give a +1 permanent boost to that stat");
+        System.out.println("Potion heals for 25, High Potion heals for 55, Mega Potion heals 35% max health, Antidote cures poison, Revive cures death, Bomb deals 20% of enemy Max HP");
         System.out.println("Ether recovers 35% mp");
+        System.out.println("Each of the stat boosters give a +1 permanent boost to that stat");
         System.out.println("Weapon boosts attack, Guard boost defense, Fade boost speed, Study boosts magic");
         System.out.println("Learn and increase your max Mp by 5, Develop to increase your max Hp by 5");
-        System.out.println("When an item is used, it takes your turn and then the enemy takes their turn even if you did not need to heal.. you should not heal if you do not need to");
+        System.out.println("When an item is used, it takes your turn");
+        System.out.println("Potions will heal at most up to your Max HP");
     }
 }
