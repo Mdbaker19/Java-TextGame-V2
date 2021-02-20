@@ -4,7 +4,7 @@ import java.util.Arrays;
 public class Gambler {
     private Input sc = new Input();
     private MiniGamer miniGamer = new MiniGamer();
-    private final ArrayList<String> options = new ArrayList<>(Arrays.asList("S", "R", "W", "C", "U", "E"));
+    private final ArrayList<String> options = new ArrayList<>(Arrays.asList("S", "G", "W", "C", "U", "E"));
     private final ArrayList<String> gameOptions = new ArrayList<>(Arrays.asList("R", "C", "N", "E"));
 
     private int storage;
@@ -19,7 +19,7 @@ public class Gambler {
         this.checkNumber = 0;
     }
 
-    public void gamble (Player player) throws InterruptedException {
+    public void account (Player player) throws InterruptedException {
         do {
             welcome();
             String choice = sc.getInput("What would you like to do here?", options, false).toUpperCase();
@@ -38,8 +38,8 @@ public class Gambler {
             case "S":
                 stash(player);
                 break;
-            case "R":
-                risk(player);
+            case "G":
+                gamble(player);
                 break;
             case "W":
                 take(player);
@@ -53,7 +53,7 @@ public class Gambler {
         }
     }
 
-    private void risk(Player player) throws InterruptedException {
+    private void gamble(Player player) throws InterruptedException {
         gameMenu();
         String choice = sc.getInput("What would you like to play?", gameOptions, false);
         if(choice.equalsIgnoreCase("e")){
