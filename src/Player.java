@@ -38,15 +38,15 @@ public class Player {
         HashMap<String, Integer> stats = new HashMap<>();
         if (type.equalsIgnoreCase("thief")) {
             stats.put("Health", 120);
-            stats.put("Attack", 12);
+            stats.put("Attack", 14);
             stats.put("Defense", 10);
             stats.put("Magic", 15);
-            stats.put("Speed", 28);
+            stats.put("Speed", 32);
             this.mp = 25;
         } else if (type.equalsIgnoreCase("knight")) {
-            stats.put("Health", 155);
-            stats.put("Attack", 17);
-            stats.put("Defense", 15);
+            stats.put("Health", 165);
+            stats.put("Attack", 18);
+            stats.put("Defense", 16);
             stats.put("Magic", 8);
             stats.put("Speed", 10);
             this.mp = 10;
@@ -98,14 +98,14 @@ public class Player {
 
     public void viewStats() {
         System.out.println("Here are your stats for your class");
+        System.out.println("Current level is " +this.getLevel());
+        System.out.println("Current EXP: " + this.getExp() +"/"+this.getExpRequirement());
         System.out.println("Max health : " + this.getMaxHealth());
         for(Map.Entry<String, Integer> entry : this.getStats().entrySet()){
             System.out.println(entry.getKey() + " : " + entry.getValue());
         }
         System.out.println("Mp : " + this.getMp() + "/" + this.getMaxMp());
         System.out.println(this.getWallet()+" ¢");
-        System.out.println("Current level is " +this.getLevel());
-        System.out.println("Current EXP: " + this.getExp() +"/"+this.getExpRequirement());
         System.out.println("Inventory contains : ");
     }
 

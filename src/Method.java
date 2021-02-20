@@ -38,10 +38,12 @@ public class Method {
 
     public boolean criticalHit(int speed){
         int ran = (int) Math.floor(Math.random() * 100);
-        if(speed >= 50){
-            return ran < 15;
+        if(speed >= 75){
+            return ran < 22;
+        } else if(speed >= 50){
+            return ran < 18;
         } else {
-            return ran < speed * .3;
+            return ran < speed * .35;
         }
     }
 }

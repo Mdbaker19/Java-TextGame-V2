@@ -47,6 +47,7 @@ public class Art {
         System.out.println("Good luck player");
     }
     public void gamePlayInfo(){
+        System.out.println("Leveling up recovers MP to the previous Max MP, HP does not recover on level up");
         System.out.println("Special contains a few different options, all of which last through the battle if it was a successfully cast.");
         System.out.println("Magic Summon calls an ally into battle that deals 3% of enemy health per turn and has a 20% chance to block for you");
         System.out.println("Blind increases you dodge rate by 2x");
@@ -132,14 +133,14 @@ public class Art {
             }
             quantity(howMany, 15, player, "Clock");
 
-        } else if (choice.equalsIgnoreCase("r") && savings >= 100) {
-            int howMany = sc.getNum("How many would you like?", player.getWallet(), 100);
+        } else if (choice.equalsIgnoreCase("r") && savings >= 105) {
+            int howMany = sc.getNum("How many would you like?", player.getWallet(), 105);
             if(howMany < 2) {
                 item = " Revive";
             } else {
                 item = " " +howMany + " Revives";
             }
-            quantity(howMany, 100, player, "Revive");
+            quantity(howMany, 105, player, "Revive");
 
         } else if (choice.equalsIgnoreCase("b") && savings >= 35) {
             int howMany = sc.getNum("How many would you like?", player.getWallet(), 35);
