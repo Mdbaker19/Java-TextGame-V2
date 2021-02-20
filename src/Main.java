@@ -318,66 +318,68 @@ public class Main {
             currentAilments.remove("confuse");
             currentAilments.remove("blind");
         }
-
-        if (enemy.isCaster() && castChance < 35) {
-            System.out.println("The monster begins to glow as the world fades to darkness…");
-            playerStatus.add("sleep");
-        } else if (enemy.isHealer() && healChance < 35) {
-            int turnHeal = (int) (enemy.getMaxHealth() * .20);
-            if(enemy.getHealth() + turnHeal > enemy.getMaxHealth()){
-                turnHeal = enemy.getMaxHealth() - enemy.getHealth();
+        if (ranConfuseHit <= confuseChance && currentAilments.contains("confuse")) {
+            int hitSelf = enemy.getAttack() / 2;
+            if(hitSelf < 1){
+                hitSelf = 1;
             }
-            System.out.printf("You blink and it is gone…… you hear the clanging of bottles in the distance and chase it down, enemy heals for %d%n", turnHeal);
-            enemy.setHealth(enemy.getHealth() + turnHeal);
-        } else {
-            int damage = m.calcDamage(enemy.getAttack(), player.getStats().get("Defense"));
-            if(enemy.isCaster()){
-                damage = m.calcDamage(enemy.getMagic(), player.getStats().get("Defense"));
-            }
-            damage /= extraDefenseMult;
-            System.out.println("\033[0;37mYou attempt to dodge");
-            boolean youDodge = m.blocked(player.getStats().get("Speed") * extraDodgeMult);
+            System.out.println("Enemy has hit itself for " + hitSelf);
             Thread.sleep(600);
+            enemy.setHealth(enemy.getHealth() - hitSelf);
 
-            int randomSummonBlock = (int) Math.floor(Math.random() * 100);
+        } else {
 
-            if (ranConfuseHit <= confuseChance && currentAilments.contains("confuse")) {
-                int hitSelf = enemy.getAttack() / 2;
-                if(hitSelf < 1){
-                    hitSelf = 1;
+            if (enemy.isCaster() && castChance < 35) {
+                System.out.println("The monster begins to glow as the world fades to darkness…");
+                playerStatus.add("sleep");
+            } else if (enemy.isHealer() && healChance < 35) {
+                int turnHeal = (int) (enemy.getMaxHealth() * .20);
+                if (enemy.getHealth() + turnHeal > enemy.getMaxHealth()) {
+                    turnHeal = enemy.getMaxHealth() - enemy.getHealth();
                 }
-                System.out.println("Enemy has hit itself for " + hitSelf);
+                System.out.printf("You blink and it is gone…… you hear the clanging of bottles in the distance and chase it down, enemy heals for %d%n", turnHeal);
+                enemy.setHealth(enemy.getHealth() + turnHeal);
+            } else {
+                int damage = m.calcDamage(enemy.getAttack(), player.getStats().get("Defense"));
+                if (enemy.isCaster()) {
+                    damage = m.calcDamage(enemy.getMagic(), player.getStats().get("Defense"));
+                }
+                damage /= extraDefenseMult;
+                System.out.println("\033[0;37mYou attempt to dodge");
+                boolean youDodge = m.blocked(player.getStats().get("Speed") * extraDodgeMult);
                 Thread.sleep(600);
-                enemy.setHealth(enemy.getHealth() - hitSelf);
 
-            } else if (enemy.getAccuracy() > 10) {
-                System.out.println("This one sees through your tricks");
-                if (m.criticalHit(enemy.getSpeed())) {
-                    System.out.println("Critical Hit!");
-                    damage *= 1.5;
-                }
-                System.out.println("Enemy hits you for " + damage + " damage");
-                player.updateStat("Health", player.getHealth() - damage);
-            } else if (!youDodge) {
-                if (randomSummonBlock < 20 && currentAilments.contains("cursed")) {
-                    System.out.println("Your summon stumbles.. it falls in front of you and takes the hit");
-                } else {
+                int randomSummonBlock = (int) Math.floor(Math.random() * 100);
+
+                if (enemy.getAccuracy() > 10) {
+                    System.out.println("This one sees through your tricks");
                     if (m.criticalHit(enemy.getSpeed())) {
                         System.out.println("Critical Hit!");
                         damage *= 1.5;
                     }
                     System.out.println("Enemy hits you for " + damage + " damage");
-                    if (infectChance <= infect) {
-                        Thread.sleep(600);
-                        System.out.println("You begin to slowly die");
-                        Thread.sleep(600);
-                        playerStatus.add("poison");
-                    }
                     player.updateStat("Health", player.getHealth() - damage);
+                } else if (!youDodge) {
+                    if (randomSummonBlock < 20 && currentAilments.contains("cursed")) {
+                        System.out.println("Your summon stumbles.. it falls in front of you and takes the hit");
+                    } else {
+                        if (m.criticalHit(enemy.getSpeed())) {
+                            System.out.println("Critical Hit!");
+                            damage *= 1.5;
+                        }
+                        System.out.println("Enemy hits you for " + damage + " damage");
+                        if (infectChance <= infect) {
+                            Thread.sleep(600);
+                            System.out.println("You begin to slowly die");
+                            Thread.sleep(600);
+                            playerStatus.add("poison");
+                        }
+                        player.updateStat("Health", player.getHealth() - damage);
+                    }
+                } else {
+                    System.out.println("You have successfully dodged the attack!");
+                    Thread.sleep(600);
                 }
-            } else {
-                System.out.println("You have successfully dodged the attack!");
-                Thread.sleep(600);
             }
         }
         player.setState(playerStatus);
