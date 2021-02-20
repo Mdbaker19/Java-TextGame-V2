@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Enemy {
@@ -12,7 +13,7 @@ public class Enemy {
     private int infect;
     private int accuracy = 0;
     private boolean caster = false;
-    private List<String> inventory;
+    private List<String> ailments;
     public Enemy(int number, int randomizer) throws InterruptedException {
         if (randomizer > 95 && number < 8) {
             randomizer = 95;
@@ -75,6 +76,7 @@ public class Enemy {
         this.speed = (int) Math.floor(2 * multiplier);
         this.magic = (int) Math.floor(2 * multiplier);
         this.defense = (int) Math.floor(3 * multiplier);
+        this.ailments = new ArrayList<>();
     }
 
     public void showStats(int number){
@@ -166,12 +168,12 @@ public class Enemy {
         this.accuracy = accuracy;
     }
 
-    public List<String> getInventory() {
-        return inventory;
+    public List<String> getAilments() {
+        return ailments;
     }
 
-    public void setInventory(List<String> inventory) {
-        this.inventory = inventory;
+    public void setAilments(List<String> ailments) {
+        this.ailments = ailments;
     }
 
     public boolean isCaster() {
