@@ -219,7 +219,7 @@ public class Main {
 
         if(ranWakeUp <= 35){
             System.out.println("You fall over, as you hit the ground you wake up");
-            playerStates.remove("normal");
+            playerStates.remove("sleep");
             player.setState(playerStates);
             asleep = false;
         }
