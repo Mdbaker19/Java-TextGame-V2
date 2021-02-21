@@ -324,6 +324,7 @@ public class Main {
         if(enemy.isCaster()){
             currentAilments.remove("confuse");
             currentAilments.remove("blind");
+            currentAilments.remove("slow");
         }
         if (ranConfuseHit <= confuseChance && currentAilments.contains("confuse")) {
             int hitSelf = enemy.getAttack() / 2;
