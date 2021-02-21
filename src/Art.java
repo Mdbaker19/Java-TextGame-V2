@@ -56,7 +56,7 @@ public class Art {
         System.out.println("Normal enemies have a 5% chance to poison you, a more venomous enemy, 'cough' has 10x the chance to poison you");
         System.out.println("Some enemies are smarter than others and it is impossible to dodge them but, they can not poison you");
         System.out.println("Some enemies can put you to sleep, you need a clock to wake up or try you luck every turn with a 35% chance to wake up");
-        System.out.println("Steal the enemy to steal 50% of their coin reward, reduces coin reward by 15% each time");
+        System.out.println("Steal the enemy to steal 50% of their coin reward, reduces coin reward by 25% each time");
         System.out.println("Confuse the enemy to have a 35% chance of them hitting themselves");
         System.out.println("Defend to reduce damage by 1/2");
         System.out.println("Time to reduce enemy dodge by 1/2");

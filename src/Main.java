@@ -58,8 +58,8 @@ public class Main {
 
     public static void decision(Player player) throws IOException, InterruptedException {
         do {
-            if(player.getVictories() % 13 == 0){
-                System.out.println("\033[0;31mBoss fight coming up soon");
+            if(player.getVictories() % 14 == 0){
+                System.out.println("\033[0;31mBoss fight coming up");
             }
             if (player.getHealth() <= 0) {
                 System.out.println("You are dead and we need to take care of that");
@@ -439,7 +439,7 @@ public class Main {
         if (specialTurn.equalsIgnoreCase("s")){
             int currWorth = enemy.getWorth();
             int stolenAmount = currWorth / 2;
-            enemy.setWorth(currWorth - (int) (currWorth * .15));
+            enemy.setWorth(currWorth - (int) (currWorth * .25));
             System.out.printf("You sneak up and steal %d ¢%n", stolenAmount);
             player.setWallet(player.getWallet() + stolenAmount);
             return "stolen";
