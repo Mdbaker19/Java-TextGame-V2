@@ -170,12 +170,16 @@ public class Art {
             int currMaxMp = player.getMaxMp();
             player.setMp(currMp + 5);
             player.setMaxMp(currMaxMp + 5);
+            int total = amount * price;
+            player.setWallet(player.getWallet() - total);
             return;
         } else if (statToUpgrade.equalsIgnoreCase("d")){
             int currHp = player.getHealth();
             int currMaxHp = player.getMaxHealth();
             player.updateStat("Health", currHp + 5);
             player.setMaxHealth(currMaxHp + 5);
+            int total = amount * price;
+            player.setWallet(player.getWallet() - total);
             return;
         }
         int total = amount * price;
