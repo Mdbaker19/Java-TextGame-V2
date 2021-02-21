@@ -108,7 +108,11 @@ public class FileReader {
         fullSave.append("exp Req : ").append(player.getExpRequirement()).append("\n");
         fullSave.append("Rate : ").append(gambler.getRate()).append("\n");
         fullSave.append("Gambler lvl : ").append(gambler.getLevel()).append("\n");
-        fullSave.append(player.getState()).append("\n");
+        List<String> playerState = player.getState();
+        if(playerState.size() > 1){
+            playerState.remove("normal");
+        }
+        fullSave.append(playerState).append("\n");
         fullSave.append("Inventory : \n");
         for(Map.Entry<String, Integer> item : player.getInventory().entrySet()){
             fullSave.append(item.getKey()).append(" ").append(item.getValue()).append("\n");

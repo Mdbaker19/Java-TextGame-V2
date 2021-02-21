@@ -16,14 +16,18 @@ public class Method {
 
     public int calcDamage(int attackerAttack, int defenderDefense){ // 20 attack against 20 defense result is 16 dmg
         double guard = (100 - defenderDefense) * .01;               // needs fixing when defense is > 100
-        int total = (int) Math.floor(attackerAttack * guard);
-//        int damage = (100 / (100 + defenderDefense)) * attackerAttack;
-//        System.out.println("damage is : " + damage);
-//        System.out.println("total is : " + total);
-        if ( total < 5 ) {
-            total = 5;
+//        int damage = (int) Math.floor(attackerAttack * guard);     // trying new formula
+
+        int multiplier = 12;
+
+
+        int damage = attackerAttack * multiplier / defenderDefense;
+        for(int i = Math.max(attackerAttack, defenderDefense); i >= 10; i -= 10){ // just trying anything that helps when it is scaled
+            damage*=1.3;
         }
-        return total;
+//        System.out.println("damage is : " + damage);
+//        System.out.println();
+        return damage;
     }
 
     public boolean successfulCast(int magic){
@@ -49,15 +53,21 @@ public class Method {
 
     public static void main(String[] args) {
         Method m = new Method();
-        System.out.println("midHigh 2x");
+        System.out.println("100, 98");
         m.calcDamage(100, 98);
-        System.out.println("midHigh, VeryHigh");
+        System.out.println("100, 918");
         m.calcDamage(100, 918);
-        System.out.println("VeryHigh 2x");
+        System.out.println("1000, 983");
         m.calcDamage(1000, 983);
-        System.out.println("midHigh, Low");
-        m.calcDamage(100, 9);
-        System.out.println("Low, Low");
+        System.out.println("110, 9");
+        m.calcDamage(110, 9);
+        System.out.println("10, 9");
         m.calcDamage(10, 9);
+        System.out.println("20 and 20");
+        m.calcDamage(20, 20);
+        System.out.println("45 and 57");
+        m.calcDamage(45, 57);
+        System.out.println("57 and 45");
+        m.calcDamage(57, 45);
     }
 }

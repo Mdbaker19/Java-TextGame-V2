@@ -199,15 +199,16 @@ public class Art {
 
     public void hud(Player player){
         List<String> status = player.getState();
+        status.remove("normal");
         System.out.printf("\033[0;34m|%-70s|%n", " ");
         System.out.printf("|%-20s%-25s\033[0;31m%-5d / %-17d\033[0;34m|%n", " ", "Health : " , player.getHealth(), player.getMaxHealth());
         System.out.printf("|%-20s%-25s\033[0;34m%-5d / %-17d\033[0;34m|%n", " ", "Mp : " , player.getMp(), player.getMaxMp());
         if(status.size() > 0){
             for(String s : status) {
-                System.out.printf("|%-20s%-22s%-28s|%n", " ", "Condition: ", s);
+                System.out.printf("|%-20s%-25s\033[0;32m%-25s|\033[0;34m%n", " ", "Condition: ", s);
             }
         } else {
-            System.out.printf("|\033[0;32m%-20s%-25s%-25s\033[0;34m|%n", " ", "Status: ", "normal");
+            System.out.printf("|%-20s%-25s\033[0;37m%-25s\033[0;34m|%n", " ", "Status: ", "normal");
         }
         System.out.printf("|%-20s%-22s%-28s|%n", " ", "[A]ttack", " ");
         System.out.printf("|%-20s%-22s%-28s|%n", " ", "[S]pecial", " ");
@@ -225,7 +226,7 @@ public class Art {
                 System.out.printf("|%-20s%-25s%-25s|%n", " ", "Condition: ", a);
             }
         } else {
-            System.out.printf("|%-20s%-25s%-25s|%n\033[0;38m", " ", "Status: ", "normal");
+            System.out.printf("|%-20s%-25s\033[0;37m%-25s|%n\033[0;38m", " ", "Status: ", "normal");
         }
         System.out.printf("\033[0;32m|%-70s|%n", " ");
         System.out.println("\033[0;38m");
