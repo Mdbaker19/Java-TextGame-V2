@@ -7,7 +7,6 @@ Attack 386
 Defense 825
 Max Health : 297
 
-___________________________________________________________________________________________________________
 Nemo as a Knight won 39 battles at level 13 played at : Sat Feb 20 20:04:49 CST 2021
 You had 2020631 saved up
 Your stats : Speed 168
@@ -18,4 +17,111 @@ Defense 886
 
 Max Health : 1277
 Mp : 32/115
-___________________________________________________________________________________________________________
+Matt as a Mage won 10 battles at level 13 played at : Sun Feb 21 00:21:39 CST 2021
+You had 9099 saved up
+Wallet : 63522
+Your stats : Speed 1068
+Health 1000
+Magic 860
+Attack 78
+Defense 8816
+
+Max Health : 1977
+Mp : 323/1115
+exp : 45
+exp Req : 244
+Rate : 1.25
+Gambler lvl : 3
+Inventory : 
+{Ether=4, Mega=9, Clock=99, Bomb=790}
+%
+Matt as a Mage won 10 battles at level 13 played at : Sun Feb 21 00:27:28 CST 2021
+You had 9099 saved up
+Wallet : 63522
+Your stats : Speed 1068
+Health 1400
+Magic 860
+Attack 78
+Defense 881
+
+Max Health : 1477
+Mp : 323/1115
+exp : 45
+exp Req : 244
+Rate : 1.25
+Gambler lvl : 3
+Inventory : 
+{Potion=74, Mega=9, Clock=99, Bomb=790}
+%
+Matt as a Mage won 11 battles at level 13 played at : Sun Feb 21 00:35:22 CST 2021
+You had 9099 saved up
+Wallet : 63592
+Your stats : Speed 1068
+Health 1322
+Magic 860
+Attack 78
+Defense 881
+
+Max Health : 1477
+Mp : 323/1115
+exp : 177
+exp Req : 244
+Rate : 1.25
+Gambler lvl : 3
+Inventory : 
+{}
+%
+Matt as a Mage won 11 battles at level 13 played at : Sun Feb 21 00:41:05 CST 2021
+You had 9099 saved up
+Wallet : 63592
+Your stats : Speed 1068
+Health 1322
+Magic 860
+Attack 78
+Defense 881
+
+Max Health : 1477
+Mp : 323/1115
+exp : 177
+exp Req : 244
+Rate : 1.25
+Gambler lvl : 3
+Inventory : 
+{Bomb=43}
+%
+Matt as a Mage won 11 battles at level 13 played at : Sun Feb 21 00:42:14 CST 2021
+You had 9099 saved up
+Wallet : 63592
+Your stats : Speed 1068
+Health 1322
+Magic 86
+Attack 708
+Defense 81
+
+Max Health : 1477
+Mp : 533/1115
+exp : 177
+exp Req : 244
+Rate : 1.25
+Gambler lvl : 3
+Inventory : 
+{Potion=4, Bomb=43}
+%
+Matt as a Mage won 11 battles at level 13 played at : Sun Feb 21 00:42:27 CST 2021
+You had 9099 saved up
+Wallet : 63592
+Your stats : Speed 1068
+Health 1322
+Magic 86
+Attack 708
+Defense 81
+
+Max Health : 1477
+Mp : 533/1115
+exp : 177
+exp Req : 244
+Rate : 1.25
+Gambler lvl : 3
+Inventory : 
+{Potion=4, Bomb=43}
+%

@@ -10,14 +10,12 @@ mp currently not being used unless successful cast ( ? )
 
 allocate stat points at level up ( ? )
 
-spell to reduce enemy defense ( ? )
-
 ======ISSUES======
 issue with poison damage even when checking inventory or scanning enemy     ==> quick fix implemented for now ( undo the damage )
 
 better stat development ( seems to be okay ish for now ) game needs some balancing, end game is unplayable for both sides haha => a little better now
 
-enemy with over 100 defense will default to taking only 5 damage, end game issue ^^ => bomb, poison, confuse, summon only ways of playing end game
+enemy with over 100 defense will default to taking only 5 damage, end game issue ^^ => bomb, poison, confuse, summon only ways of playing end game ( spell to reduce enemy damage = > short term fix )
 
 =====EXPLOITS=======
 check enemy can undo sleep

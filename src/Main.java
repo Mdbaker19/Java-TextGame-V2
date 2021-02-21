@@ -7,19 +7,31 @@ public class Main {
     private static final Input sc = new Input();
     private static final Art art = new Art();
     private static final Method m = new Method();
+    private static final Converter converter = new Converter();
     private static FileReader fileReader;
-    private static final Gambler gambler = new Gambler();
-    private static final ArrayList<String> beginOptions = new ArrayList<>(Arrays.asList("A", "S", "G"));
+    private static FileReader saveLoadWriter;
+    private static Gambler gambler = new Gambler();
+    private static final ArrayList<String> beginOptions = new ArrayList<>(Arrays.asList("A", "S", "G", "L"));
     private static final ArrayList<String> classOptions = new ArrayList<>(Arrays.asList("knight", "mage", "thief"));
     static {
         try {
             fileReader = new FileReader("src", "gameLog.txt", "gameLog.txt");
         } catch (IOException e) {
-            System.out.println("Error creating file reader");
+            System.out.println("Error creating file reader" + e);
+        }
+    }
+    static {
+        try {
+            saveLoadWriter = new FileReader("src", "gameStates.txt", "gameStates.txt");
+        } catch (IOException e){
+            System.out.println("Error accessing save states" + e);
         }
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
+
+        List<String> playerInfo = converter.formatInfo(saveLoadWriter.getFileLines());
+
         art.welcome();
         art.welcomeOptions();
         do{
@@ -35,6 +47,17 @@ public class Main {
                 case "G":
                     art.gamePlayInfo();
                     break;
+                case "L":
+                    if(playerInfo == null){
+                        System.out.println("No save file detected");
+                        break;
+                    }
+                    Player loadedPlayer = converter.makePlayer(playerInfo);
+                    System.out.println("Loading Save file for " + loadedPlayer.getName());
+                    Thread.sleep(1000);
+                    gambler = converter.getGambler(saveLoadWriter.getFileLines());
+                    decision(loadedPlayer);
+                    return;
             }
         } while (true);
         start();
@@ -80,6 +103,11 @@ public class Main {
                 art.mainScreen();
                 String input = sc.getInput("What would you like to do?", art.getMainOptions(), false).toUpperCase();
                 if (input.equalsIgnoreCase("e") && sc.getInput("Are you sure? [Y]es / [N]o").equalsIgnoreCase("y")) {
+                    break;
+                }
+                if(input.equalsIgnoreCase("p") && sc.getInput("Are you sure? [Y]es / [N]o").equalsIgnoreCase("y")){
+                    pushUpWork(player, gambler, saveLoadWriter);
+                    System.out.println("File saved in gameStates");
                     break;
                 }
                 switch (input) {
@@ -266,7 +294,11 @@ public class Main {
 
 
     public static void attackMade(Player attacker, Enemy enemy) throws InterruptedException {
-        int damage = m.calcDamage(attacker.getStats().get("Attack"), enemy.getDefense());
+        int enemyDef = enemy.getDefense();
+        if(enemy.getAilments().contains("fractured")) {
+            enemyDef /= 2;
+        }
+        int damage = m.calcDamage(attacker.getStats().get("Attack"), enemyDef);
         System.out.println("\033[0;37mEnemy attempts to dodge");
         int enemySpeed = enemy.getSpeed();
         if(enemy.getAilments().contains("slow")){
@@ -454,6 +486,12 @@ public class Main {
                 }
                 player.setMp(availableMp - 15);
                 return "blind";
+            } else if (specialTurn.equalsIgnoreCase("f")) {
+                if (enemyMagician) {
+                    System.out.println("This one is immune……");
+                }
+                player.setMp(availableMp - 20);
+                return "fractured";
             } else if (specialTurn.equalsIgnoreCase("p")) {
                 if (enemy.getInfect() > 49) {
                     System.out.println("This one is immune……");
@@ -496,4 +534,9 @@ public class Main {
             player.updateStat("Health", player.getHealth() - damage);
         }
     }
+
+    public static void pushUpWork(Player player, Gambler gambler, FileReader saveWriter) throws IOException {
+        saveWriter.createSaveState(player, gambler);
+    }
+
 }
