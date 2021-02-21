@@ -346,8 +346,13 @@ public class Main {
                     damage = m.calcDamage(enemy.getMagic(), player.getStats().get("Defense"));
                 }
                 damage /= extraDefenseMult;
-                System.out.println("\033[0;37mYou attempt to dodge");
-                boolean youDodge = m.blocked(player.getStats().get("Speed") * extraDodgeMult);
+                boolean youDodge = false;
+                if(!playerStatus.contains("sleep")){
+                    System.out.println("\033[0;37mYou attempt to dodge");
+                    youDodge = m.blocked(player.getStats().get("Speed") * extraDodgeMult);
+                } else {
+                    System.out.println("You are asleep……");
+                }
                 Thread.sleep(600);
 
                 int randomSummonBlock = (int) Math.floor(Math.random() * 100);
@@ -360,7 +365,7 @@ public class Main {
                     }
                     System.out.println("Enemy hits you for " + damage + " damage");
                     player.updateStat("Health", player.getHealth() - damage);
-                } else if (!youDodge || playerStatus.contains("sleep")) { // to prevent a dodge while asleep
+                } else if (!youDodge) {
                     if (randomSummonBlock < 20 && currentAilments.contains("cursed")) {
                         System.out.println("Your summon stumbles.. it falls in front of you and takes the hit");
                         Thread.sleep(300);
