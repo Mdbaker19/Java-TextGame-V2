@@ -17,7 +17,10 @@ public class Method {
     public int calcDamage(int attackerAttack, int defenderDefense){ // 20 attack against 20 defense result is 16 dmg
         double guard = (100 - defenderDefense) * .01;               // needs fixing when defense is > 100
         int total = (int) Math.floor(attackerAttack * guard);
-        if(total < 5){
+//        int damage = (100 / (100 + defenderDefense)) * attackerAttack;
+//        System.out.println("damage is : " + damage);
+//        System.out.println("total is : " + total);
+        if ( total < 5 ) {
             total = 5;
         }
         return total;
@@ -42,5 +45,19 @@ public class Method {
         } else {
             return ran < speed * .35;
         }
+    }
+
+    public static void main(String[] args) {
+        Method m = new Method();
+        System.out.println("midHigh 2x");
+        m.calcDamage(100, 98);
+        System.out.println("midHigh, VeryHigh");
+        m.calcDamage(100, 918);
+        System.out.println("VeryHigh 2x");
+        m.calcDamage(1000, 983);
+        System.out.println("midHigh, Low");
+        m.calcDamage(100, 9);
+        System.out.println("Low, Low");
+        m.calcDamage(10, 9);
     }
 }

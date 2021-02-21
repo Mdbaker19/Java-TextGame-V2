@@ -34,6 +34,23 @@ public class Player {
         inventory.put("Potion", 1);
     }
 
+    public Player(String name, String type, List<String> state, HashMap<String, Integer> stats, HashMap<String, Integer> inventory,
+                  int wallet, int victories, int level, int exp, int expRequirement, int maxHealth, int mp, int maxMp) {
+        this.name = name;
+        this.type = type;
+        this.state = state;
+        this.stats = stats;
+        this.inventory = inventory;
+        this.wallet = wallet;
+        this.victories = victories;
+        this.level = level;
+        this.exp = exp;
+        this.expRequirement = expRequirement;
+        this.maxHealth = maxHealth;
+        this.mp = mp;
+        this.maxMp = maxMp;
+    }
+
     public void initialStats(String type) {
         HashMap<String, Integer> stats = new HashMap<>();
         if (type.equalsIgnoreCase("thief")) {

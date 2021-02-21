@@ -14,12 +14,14 @@ public class Art {
         System.out.printf("%-20s%s%n", " ", "[S]hop");
         System.out.printf("%-20s%s%n", " ", "[A]ccount");
         System.out.printf("%-20s%s%n", " ", "[V]iew Stats");
+        System.out.printf("%-20s%s%n", " ", "[P]ush Work");
         System.out.printf("%-20s%s%n", " ", "[E]nd Game");
         System.out.printf("|%-60s|%n\033[0;38m", " ");
         mainOptions.add("B");
         mainOptions.add("S");
         mainOptions.add("A");
         mainOptions.add("V");
+        mainOptions.add("P");
         mainOptions.add("E");
     }
 
@@ -33,10 +35,11 @@ public class Art {
         }
     }
     public void welcomeOptions(){
-        System.out.printf("%-86s%-25s%-25s%-25s%n", " ", "[A]bout", "[S]tart", "[G]amePlay Help");
+        System.out.printf("%-80s%-23s%-23s%-23s%-13s%n", " ", "[A]bout", "[S]tart", "[G]amePlay", "[L]oad");
     }
     public void about(){
         System.out.println("An RPG game with 3 different classes to choose from, all with different base stats.");
+        System.out.println("Games can be loaded after they have been pushed up to the gameStates file");
         System.out.println("To play the game enter the options as they are presented ( the letter in [ ] or the text after the option 'x' : ");
         System.out.println("Fight in battles of random enemies to gain exp to level up and coins to spend in the shop");
         System.out.println("In battle you can use a standard attack, check the enemy stats or try for a special attack that it's success rate is based of your current magic stat");
@@ -236,6 +239,7 @@ public class Art {
         System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[S]teal", 0, " ");
         System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[C]onfuse", 25, " ");
         System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[D]efend", 25, " ");
+        System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[F]racture", 20, " ");
         System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[T]ime", 15, " ");
         System.out.printf("|%-20s%-22s%-28s|%n", " ", "[Q]uit", " ");
         System.out.printf("|%-70s|%n\033[0;38m", " ");
