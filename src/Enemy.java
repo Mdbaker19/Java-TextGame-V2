@@ -33,8 +33,8 @@ public class Enemy {
         } else if (number >= 15){
             multiplier *= 1.2;
         }
-        this.expValue = (int) ((12 * number) * .85);
-        this.worth = number * 5;
+        this.expValue = (int) ((13 * number) * .85);
+        this.worth = number * 7;
         this.infect = 5;
         Thread.sleep(600);
         if (randomizer < 5) {
@@ -52,6 +52,8 @@ public class Enemy {
             System.out.println("\033[0;35mYou hear the clinging of bottles as a beast charges at you");
             this.healer = true;
             this.extraHealth = 4 * number;
+            this.worth *= 1.2;
+            this.expValue *= 1.2;
         } else if (randomizer < 58 && randomizer > 45) {
             System.out.println("\033[0;32mWeird… this one literally looks sharper");
             this.accuracy = 100;
@@ -68,15 +70,15 @@ public class Enemy {
         } else if (randomizer > 83 && randomizer < 98) {
             System.out.println("\033[0;31mLooks like this beast was waiting for you...");
             multiplier *= 1.35;
-            this.expValue *= 1.55;
-            this.worth *= 1.35;
+            this.expValue *= 1.65;
+            this.worth *= 1.55;
         } else if (randomizer > 98) {
             System.out.println("\033[0;31mThis is it. \033[0;36mThe moment you have trained for");
             Thread.sleep(300);
             System.out.println("\033[0;31m……");
             Thread.sleep(300);
             System.out.println("\033[0;36m………\033[0;38m");
-            multiplier*= 2.25;
+            multiplier*= 1.85;
             this.expValue *= 3.5;
             this.worth *= 2.5;
         }
