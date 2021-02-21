@@ -8,6 +8,8 @@ steal speed based ( ? )
 
 mp currently not being used unless successful cast ( ? )
 
+allocate stat points at level up ( ? )
+
 ======ISSUES======
 issue with poison damage even when checking inventory or scanning enemy     ==> quick fix implemented for now ( undo the damage )
 

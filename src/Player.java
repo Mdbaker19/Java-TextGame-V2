@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Player {
     private Method m = new Method();
-    private final double levelUpMultiplier = 1.18;
+    private final double levelUpMultiplier = 1.17;
 
     private String name;
     private String type;
@@ -38,16 +38,16 @@ public class Player {
         HashMap<String, Integer> stats = new HashMap<>();
         if (type.equalsIgnoreCase("thief")) {
             stats.put("Health", 130);
-            stats.put("Attack", 13);
-            stats.put("Defense", 13);
-            stats.put("Magic", 13);
+            stats.put("Attack", 15);
+            stats.put("Defense", 11);
+            stats.put("Magic", 11);
             stats.put("Speed", 32);
             this.mp = 25;
         } else if (type.equalsIgnoreCase("knight")) {
             stats.put("Health", 175);
             stats.put("Attack", 18);
             stats.put("Defense", 18);
-            stats.put("Magic", 8);
+            stats.put("Magic", 7);
             stats.put("Speed", 9);
             this.mp = 10;
         } else {
@@ -55,7 +55,7 @@ public class Player {
             stats.put("Attack", 9);
             stats.put("Defense", 9);
             stats.put("Magic", 30);
-            stats.put("Speed", 16);
+            stats.put("Speed", 18);
             this.mp = 100;
         }
         this.stats = stats;
