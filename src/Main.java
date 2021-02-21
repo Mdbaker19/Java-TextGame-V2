@@ -122,11 +122,10 @@ public class Main {
     public static void fight(Player player, Enemy enemy) throws InterruptedException {
         List<String> options = new ArrayList<>(Arrays.asList("a", "i", "s", "c"));
         List<String> battleEffects = enemy.getAilments();
-        if (player.getState().contains("sleep")) {  //so sleep does not carry over
-            List<String> states = player.getState();
-            states.remove("sleep");
-            player.setState(states);
-        }
+        List<String> states = player.getState();
+        states.remove("sleep");
+        states.remove("shield");
+        player.setState(states);
         do {
             List<String> youEffect = player.getState();
             takeEffect(player);
