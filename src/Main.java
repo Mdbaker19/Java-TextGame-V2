@@ -170,11 +170,14 @@ public class Main {
             }
             if (enemy.isHealer()) {
                 int turnHeal = (int) (enemy.getMaxHealth() * .02);
+                if(turnHeal < 1){
+                    turnHeal = 1;
+                }
                 if(enemy.getHealth() + turnHeal > enemy.getMaxHealth()){
                     turnHeal = enemy.getMaxHealth() - enemy.getHealth();
                 }
-                if(turnHeal < 1){
-                    turnHeal = 1;
+                if(turnHeal < 0){
+                    turnHeal = 0;
                 }
                 enemy.setHealth(enemy.getHealth() + turnHeal);
                 System.out.printf("You chase it down as it runs and drinks a potion, healing %d%n", turnHeal);
@@ -337,6 +340,9 @@ public class Main {
                 int turnHeal = (int) (enemy.getMaxHealth() * .20);
                 if (enemy.getHealth() + turnHeal > enemy.getMaxHealth()) {
                     turnHeal = enemy.getMaxHealth() - enemy.getHealth();
+                }
+                if(turnHeal < 0){
+                    turnHeal = 0;
                 }
                 System.out.printf("You blink and it is gone…… you hear the clanging of bottles in the distance and chase it down, enemy heals for %d%n", turnHeal);
                 enemy.setHealth(enemy.getHealth() + turnHeal);
