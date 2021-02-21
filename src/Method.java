@@ -15,7 +15,7 @@ public class Method {
     }
 
     public int calcDamage(int attackerAttack, int defenderDefense){ // 20 attack against 20 defense result is 16 dmg
-        double guard = (100 - defenderDefense) * .01;
+        double guard = (100 - defenderDefense) * .01;               // needs fixing when defense is > 100
         int total = (int) Math.floor(attackerAttack * guard);
         if(total < 5){
             total = 5;
