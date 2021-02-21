@@ -25,7 +25,8 @@ public class MiniGamer {
         String[] options = {"r", "s", "p"};
         String choice = sc.getInput("[R]ock, [P]aper, [S]cissors?", rpcOptions, false);
         String result = options[(int) Math.floor(Math.random() * 3)];
-        System.out.printf("%s against %s%n", choice, result);
+        System.out.printf("%s against %s%n", wordFromLetter(choice), wordFromLetter(result));
+        Thread.sleep(300);
         if(result.equalsIgnoreCase(choice)){
             System.out.println("Draw, again!");
             return rockPaperScissor();
@@ -40,6 +41,15 @@ public class MiniGamer {
             return !result.equalsIgnoreCase("s");
         }
         return !result.equalsIgnoreCase("r");
+    }
+
+    private String wordFromLetter(String letter){
+        if(letter.equalsIgnoreCase("r")){
+            return "Rock";
+        } else if (letter.equalsIgnoreCase("p")){
+            return "Paper";
+        }
+        return "Scissors";
     }
 
 }

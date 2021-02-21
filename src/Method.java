@@ -15,9 +15,6 @@ public class Method {
     }
 
     public int calcDamage(int attackerAttack, int defenderDefense){ // 20 attack against 20 defense result is 16 dmg
-        if(defenderDefense >= 50) {
-            defenderDefense = 50;
-        }
         double guard = (100 - defenderDefense) * .01;
         int total = (int) Math.floor(attackerAttack * guard);
         if(total < 5){
@@ -33,7 +30,7 @@ public class Method {
         }
         System.out.println("Chance is : " + chance + "%");
         int ran = (int) Math.floor(Math.random() * 100);
-        return magic * 2 > ran;
+        return chance > ran;
     }
 
     public boolean criticalHit(int speed){

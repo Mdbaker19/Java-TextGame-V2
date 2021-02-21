@@ -2,8 +2,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Gambler {
-    private Input sc = new Input();
-    private MiniGamer miniGamer = new MiniGamer();
+    private final Input sc = new Input();
+    private final MiniGamer miniGamer = new MiniGamer();
     private final ArrayList<String> options = new ArrayList<>(Arrays.asList("S", "G", "W", "C", "U", "E"));
     private final ArrayList<String> gameOptions = new ArrayList<>(Arrays.asList("R", "C", "N", "E"));
 

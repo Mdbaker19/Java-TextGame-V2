@@ -42,7 +42,7 @@ public class Art {
         System.out.println("In battle you can use a standard attack, check the enemy stats or try for a special attack that it's success rate is based of your current magic stat");
         System.out.println("Enemies will progressively get harder and harder with better rewards as well.");
         System.out.println("If you happen to die and have a revive it is automatically used to give you an extra fighting chance");
-        System.out.println("The gambler is a place to try your luck for some extra coin or save your money and gain some interest on it over every victory in battle");
+        System.out.println("The account is a place to try your luck for some extra coin in the gambler or save your money and gain some interest on it over every victory in battle");
         System.out.println("Rock paper scissors gives 3x money, Number guesser gives 5x and Coin toss is 2x");
         System.out.println("Good luck player");
     }
