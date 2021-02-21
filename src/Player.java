@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Player {
     private Method m = new Method();
-    private final double levelUpMultiplier = 1.12;
+    private final double levelUpMultiplier = 1.18;
 
     private String name;
     private String type;

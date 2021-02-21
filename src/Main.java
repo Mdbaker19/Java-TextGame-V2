@@ -58,6 +58,9 @@ public class Main {
 
     public static void decision(Player player) throws IOException, InterruptedException {
         do {
+            if(player.getVictories() % 13 == 0){
+                System.out.println("\033[0;31mBoss fight coming up soon");
+            }
             if (player.getHealth() <= 0) {
                 System.out.println("You are dead and we need to take care of that");
                 Thread.sleep(600);
@@ -68,7 +71,7 @@ public class Main {
                 } else {
                     System.out.println("What!? You do not have any revives.. well...");
                     Thread.sleep(600);
-                    System.out.println("Game over");
+                    System.out.println("\033[0;31mGame over");
                     fileReader.saveRecord(player, gambler);
                     return;
                 }
@@ -134,7 +137,7 @@ public class Main {
                 break;
             }
             art.enemyHud(enemy, battleEffects);
-            Thread.sleep(600);
+            Thread.sleep(700);
             art.hud(player);
 
             String turn = sc.getInput("\033[0;38mYour move", options, false);
@@ -164,6 +167,8 @@ public class Main {
             }
 
             enemy.setAilments(battleEffects);
+
+            Thread.sleep(400);
 
             if (enemy.getHealth() <= 0) { // you killed enemy
                 break;
@@ -222,6 +227,7 @@ public class Main {
 
         if(ranWakeUp <= 35){
             System.out.println("You fall over, as you hit the ground you wake up");
+            Thread.sleep(300);
             playerStates.remove("sleep");
             player.setState(playerStates);
             asleep = false;
@@ -230,7 +236,7 @@ public class Main {
         if(turn.equalsIgnoreCase("i")){
             if (player.getInventory().isEmpty()) {
                 System.out.println("You do not have any items");
-                Thread.sleep(600);
+                Thread.sleep(400);
                 return "";
             } else if (didUseItem(player, enemy)) {
                 return "item";
