@@ -12,3 +12,6 @@ mp currently not being used unless successful cast ( ? )
 issue with poison damage even when checking inventory or scanning enemy     ==> quick fix implemented for now ( undo the damage )
 
 better stat development ( seems to be okay ish for now ) game needs some balancing, end game is unplayable for both sides haha => a little better now
+
+=====EXPLOITS=======
+check enemy can undo sleep

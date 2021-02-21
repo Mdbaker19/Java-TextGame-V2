@@ -18,7 +18,7 @@ public class Enemy {
     private boolean healer = false;
     private List<String> ailments;
     public Enemy(int number, int randomizer) throws InterruptedException {
-        if(number % 12 == 0){
+        if(number % 14 == 0){
             randomizer = 99;
         } else if (randomizer > 98){
             randomizer = 98;
