@@ -168,16 +168,18 @@ public class Art {
         } else if (statToUpgrade.equalsIgnoreCase("l")){
             int currMp = player.getMp();
             int currMaxMp = player.getMaxMp();
-            player.setMp(currMp + 5);
-            player.setMaxMp(currMaxMp + 5);
+            int bonusAmount = 5 * amount;
+            player.setMp(currMp + bonusAmount);
+            player.setMaxMp(currMaxMp + bonusAmount);
             int total = amount * price;
             player.setWallet(player.getWallet() - total);
             return;
         } else if (statToUpgrade.equalsIgnoreCase("d")){
             int currHp = player.getHealth();
             int currMaxHp = player.getMaxHealth();
-            player.updateStat("Health", currHp + 5);
-            player.setMaxHealth(currMaxHp + 5);
+            int bonusAmount = 5 * amount;
+            player.updateStat("Health", currHp + bonusAmount);
+            player.setMaxHealth(currMaxHp + bonusAmount);
             int total = amount * price;
             player.setWallet(player.getWallet() - total);
             return;
