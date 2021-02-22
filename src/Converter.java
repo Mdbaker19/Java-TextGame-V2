@@ -28,8 +28,8 @@ public class Converter {
         state.add(playerInfo.get(17).substring(1, playerInfo.get(17).length() - 1));
         if(state.get(0).length() < 1){
             state.add("normal");
+            state.remove(0);
         }
-        state.remove(0);
 
         HashMap<String, Integer> inventory = new HashMap<>();
         if(playerInfo.size() > 18) {
