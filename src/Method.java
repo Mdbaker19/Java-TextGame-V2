@@ -5,7 +5,7 @@ public class Method {
         return input.substring(0, 1).toUpperCase()+input.substring(1);
     }
 
-    public boolean blocked(int speed, boolean slowed){
+    public boolean blocked(int speed, boolean slowed) throws InterruptedException {
         if(speed >= 80){
             speed = 80;
         }
@@ -13,26 +13,26 @@ public class Method {
             speed /= 2;
         }
         System.out.println("Chance is : " + speed + "%\033[0;38m");
+        Thread.sleep(200);
         int ran = (int) Math.floor(Math.random() * 100);
         return speed > ran;
     }
 
     public int calcDamage(int attackerAttack, int defenderDefense){ // 20 attack against 20 defense result is 16 dmg
-        if(defenderDefense < 80){
-            double guard = (100 - defenderDefense) * .0076;               // needs fixing when defense is > 100
-            int damage = (int) Math.floor(attackerAttack * guard);     // trying new formula
-            if(damage < 5) damage = 5;
-            return damage;
+        int damage;
+        if(defenderDefense < 80){                                   // 200 attack 200 defense result is 60 dmg
+            double guard = (100 - defenderDefense) * .0076;
+            damage = (int) Math.floor(attackerAttack * guard);     // trying new formula for when defense is over 100
         } else {
             int multiplier = 12;
-            int damage = attackerAttack * multiplier / defenderDefense;
+            damage = attackerAttack * multiplier / defenderDefense;
             for (int i = Math.max(attackerAttack, defenderDefense); i >= 18; i -= 18) { // just trying anything that helps when it is scaled
                 damage *= 1.18;
             }
-//        System.out.println("damage is : " + damage);
-//        System.out.println();
-            return damage;
         }
+//        System.out.println("damage is : " + (damage > 5 ? damage : 5));
+//        System.out.println();
+        return damage > 5 ? damage : 5;
     }
 
     public boolean successfulCast(int magic){
@@ -59,6 +59,10 @@ public class Method {
         }
     }
 
+    public int minNum(int input){
+        return input > 1 ? input : 1;
+    }
+
     public static void main(String[] args) {
         Method m = new Method();
         System.out.println("100, 98");
@@ -77,5 +81,7 @@ public class Method {
         m.calcDamage(45, 57);
         System.out.println("57 and 45");
         m.calcDamage(57, 45);
+        System.out.println("200 and 200");
+        m.calcDamage(200, 200);
     }
 }

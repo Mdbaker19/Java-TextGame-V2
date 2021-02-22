@@ -1,7 +1,5 @@
 more items from shop ( armour and weapons )
 
-more enemies ( resist to normal attacks )
-
 steal speed based ( ? )
 
 mp currently not being used unless successful cast ( ? )
@@ -9,7 +7,7 @@ mp currently not being used unless successful cast ( ? )
 allocate stat points at level up ( ? )
 
 ======ISSUES======
-issue with poison damage even when checking inventory or scanning enemy     ==> quick fix implemented for now ( undo the damage )
+issue with poison damage even when checking inventory or scanning enemy     ==> quick fix implemented for now ( undo the damage ) -> really not sure what else to do
 
 better stat development ( seems to be okay ish for now ) game needs some balancing, end game needs testing, can be played with in the save state
 
