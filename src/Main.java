@@ -357,11 +357,11 @@ public class Main {
                 damage *= .9;
             }
             System.out.println("You hit for " + damage + " damage");
-            Thread.sleep(600);
             enemy.setHealth(enemy.getHealth() - damage);
         } else {
             System.out.println("He is too quick, you have missed your attack");
         }
+        Thread.sleep(200);
     }
 
     public static void enemyTurn(Enemy enemy, Player player, List<String> currentAilments) throws InterruptedException {
@@ -377,7 +377,7 @@ public class Main {
         int infectChance = (int) Math.floor(Math.random() * 100);
 
         int infect = enemy.getInfect();
-        Thread.sleep(600);
+        Thread.sleep(400);
 
         if(enemy.isCaster()){
             currentAilments.remove("confuse");
