@@ -91,7 +91,7 @@ public class Enemy {
             this.expValue *= 3.8;
             this.worth *= 2.8;
         }
-        this.health = (int) Math.floor(14 * multiplier) + extraHealth;
+        this.health = (int) Math.floor(13 * multiplier) + extraHealth;
         this.maxHealth = this.health;
         this.attack = (int) Math.floor(4 * multiplier);
         this.speed = (int) Math.floor(2 * multiplier) + extraSpeed;

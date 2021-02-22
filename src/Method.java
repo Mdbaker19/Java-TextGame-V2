@@ -45,8 +45,11 @@ public class Method {
         return chance > ran;
     }
 
-    public boolean criticalHit(int speed){
+    public boolean criticalHit(int speed, boolean thiefSpecial){
         int ran = (int) Math.floor(Math.random() * 100);
+        if(thiefSpecial){
+            ran /= 2;
+        }
         if(speed >= 75){
             return ran < 22;
         } else if(speed >= 50){
