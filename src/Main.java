@@ -344,9 +344,9 @@ public class Main {
         int enemySpeed = enemy.getSpeed();
         boolean enemyDodge;
         if(enemy.getAilments().contains("slow")){
-            enemyDodge = m.blocked(enemySpeed, true);
+            enemyDodge = m.blocked(enemySpeed, true, player.getStats().get("Speed"));
         } else {
-            enemyDodge = m.blocked(enemySpeed, false);
+            enemyDodge = m.blocked(enemySpeed, false, player.getStats().get("Speed"));
         }
         if(!enemyDodge){
             if (m.criticalHit(player.getStats().get("Speed"), player.isThiefSpecial())) {
@@ -427,7 +427,7 @@ public class Main {
                 boolean youDodge = false;
                 if(!playerStatus.contains("sleep")){
                     System.out.println("\033[0;37mYou attempt to dodge");
-                    youDodge = m.blocked(player.getStats().get("Speed") * extraDodgeMult, false);
+                    youDodge = m.blocked(player.getStats().get("Speed") * extraDodgeMult, false, enemy.getSpeed());
                 } else {
                     System.out.println("You are asleep……");
                 }
