@@ -56,6 +56,7 @@ public class Main {
                     System.out.println("Loading Save file for " + loadedPlayer.getName());
                     Thread.sleep(1000);
                     gambler = converter.getGambler(saveLoadWriter.getFileLines());
+                    gambler.setCheckNumber(loadedPlayer.getVictories());
                     decision(loadedPlayer);
                     return;
             }
