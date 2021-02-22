@@ -13,8 +13,6 @@ issue with poison damage even when checking inventory or scanning enemy     ==> 
 
 better stat development ( seems to be okay ish for now ) game needs some balancing, end game needs testing, can be played with in the save state
 
-=====EXPLOITS=======
-check enemy can undo sleep
 
 =======WORK IN PROGRESS=======
 NEW DAMAGE FORMULA, SEEMS OKAY FOR NOW
