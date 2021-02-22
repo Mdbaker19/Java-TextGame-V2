@@ -67,12 +67,16 @@ public class Gambler {
         gameMenu();
         String choice = sc.getInput("What would you like to play?", gameOptions, false);
         if(choice.equalsIgnoreCase("e")){
+            gamble(player);
             return;
         } else if (choice.equalsIgnoreCase("i")){
             gambleInfo();
+            gamble(player);
+            return;
+        } else {
+            int amount = sc.getNum("How much are we gambling here? Current wallet : " + player.getWallet(), player.getWallet());
+            games(player, choice, amount);
         }
-        int amount = sc.getNum("How much are we gambling here? Current wallet : " + player.getWallet(), player.getWallet());
-        games(player, choice, amount);
     }
 
     private void games(Player player, String choice, int bet) throws InterruptedException {
