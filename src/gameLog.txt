@@ -1,0 +1,54 @@
+Nemo as a Thief won 14 battles at level 6 played at : Sun Feb 21 19:49:23 CST 2021
+You had 4247 saved up
+Wallet : 118
+Your stats : Speed 67
+Health 116
+Magic 21
+Attack 29
+Defense 21
+
+Max Health : 283
+Mp : 47/54
+exp : 231
+exp Req : 445
+Rate : 1.2500000000000002
+Gambler lvl : 3
+Inventory : 
+{Revive=1, Hpotion=5, Antidote=2}
+%
+Nemo as a Thief won 14 battles at level 6 played at : Sun Feb 21 19:50:02 CST 2021
+You had 4247 saved up
+Wallet : 118
+Your stats : Speed 67
+Health 116
+Magic 21
+Attack 29
+Defense 21
+
+Max Health : 283
+Mp : 47/54
+exp : 231
+exp Req : 445
+Rate : 1.2500000000000002
+Gambler lvl : 3
+Inventory : 
+{Revive=1, Hpotion=5, Antidote=2}
+%
+Nemo as a Thief won 14 battles at level 6 played at : Sun Feb 21 19:50:23 CST 2021
+You had 4247 saved up
+Wallet : 118
+Your stats : Speed 67
+Health 116
+Magic 21
+Attack 29
+Defense 21
+
+Max Health : 283
+Mp : 47/54
+exp : 231
+exp Req : 445
+Rate : 1.2500000000000002
+Gambler lvl : 3
+Inventory : 
+{Revive=1, Hpotion=5, Antidote=2}
+%
