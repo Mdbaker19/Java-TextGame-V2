@@ -80,6 +80,7 @@ public class Main {
 
 
     public static void decision(Player player) throws IOException, InterruptedException {
+        List<String> playerInfo = converter.formatInfo(saveLoadWriter.getFileLines());
         do {
             if(player.getVictories() % 14 == 0){
                 System.out.println("\033[0;31mBoss fight coming up");
@@ -105,10 +106,15 @@ public class Main {
                 if (input.equalsIgnoreCase("e") && sc.getInput("Are you sure? [Y]es / [N]o").equalsIgnoreCase("y")) {
                     break;
                 }
-                if(input.equalsIgnoreCase("p") && sc.getInput("Are you sure? [Y]es / [N]o").equalsIgnoreCase("y")){
-                    pushUpWork(player, gambler, saveLoadWriter);
-                    System.out.println("File saved in gameStates");
-                    break;
+                if(input.equalsIgnoreCase("p")){
+                    boolean areYouSure = false;
+                    if(playerInfo != null){
+                        areYouSure = sc.getInput("A save file is detected, do you wish to overwrite? [Y]es / [N]o").equalsIgnoreCase("y");
+                    }
+                    if(areYouSure || playerInfo == null) {
+                        pushUpWork(player, gambler, saveLoadWriter);
+                        System.out.println("File saved in \033[0;35mgameStates\033[0;38m");
+                    }
                 }
                 switch (input) {
                     case "B":
@@ -301,10 +307,12 @@ public class Main {
         int damage = m.calcDamage(attacker.getStats().get("Attack"), enemyDef);
         System.out.println("\033[0;37mEnemy attempts to dodge");
         int enemySpeed = enemy.getSpeed();
+        boolean enemyDodge = false;
         if(enemy.getAilments().contains("slow")){
-            enemySpeed /= 2;
+            enemyDodge = m.blocked(enemySpeed, true);
+        } else {
+            enemyDodge = m.blocked(enemySpeed, false);
         }
-        boolean enemyDodge = m.blocked(enemySpeed);
         if(!enemyDodge){
             if (m.criticalHit(attacker.getStats().get("Speed"))) {
                 System.out.println("Critical Hit!");
@@ -394,7 +402,7 @@ public class Main {
                 boolean youDodge = false;
                 if(!playerStatus.contains("sleep")){
                     System.out.println("\033[0;37mYou attempt to dodge");
-                    youDodge = m.blocked(player.getStats().get("Speed") * extraDodgeMult);
+                    youDodge = m.blocked(player.getStats().get("Speed") * extraDodgeMult, false);
                 } else {
                     System.out.println("You are asleep……");
                 }

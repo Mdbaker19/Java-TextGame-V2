@@ -55,7 +55,7 @@ public class Enemy {
             System.out.println("\033[0;35mYou hear the clinging of bottles as a beast charges at you");
             Thread.sleep(600);
             this.healer = true;
-            this.extraHealth = 4 * number;
+            this.extraHealth = 3 * number;
             this.worth *= 1.5;
             this.expValue *= 1.7;
         } else if (randomizer < 58 && randomizer > 45) {
@@ -91,12 +91,12 @@ public class Enemy {
             this.expValue *= 3.8;
             this.worth *= 2.8;
         }
-        this.health = (int) Math.floor(13 * multiplier) + extraHealth;
+        this.health = (int) Math.floor(14 * multiplier) + extraHealth;
         this.maxHealth = this.health;
         this.attack = (int) Math.floor(4 * multiplier);
         this.speed = (int) Math.floor(2 * multiplier) + extraSpeed;
         this.magic = (int) Math.floor(2 * multiplier); // for magic enemy damage
-        this.defense = (int) Math.floor(3 * multiplier);
+        this.defense = (int) Math.floor(3.2 * multiplier);
         this.ailments = new ArrayList<>();
     }
 
