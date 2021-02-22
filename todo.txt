@@ -1,8 +1,6 @@
 more items from shop ( armour and weapons )
 
-different enemy ( resist to magic or normal attacks )
-
-options and maybe a load save from file reader ( ? )
+more enemies ( resist to normal attacks )
 
 steal speed based ( ? )
 
@@ -13,12 +11,10 @@ allocate stat points at level up ( ? )
 ======ISSUES======
 issue with poison damage even when checking inventory or scanning enemy     ==> quick fix implemented for now ( undo the damage )
 
-better stat development ( seems to be okay ish for now ) game needs some balancing, end game is unplayable for both sides haha => a little better now
-
-enemy with over 100 defense will default to taking only 5 damage, end game issue ^^ => bomb, poison, confuse, summon only ways of playing end game ( spell to reduce enemy damage = > short term fix and damage formula rework)
+better stat development ( seems to be okay ish for now ) game needs some balancing, end game needs testing, can be played with in the save state
 
 =====EXPLOITS=======
 check enemy can undo sleep
 
 =======WORK IN PROGRESS=======
-NEW DAMAGE FORMULA NEEDS TESTING, SEEMS OKAY FOR NOW
+NEW DAMAGE FORMULA, SEEMS OKAY FOR NOW
