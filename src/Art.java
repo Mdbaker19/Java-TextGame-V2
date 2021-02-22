@@ -211,6 +211,7 @@ public class Art {
             System.out.printf("|%-20s%-25s\033[0;37m%-25s\033[0;34m|%n", " ", "Status: ", "normal");
         }
         System.out.printf("|%-20s%-22s%-28s|%n", " ", "[A]ttack", " ");
+        System.out.printf("|%-20s%-22s%-28s|%n", " ", "[M]agic", " ");
         System.out.printf("|%-20s%-22s%-28s|%n", " ", "[S]pecial", " ");
         System.out.printf("|%-20s%-22s%-28s|%n", " ", "[I]nventory", " ");
         System.out.printf("|%-20s%-22s%-28s|%n", " ", "[C]heck Enemy", " ");
@@ -226,7 +227,7 @@ public class Art {
                 System.out.printf("|%-20s%-25s%-25s|%n", " ", "Condition: ", a);
             }
         } else {
-            System.out.printf("|%-20s%-25s\033[0;37m%-25s|%n\033[0;38m", " ", "Status: ", "normal");
+            System.out.printf("|%-20s%-25s\033[0;37m%-25s\033[0;32m|%n\033[0;38m", " ", "Status: ", "normal");
         }
         System.out.printf("\033[0;32m|%-70s|%n", " ");
         System.out.println("\033[0;38m");

@@ -157,14 +157,13 @@ public class Main {
 
 
     public static void fight(Player player, Enemy enemy) throws InterruptedException {
-        List<String> options = new ArrayList<>(Arrays.asList("a", "i", "s", "c"));
+        List<String> options = new ArrayList<>(Arrays.asList("a", "i", "s", "c", "m"));
         List<String> battleEffects = enemy.getAilments();
         List<String> states = player.getState();
         states.remove("sleep");
         states.remove("shield");
         player.setState(states);
         do {
-            List<String> youEffect = player.getState();
             takeEffect(player);
 
             if (player.getHealth() <= 0) { // if poison kills you
@@ -178,24 +177,34 @@ public class Main {
             String result = handleTurn(turn, enemy, player);
             if (result.equalsIgnoreCase("item")) {
                 System.out.println(); // so the turn counts if an item was used or you are asleep
-            } else if (result.equalsIgnoreCase("special")) {
-                String specialReturn = specialOptions(player, enemy);
-                if(specialReturn.equalsIgnoreCase("quit")){
-                    if (youEffect.contains("poison")) {  // temp for undoing the poison damage when you actually did not make a turn
-                        player.updateStat("Health", player.getHealth() + (int) (player.getMaxHealth() * .05));  // needs to be undone because it poison needs to happen before your turn happens in case it kills you, you would know
-                    }
+            } else if (result.equalsIgnoreCase("magic")) {
+                String magicReturn = magicOptions(player, enemy);
+                if(magicReturn.equalsIgnoreCase("quit")){
+                    undoPoison(player);
                     fight(player, enemy);
                     return;
-                } else if(!specialReturn.equalsIgnoreCase("normal") && !battleEffects.contains(specialReturn)){
-                    battleEffects.add(specialReturn);
+                } else if(!magicReturn.equalsIgnoreCase("normal") && !battleEffects.contains(magicReturn)){
+                    battleEffects.add(magicReturn);
                 }
             } else if (result.equalsIgnoreCase("attacking")) {
                 attackMade(player, enemy);
-            } else {
-                // did not use an item, so either scanned enemy or viewed and exited inventory
-                if (youEffect.contains("poison")) {  // temp for undoing the poison damage when you actually did not make a turn
-                    player.updateStat("Health", player.getHealth() + (int) (player.getMaxHealth() * .05));  // needs to be undone because it poison needs to happen before your turn happens in case it kills you, you would know
+            } else if (result.equalsIgnoreCase("special")) {
+                String whatItDoes = specialInfo(player);
+                if(player.getMp() < 40){
+                    System.out.println("You do not have enough MP for this");
+                    undoPoison(player);
+                    fight(player, enemy);
+                    return;
                 }
+                if(sc.getInput(whatItDoes).equalsIgnoreCase("y")){
+                    specialMove(player, enemy);
+                } else {
+                    undoPoison(player);
+                    fight(player, enemy);
+                    return;
+                }
+            } else {
+                undoPoison(player);
                 fight(player, enemy);
                 return; // return needed to prevent a bubble effect with scanning enemy and finishing the fight, caused multiple victories. finally figured this out
             }
@@ -208,18 +217,7 @@ public class Main {
                 break;
             }
             if (enemy.isHealer()) {
-                int turnHeal = (int) (enemy.getMaxHealth() * .02);
-                if(turnHeal < 1){
-                    turnHeal = 1;
-                }
-                if(enemy.getHealth() + turnHeal > enemy.getMaxHealth()){
-                    turnHeal = enemy.getMaxHealth() - enemy.getHealth();
-                }
-                if(turnHeal < 0){
-                    turnHeal = 0;
-                }
-                enemy.setHealth(enemy.getHealth() + turnHeal);
-                System.out.printf("You chase it down as it runs and drinks a potion, healing %d%n", turnHeal);
+                enemyHealerTurn(enemy, false);
             }
 
             if (battleEffects.contains("cursed")) {
@@ -246,7 +244,7 @@ public class Main {
             System.out.println("Oof you lost...");
             Thread.sleep(600);
         }
-
+        player.setSpecialUsed(false);
     }
 
 
@@ -280,6 +278,8 @@ public class Main {
             return "item";
         } else if (turn.equalsIgnoreCase("a")){
             return "attacking";
+        } else if (turn.equalsIgnoreCase("m")){
+            return "magic";
         } else if (turn.equalsIgnoreCase("s")){
             return "special";
         } else if (turn.equalsIgnoreCase("c")){
@@ -296,6 +296,60 @@ public class Main {
             player.useItem(option, enemy);
         }
         return itemUsed;
+    }
+    public static String specialInfo(Player player){
+        String type = player.getType();
+        System.out.println("Special Moves will use 40MP");
+        String description = "";
+        if (type.equalsIgnoreCase("knight")) {
+            description = "Throw a spear at the enemy, guaranteed to deal double damage";
+        } else if (type.equalsIgnoreCase("mage")){
+            description = "Heal 50% of your health";
+        } else {
+            description = "Double your critical chance for the rest of the fight";
+        }
+        return description;
+    }
+    public static void specialMove(Player player, Enemy enemy) throws InterruptedException {
+        String type = player.getType();
+        int enemyDef = enemy.getDefense();
+        if(enemy.getAilments().contains("fractured")) {
+            enemyDef /= 2;
+        }
+        int damage = m.calcDamage(player.getStats().get("Attack"), enemyDef);
+
+        if (type.equalsIgnoreCase("knight")) {
+            if (m.criticalHit(player.getStats().get("Speed"), false)) {
+                System.out.println("You have time to sharpen your spear a little more");
+                Thread.sleep(300);
+                damage*=1.5;
+            }
+            System.out.printf("Quickly you take the high ground and throw your spear dealing %d damage %n", damage * 2);
+            enemy.setHealth(enemy.getHealth() - damage * 2);
+        } else if (type.equalsIgnoreCase("mage")){
+            int maxHp = player.getMaxHealth();
+            int currHealth = player.getHealth();
+            int amount = maxHp / 2;
+            if(currHealth + amount > maxHp){
+                System.out.println("You fully heal");
+                player.updateStat("Health", maxHp);
+            } else {
+                System.out.printf("You heal for %d %n", amount); // some other message later
+                player.updateStat("Health", currHealth + amount);
+            }
+        } else {
+            player.setSpecialUsed(true);
+            System.out.println("You realize you have not been wearing your glasses and put them on, the world is so much clearer now");
+            Thread.sleep(500);
+            if (m.criticalHit(player.getStats().get("Speed"), true)) {
+                System.out.println("Critical Hit!");
+                damage*=1.5;
+            }
+            System.out.printf("You attack for the first time dealing %d damage%n", damage);
+            enemy.setHealth(enemy.getHealth() - damage);
+        }
+        Thread.sleep(400);
+        player.setMp(player.getMp() - 40);
     }
 
 
@@ -314,7 +368,7 @@ public class Main {
             enemyDodge = m.blocked(enemySpeed, false);
         }
         if(!enemyDodge){
-            if (m.criticalHit(attacker.getStats().get("Speed"))) {
+            if (m.criticalHit(attacker.getStats().get("Speed"), false)) {
                 System.out.println("Critical Hit!");
                 damage*=1.5;
             }
@@ -358,7 +412,7 @@ public class Main {
             extraDefenseMult = 2;
         }
         if (currentAilments.contains("confuse")) {
-            confuseChance = 35;
+            confuseChance = 33;
         }
 
         if(enemy.isCaster()){
@@ -377,22 +431,14 @@ public class Main {
 
         } else {
 
-            if (enemy.isCaster() && castChance < 35) {
+            if (enemy.isCaster() && castChance < 33) {
                 System.out.println("The monster begins to glow as the world fades to darkness…");
                 Thread.sleep(500);
                 if(!playerStatus.contains("sleep")){
                     playerStatus.add("sleep");
                 }
-            } else if (enemy.isHealer() && healChance < 35) {
-                int turnHeal = (int) (enemy.getMaxHealth() * .20);
-                if (enemy.getHealth() + turnHeal > enemy.getMaxHealth()) {
-                    turnHeal = enemy.getMaxHealth() - enemy.getHealth();
-                }
-                if(turnHeal < 0){
-                    turnHeal = 0;
-                }
-                System.out.printf("You blink and it is gone…… you hear the clanging of bottles in the distance and chase it down, enemy heals for %d%n", turnHeal);
-                enemy.setHealth(enemy.getHealth() + turnHeal);
+            } else if (enemy.isHealer() && healChance < 33) {
+                enemyHealerTurn(enemy, true);
             } else {
                 int damage = m.calcDamage(enemy.getAttack(), player.getStats().get("Defense"));
                 if (enemy.isCaster()) {
@@ -412,7 +458,7 @@ public class Main {
 
                 if (enemy.getAccuracy() > 10) {
                     System.out.println("This one sees through your tricks");
-                    if (m.criticalHit(enemy.getSpeed())) {
+                    if (m.criticalHit(enemy.getSpeed(), false)) {
                         System.out.println("Critical Hit!");
                         damage *= 1.5;
                     }
@@ -423,7 +469,7 @@ public class Main {
                         System.out.println("Your summon stumbles.. it falls in front of you and takes the hit");
                         Thread.sleep(300);
                     } else {
-                        if (m.criticalHit(enemy.getSpeed())) {
+                        if (m.criticalHit(enemy.getSpeed(), false)) {
                             System.out.println("Critical Hit!");
                             damage *= 1.5;
                         }
@@ -447,7 +493,7 @@ public class Main {
         player.setState(playerStatus);
     }
 
-    public static String specialOptions(Player player, Enemy enemy) throws InterruptedException {
+    public static String magicOptions(Player player, Enemy enemy) throws InterruptedException {
         List<String> options = new ArrayList<>(Arrays.asList("s", "p", "b", "c", "d", "m", "t", "q", "f"));
         String result = "normal";
         art.specials();
@@ -541,6 +587,34 @@ public class Main {
             Thread.sleep(600);
             player.updateStat("Health", player.getHealth() - damage);
         }
+    }
+
+    public static void undoPoison(Player player) throws InterruptedException {
+        if (player.getState().contains("poison")) {
+            player.updateStat("Health", player.getHealth() + (int) (player.getMaxHealth() * .05));
+        }
+    }
+
+    public static void enemyHealerTurn(Enemy enemy, boolean enemyTurn) {
+        int turnHeal = 0;
+        if(enemyTurn) {
+            turnHeal = (int) (enemy.getMaxHealth() * .18);
+            System.out.printf("You blink and it is gone…… you hear the clanging of bottles in the distance and chase it down, enemy heals for %d%n", turnHeal);
+        } else {
+            turnHeal = (int) (enemy.getMaxHealth() * .02);
+            if(turnHeal < 1){
+                turnHeal = 1;
+            }
+            System.out.printf("You chase it down as it runs and drinks a potion, healing %d%n", turnHeal);
+        }
+
+        if(enemy.getHealth() + turnHeal > enemy.getMaxHealth()){
+            turnHeal = enemy.getMaxHealth() - enemy.getHealth();
+        }
+        if(turnHeal < 0){
+            turnHeal = 0;
+        }
+        enemy.setHealth(enemy.getHealth() + turnHeal);
     }
 
     public static void pushUpWork(Player player, Gambler gambler, FileReader saveWriter) throws IOException {
