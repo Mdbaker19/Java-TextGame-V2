@@ -85,8 +85,9 @@ public class Enemy {
             System.out.println("\033[0;31mThis is it. \033[0;36mThe moment you have trained for");
             Thread.sleep(800);
             System.out.println("\033[0;31m……");
-            Thread.sleep(300);
+            Thread.sleep(500);
             System.out.println("\033[0;36m………\033[0;38m");
+            Thread.sleep(500);
             multiplier*= 1.85;
             this.expValue *= 3.8;
             this.worth *= 2.8;

@@ -205,7 +205,7 @@ public class Art {
         System.out.printf("|%-20s%-25s\033[0;34m%-5d / %-17d\033[0;34m|%n", " ", "Mp : " , player.getMp(), player.getMaxMp());
         if(status.size() > 0){
             for(String s : status) {
-                System.out.printf("|%-20s%-25s\033[0;32m%-25s|\033[0;34m%n", " ", "Condition: ", s);
+                System.out.printf("|%-20s%-25s\033[0;32m%-25s\033[0;34m|%n", " ", "Condition: ", s);
             }
         } else {
             System.out.printf("|%-20s%-25s\033[0;37m%-25s\033[0;34m|%n", " ", "Status: ", "normal");

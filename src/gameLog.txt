@@ -14,3 +14,19 @@ Gambler lvl : 3
 Inventory : 
 {Revive=1, Hpotion=5, Antidote=2}
 =================================================
+Nemo as a Thief won 14 battles at level 6 played at : Sun Feb 21 20:22:37 CST 2021
+Your stats : Speed 6
+Health -29
+Magic 21
+Attack 29
+Defense 21
+
+Max Health : 283
+Mp : 47/54
+You had 4247 saved up
+Wallet : 118
+Rate : 1.2500000000000002
+Gambler lvl : 3
+Inventory : 
+{Hpotion=5, Antidote=2}
+=================================================
