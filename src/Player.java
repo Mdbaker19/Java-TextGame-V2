@@ -59,9 +59,9 @@ public class Player {
             stats.put("Health", 130);
             stats.put("Attack", 15);
             stats.put("Defense", 11);
-            stats.put("Magic", 11);
+            stats.put("Magic", 10);
             stats.put("Speed", 32);
-            this.mp = 25;
+            this.mp = 30;
         } else if (type.equalsIgnoreCase("knight")) {
             stats.put("Health", 175);
             stats.put("Attack", 18);
@@ -74,7 +74,7 @@ public class Player {
             stats.put("Attack", 9);
             stats.put("Defense", 9);
             stats.put("Magic", 30);
-            stats.put("Speed", 18);
+            stats.put("Speed", 16);
             this.mp = 100;
         }
         this.stats = stats;
@@ -198,7 +198,7 @@ public class Player {
 
             if(curr + 55 > max){
                 int healing = Math.abs(max - curr);
-                System.out.printf("Potion healing for %d hp%n", healing);
+                System.out.printf("High Potion healing for %d hp%n", healing);
                 this.updateStat("Health", this.getHealth() + healing);
             } else {
                 System.out.println("High Potion healing for 55 hp");
@@ -208,7 +208,7 @@ public class Player {
             int amount = (int) (this.getMaxHealth() * .35);
             if(curr + amount > max){
                 int healing = Math.abs(max - curr);
-                System.out.printf("Potion healing for %d hp%n", healing);
+                System.out.printf("Mega Potion healing for %d hp%n", healing);
                 this.updateStat("Health", this.getHealth() + healing);
             } else {
                 System.out.printf("Mega Potion healing for %d hp%n", amount);

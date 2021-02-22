@@ -65,7 +65,7 @@ public class Enemy {
             this.accuracy = 100;
             this.worth *= 1.3;
             this.expValue *= 1.3;
-            extraSpeed += 5;
+            extraSpeed += 10;
         } else if (randomizer <= 71) {  // 50% to poison you, immune to poison
             System.out.println("\033[0;32m…Cough..Cough… what is this thing");
             Thread.sleep(600);
@@ -89,14 +89,14 @@ public class Enemy {
             Thread.sleep(500);
             System.out.println("\033[0;36m………\033[0;38m");
             Thread.sleep(500);
-            multiplier*= 1.85;
+            multiplier*= 1.95;
             this.expValue *= 3.8;
             this.worth *= 2.8;
         }
         this.health = (int) Math.floor(13 * multiplier) + extraHealth;
         this.maxHealth = this.health;
         this.attack = (int) Math.floor(4 * multiplier);
-        this.speed = (int) Math.floor(2 * multiplier) + extraSpeed;
+        this.speed = (int) Math.floor(2.2 * multiplier) + extraSpeed;
         this.magic = (int) Math.floor(2 * multiplier); // for magic enemy damage
         this.defense = (int) Math.floor(3.2 * multiplier);
         this.ailments = new ArrayList<>();

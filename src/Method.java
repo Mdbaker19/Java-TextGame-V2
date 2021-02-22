@@ -5,10 +5,11 @@ public class Method {
         return input.substring(0, 1).toUpperCase()+input.substring(1);
     }
 
-    public boolean blocked(int speed, boolean slowed) throws InterruptedException {
+    public boolean blocked(int speed, boolean slowed, int attackersSpeed) throws InterruptedException {
         if(speed >= 80){
             speed = 80;
         }
+        speed -= (attackersSpeed / 5);
         if(slowed){
             speed /= 2;
         }
