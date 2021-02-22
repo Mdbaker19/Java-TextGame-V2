@@ -5,7 +5,7 @@ public class Gambler {
     private final Input sc = new Input();
     private final MiniGamer miniGamer = new MiniGamer();
     private final ArrayList<String> options = new ArrayList<>(Arrays.asList("S", "G", "W", "C", "U", "E"));
-    private final ArrayList<String> gameOptions = new ArrayList<>(Arrays.asList("R", "C", "N", "E"));
+    private final ArrayList<String> gameOptions = new ArrayList<>(Arrays.asList("R", "C", "N", "E", "I"));
 
     private int storage;
     private int level;
@@ -24,6 +24,7 @@ public class Gambler {
         System.out.printf("|%-20s%-20s%-28s|%n", " ", "[N]umber Guess", " ");
         System.out.printf("|%-20s%-20s%-28s|%n", " ", "[R]ock Paper Scissor", " ");
         System.out.printf("|%-20s%-20s%-28s|%n", " ", "[C]oin Toss", " ");
+        System.out.printf("|%-20s%-20s%-28s|%n", " ", "[I]nfo", " ");
         System.out.printf("|%-20s%-20s%-28s|%n", " ", "[E]xit", " ");
         System.out.printf("|%-68s|%n\033[0;38m", " ");
     }
@@ -67,6 +68,8 @@ public class Gambler {
         String choice = sc.getInput("What would you like to play?", gameOptions, false);
         if(choice.equalsIgnoreCase("e")){
             return;
+        } else if (choice.equalsIgnoreCase("i")){
+            gambleInfo();
         }
         int amount = sc.getNum("How much are we gambling here? Current wallet : " + player.getWallet(), player.getWallet());
         games(player, choice, amount);
@@ -160,6 +163,13 @@ public class Gambler {
         System.out.printf("|%-20s%-19s%-28s|%n", " ", "[U]pgrade", " ");
         System.out.printf("|%-20s%-19s%-28s|%n", " ", "[E]xit", " ");
         System.out.printf("|%-67s|%n\033[0;38m", " ");
+    }
+
+    private static void gambleInfo(){
+        System.out.println("Place your bets to try and win extra coin, Success in each game gives different rewards");
+        System.out.println("Rock paper scissors gives 3x on top");
+        System.out.println("Number Guesser ( 1 - 10 ) gives 5x on top");
+        System.out.println("Coin Toss gives 2x on top");
     }
 
     public int getStorage() {

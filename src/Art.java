@@ -42,11 +42,11 @@ public class Art {
         System.out.println("Games can be loaded after they have been pushed up to the gameStates file");
         System.out.println("To play the game enter the options as they are presented ( the letter in [ ] or the text after the option 'x' : ");
         System.out.println("Fight in battles of random enemies to gain exp to level up and coins to spend in the shop");
-        System.out.println("In battle you can use a standard attack, check the enemy stats or try for a special attack that it's success rate is based of your current magic stat");
+        System.out.println("In battle you can use a standard attack, check the enemy stats or try for a magic attack that it's success rate is based of your current magic stat");
+        System.out.println("Each class type has one special that can be used once per battle, special cost 40MP");
         System.out.println("Enemies will progressively get harder and harder with better rewards as well.");
         System.out.println("If you happen to die and have a revive it is automatically used to give you an extra fighting chance");
-        System.out.println("The account is a place to try your luck for some extra coin in the gambler or save your money and gain some interest on it over every victory in battle");
-        System.out.println("Rock paper scissors gives 3x money, Number guesser gives 5x and Coin toss is 2x");
+        System.out.println("The account is a place to try your luck for some extra coin in the gambler or save your money and gain some interest");
         System.out.println("Good luck player");
     }
     public void gamePlayInfo(){
