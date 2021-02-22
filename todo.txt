@@ -1,18 +1,19 @@
 more items from shop ( armour and weapons )
 
-more enemies ( resist to normal attacks )
-
 steal speed based ( ? )
 
 mp currently not being used unless successful cast ( ? )
 
 allocate stat points at level up ( ? )
 
+spell or item to prevent enemy from healing ( ? )
+
 ======ISSUES======
-issue with poison damage even when checking inventory or scanning enemy     ==> quick fix implemented for now ( undo the damage )
+issue with poison damage even when checking inventory or scanning enemy     ==> quick fix implemented for now ( undo the damage ) -> really not sure what else to do
 
 better stat development ( seems to be okay ish for now ) game needs some balancing, end game needs testing, can be played with in the save state
 
+if you save and reload a file with a certain amount of "days past" in your gambler account then you lose that interest. ( patched from it being counted for multiple times )
 
 =======WORK IN PROGRESS=======
 NEW DAMAGE FORMULA, SEEMS OKAY FOR NOW
