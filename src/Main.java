@@ -163,6 +163,7 @@ public class Main {
         states.remove("sleep");
         states.remove("shield");
         player.setState(states);
+        player.setThiefSpecial(false);
         do {
             takeEffect(player);
 
@@ -195,8 +196,13 @@ public class Main {
                     undoPoison(player);
                     fight(player, enemy);
                     return;
+                } else if (player.isSpecialUsed()){
+                    System.out.println("You have already activated this");
+                    undoPoison(player);
+                    fight(player, enemy);
+                    return;
                 }
-                if(sc.getInput(whatItDoes).equalsIgnoreCase("y")){
+                if(sc.getInput(whatItDoes + " [Y]es / [N]o").equalsIgnoreCase("y")){
                     specialMove(player, enemy);
                 } else {
                     undoPoison(player);
@@ -210,7 +216,6 @@ public class Main {
             }
 
             enemy.setAilments(battleEffects);
-
             Thread.sleep(400);
 
             if (enemy.getHealth() <= 0) { // you killed enemy
@@ -244,7 +249,6 @@ public class Main {
             System.out.println("Oof you lost...");
             Thread.sleep(600);
         }
-        player.setSpecialUsed(false);
     }
 
 
@@ -339,6 +343,7 @@ public class Main {
             }
         } else {
             player.setSpecialUsed(true);
+            player.setThiefSpecial(true);
             System.out.println("You realize you have not been wearing your glasses and put them on, the world is so much clearer now");
             Thread.sleep(500);
             if (m.criticalHit(player.getStats().get("Speed"), true)) {
@@ -353,12 +358,12 @@ public class Main {
     }
 
 
-    public static void attackMade(Player attacker, Enemy enemy) throws InterruptedException {
+    public static void attackMade(Player player, Enemy enemy) throws InterruptedException {
         int enemyDef = enemy.getDefense();
         if(enemy.getAilments().contains("fractured")) {
             enemyDef /= 2;
         }
-        int damage = m.calcDamage(attacker.getStats().get("Attack"), enemyDef);
+        int damage = m.calcDamage(player.getStats().get("Attack"), enemyDef);
         System.out.println("\033[0;37mEnemy attempts to dodge");
         int enemySpeed = enemy.getSpeed();
         boolean enemyDodge = false;
@@ -368,7 +373,7 @@ public class Main {
             enemyDodge = m.blocked(enemySpeed, false);
         }
         if(!enemyDodge){
-            if (m.criticalHit(attacker.getStats().get("Speed"), false)) {
+            if (m.criticalHit(player.getStats().get("Speed"), player.isThiefSpecial())) {
                 System.out.println("Critical Hit!");
                 damage*=1.5;
             }

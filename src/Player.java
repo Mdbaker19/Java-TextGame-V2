@@ -9,8 +9,8 @@ public class Player {
 
     private String name;
     private String type;
-    private String special;
     private boolean specialUsed = false;
+    private boolean thiefSpecial = false;
     private List<String> state;
     private HashMap<String, Integer> stats;
     private HashMap<String, Integer> inventory = new HashMap<>();
@@ -62,7 +62,6 @@ public class Player {
             stats.put("Magic", 11);
             stats.put("Speed", 32);
             this.mp = 25;
-            this.special = "Focus";
         } else if (type.equalsIgnoreCase("knight")) {
             stats.put("Health", 175);
             stats.put("Attack", 18);
@@ -70,7 +69,6 @@ public class Player {
             stats.put("Magic", 7);
             stats.put("Speed", 9);
             this.mp = 10;
-            this.special = "Spear";
         } else {
             stats.put("Health", 95);
             stats.put("Attack", 9);
@@ -78,7 +76,6 @@ public class Player {
             stats.put("Magic", 30);
             stats.put("Speed", 18);
             this.mp = 100;
-            this.special = "Life";
         }
         this.stats = stats;
         this.maxMp = this.mp;
@@ -332,14 +329,6 @@ public class Player {
         this.maxMp = maxMp;
     }
 
-    public String getSpecial() {
-        return special;
-    }
-
-    public void setSpecial(String special) {
-        this.special = special;
-    }
-
     public boolean isSpecialUsed() {
         return specialUsed;
     }
@@ -350,5 +339,13 @@ public class Player {
 
     public void setExpRequirement(int expRequirement) {
         this.expRequirement = expRequirement;
+    }
+
+    public boolean isThiefSpecial() {
+        return thiefSpecial;
+    }
+
+    public void setThiefSpecial(boolean thiefSpecial) {
+        this.thiefSpecial = thiefSpecial;
     }
 }
