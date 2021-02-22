@@ -9,6 +9,8 @@ public class Player {
 
     private String name;
     private String type;
+    private boolean specialUsed = false;
+    private boolean thiefSpecial = false;
     private List<String> state;
     private HashMap<String, Integer> stats;
     private HashMap<String, Integer> inventory = new HashMap<>();
@@ -325,5 +327,25 @@ public class Player {
 
     public void setMaxMp(int maxMp) {
         this.maxMp = maxMp;
+    }
+
+    public boolean isSpecialUsed() {
+        return specialUsed;
+    }
+
+    public void setSpecialUsed(boolean specialUsed) {
+        this.specialUsed = specialUsed;
+    }
+
+    public void setExpRequirement(int expRequirement) {
+        this.expRequirement = expRequirement;
+    }
+
+    public boolean isThiefSpecial() {
+        return thiefSpecial;
+    }
+
+    public void setThiefSpecial(boolean thiefSpecial) {
+        this.thiefSpecial = thiefSpecial;
     }
 }
