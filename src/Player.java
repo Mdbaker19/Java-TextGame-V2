@@ -116,10 +116,10 @@ public class Player {
     }
 
     public void viewStats() {
-        System.out.println("Here are your stats for your class");
-        System.out.println("Current level is " +this.getLevel());
-        System.out.println("Current EXP: " + this.getExp() +"/"+this.getExpRequirement());
-        System.out.println("Max health : " + this.getMaxHealth());
+        System.out.println("Here are your stats");
+        System.out.println("LVL : " +this.getLevel());
+        System.out.println("EXP: " + this.getExp() +"/"+this.getExpRequirement());
+        System.out.println("Max HP : " + this.getMaxHealth());
         for(Map.Entry<String, Integer> entry : this.getStats().entrySet()){
             System.out.println(entry.getKey() + " : " + entry.getValue());
         }
@@ -219,10 +219,6 @@ public class Player {
         removeItem(m.cap(item));
     }
 
-    public void revive(String item){
-        removeItem(m.cap(item));
-    }
-
     public void setInventory(HashMap<String, Integer> inventory) {
         this.inventory = inventory;
     }
@@ -302,7 +298,7 @@ public class Player {
     }
 
     public void setExpRequirement() {
-        this.expRequirement = (int) (this.getExpRequirement() * 1.35);
+        this.expRequirement = (int) (this.getExpRequirement() * 1.4);
     }
 
     public List<String> getState() {
@@ -335,10 +331,6 @@ public class Player {
 
     public void setSpecialUsed(boolean specialUsed) {
         this.specialUsed = specialUsed;
-    }
-
-    public void setExpRequirement(int expRequirement) {
-        this.expRequirement = expRequirement;
     }
 
     public boolean isThiefSpecial() {

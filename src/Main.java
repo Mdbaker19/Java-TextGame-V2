@@ -86,21 +86,10 @@ public class Main {
                 System.out.println("\033[0;31mBoss fight coming up");
             }
             if (player.getHealth() <= 0) {
-                System.out.println("You are dead and we need to take care of that");
-                Thread.sleep(600);
-                if(checkRevive(player)) {
-                    System.out.println("You have used your revive to come back with 25% of your max HP, good on you for buying one");
-                    Thread.sleep(600);
-                    player.updateStat("Health", player.getMaxHealth() / 4);
-                } else {
-                    System.out.println("What!? You do not have any revives.. well...");
-                    Thread.sleep(600);
-                    System.out.println("\033[0;31mGame over");
-                    fileReader.saveRecord(player, gambler);
+                if(!death(player)){
                     return;
                 }
-            }
-            if(player.getHealth() > 0){
+            } else {
                 art.mainScreen();
                 String input = sc.getInput("What would you like to do?", art.getMainOptions(), false).toUpperCase();
                 if (input.equalsIgnoreCase("e") && sc.getInput("Are you sure? [Y]es / [N]o").equalsIgnoreCase("y")) {
@@ -138,15 +127,6 @@ public class Main {
         fileReader.saveRecord(player, gambler);
     }
 
-    public static boolean checkRevive(Player player) {
-        if(player.getInventory().get("Revive") != null) {
-            player.revive("Revive");
-            return true;
-        }
-        return false;
-    }
-
-
     public static void battle(Player player) throws InterruptedException {
         int wins = player.getVictories();
         System.out.printf("Battle # %d%n", wins);
@@ -166,7 +146,6 @@ public class Main {
         player.setThiefSpecial(false);
         do {
             takeEffect(player);
-
             if (player.getHealth() <= 0) { // if poison kills you
                 break;
             }
@@ -226,10 +205,7 @@ public class Main {
             }
 
             if (battleEffects.contains("cursed")) {
-                int zombieDamage = (int) (enemy.getMaxHealth() * .03);
-                if(zombieDamage < 1){
-                    zombieDamage = 1;
-                }
+                int zombieDamage = m.minNum((int) (enemy.getMaxHealth() * .03));
                 System.out.printf("Agheghegh… your summon attacks dealing %d damage%n", zombieDamage);
                 enemy.setHealth(enemy.getHealth() - zombieDamage);
             }
@@ -261,6 +237,20 @@ public class Main {
             ranWakeUp = (int) Math.floor(Math.random() * 100);
         }
 
+        if (turn.equalsIgnoreCase("c")){
+            enemy.showStats(player.getVictories());
+            return "";
+        } else if(turn.equalsIgnoreCase("i")){
+            if (player.getInventory().isEmpty()) {
+                System.out.println("You do not have any items");
+                Thread.sleep(400);
+                return "";
+            } else if (didUseItem(player, enemy)) {
+                return "item";
+            }
+            return "";
+        }
+
         if(ranWakeUp <= 35){
             System.out.println("You fall over, as you hit the ground you wake up");
             Thread.sleep(300);
@@ -269,15 +259,7 @@ public class Main {
             asleep = false;
         }
 
-        if(turn.equalsIgnoreCase("i")){
-            if (player.getInventory().isEmpty()) {
-                System.out.println("You do not have any items");
-                Thread.sleep(400);
-                return "";
-            } else if (didUseItem(player, enemy)) {
-                return "item";
-            }
-        } else if (asleep){
+        if (asleep){
             System.out.println("You are dreaming of a fight that you are losing");
             return "item";
         } else if (turn.equalsIgnoreCase("a")){
@@ -286,8 +268,6 @@ public class Main {
             return "magic";
         } else if (turn.equalsIgnoreCase("s")){
             return "special";
-        } else if (turn.equalsIgnoreCase("c")){
-            enemy.showStats(player.getVictories());
         }
         return "";
     }
@@ -301,6 +281,7 @@ public class Main {
         }
         return itemUsed;
     }
+
     public static String specialInfo(Player player){
         String type = player.getType();
         System.out.println("Special Moves will use 40MP");
@@ -314,6 +295,7 @@ public class Main {
         }
         return description;
     }
+
     public static void specialMove(Player player, Enemy enemy) throws InterruptedException {
         String type = player.getType();
         int enemyDef = enemy.getDefense();
@@ -330,17 +312,10 @@ public class Main {
             }
             System.out.printf("Quickly you take the high ground and throw your spear dealing %d damage %n", damage * 2);
             enemy.setHealth(enemy.getHealth() - damage * 2);
+
         } else if (type.equalsIgnoreCase("mage")){
-            int maxHp = player.getMaxHealth();
-            int currHealth = player.getHealth();
-            int amount = maxHp / 2;
-            if(currHealth + amount > maxHp){
-                System.out.println("You fully heal");
-                player.updateStat("Health", maxHp);
-            } else {
-                System.out.printf("You heal for %d %n", amount); // some other message later
-                player.updateStat("Health", currHealth + amount);
-            }
+            mageSpecial(player);
+
         } else {
             player.setSpecialUsed(true);
             player.setThiefSpecial(true);
@@ -366,7 +341,7 @@ public class Main {
         int damage = m.calcDamage(player.getStats().get("Attack"), enemyDef);
         System.out.println("\033[0;37mEnemy attempts to dodge");
         int enemySpeed = enemy.getSpeed();
-        boolean enemyDodge = false;
+        boolean enemyDodge;
         if(enemy.getAilments().contains("slow")){
             enemyDodge = m.blocked(enemySpeed, true);
         } else {
@@ -377,6 +352,9 @@ public class Main {
                 System.out.println("Critical Hit!");
                 damage*=1.5;
             }
+            if(enemy.isCaster()){
+                damage *= .9;
+            }
             System.out.println("You hit for " + damage + " damage");
             Thread.sleep(600);
             enemy.setHealth(enemy.getHealth() - damage);
@@ -384,6 +362,7 @@ public class Main {
             System.out.println("He is too quick, you have missed your attack");
         }
     }
+
     public static void enemyTurn(Enemy enemy, Player player, List<String> currentAilments) throws InterruptedException {
         List<String> playerStatus = player.getState();
 
@@ -399,14 +378,16 @@ public class Main {
         int infect = enemy.getInfect();
         Thread.sleep(600);
 
+        if(enemy.isCaster()){
+            currentAilments.remove("confuse");
+            currentAilments.remove("blind");
+            currentAilments.remove("slow");
+        }
         if (currentAilments.contains("blind")) {
             extraDodgeMult = 2;
         }
         if (currentAilments.contains("poison")) {
-            poisonDamage = (int) (enemy.getMaxHealth() * .05);
-            if (poisonDamage < 1) {
-                poisonDamage = 1;
-            }
+            poisonDamage = m.minNum((int) (enemy.getMaxHealth() * .05));
             System.out.println("\033[0;32mEnemy takes poison damage\033[0;38m");
             enemy.setHealth(enemy.getHealth() - poisonDamage);
             if(enemy.getHealth() <= 0){
@@ -420,16 +401,8 @@ public class Main {
             confuseChance = 33;
         }
 
-        if(enemy.isCaster()){
-            currentAilments.remove("confuse");
-            currentAilments.remove("blind");
-            currentAilments.remove("slow");
-        }
         if (ranConfuseHit <= confuseChance && currentAilments.contains("confuse")) {
-            int hitSelf = enemy.getAttack() / 2;
-            if(hitSelf < 1){
-                hitSelf = 1;
-            }
+            int hitSelf = m.minNum(enemy.getAttack() / 2);
             System.out.println("Enemy has hit itself for " + hitSelf);
             Thread.sleep(600);
             enemy.setHealth(enemy.getHealth() - hitSelf);
@@ -480,12 +453,7 @@ public class Main {
                         }
                         System.out.println("Enemy hits you for " + damage + " damage");
                         if (infectChance <= infect) {
-                            Thread.sleep(600);
-                            System.out.println("You begin to slowly die");
-                            Thread.sleep(600);
-                            if(!playerStatus.contains("poison")){
-                                playerStatus.add("poison");
-                            }
+                            poison(player);
                         }
                         player.updateStat("Health", player.getHealth() - damage);
                     }
@@ -594,7 +562,18 @@ public class Main {
         }
     }
 
-    public static void undoPoison(Player player) throws InterruptedException {
+    public static void poison(Player player) throws InterruptedException {
+        List<String> status = player.getState();
+        Thread.sleep(600);
+        System.out.println("You begin to slowly die");
+        Thread.sleep(600);
+        if(!status.contains("poison")){
+            status.add("poison");
+        }
+        player.setState(status);
+    }
+
+    public static void undoPoison(Player player) {
         if (player.getState().contains("poison")) {
             player.updateStat("Health", player.getHealth() + (int) (player.getMaxHealth() * .05));
         }
@@ -606,10 +585,7 @@ public class Main {
             turnHeal = (int) (enemy.getMaxHealth() * .18);
             System.out.printf("You blink and it is gone…… you hear the clanging of bottles in the distance and chase it down, enemy heals for %d%n", turnHeal);
         } else {
-            turnHeal = (int) (enemy.getMaxHealth() * .02);
-            if(turnHeal < 1){
-                turnHeal = 1;
-            }
+            turnHeal = m.minNum((int) (enemy.getMaxHealth() * .02));
             System.out.printf("You chase it down as it runs and drinks a potion, healing %d%n", turnHeal);
         }
 
@@ -620,6 +596,37 @@ public class Main {
             turnHeal = 0;
         }
         enemy.setHealth(enemy.getHealth() + turnHeal);
+    }
+
+    public static void mageSpecial(Player player){
+        int maxHp = player.getMaxHealth();
+        int currHealth = player.getHealth();
+        int amount = maxHp / 2;
+        if(currHealth + amount > maxHp){
+            System.out.println("You fully heal");
+            player.updateStat("Health", maxHp);
+        } else {
+            System.out.printf("You heal for %d %n", amount); // some other message later
+            player.updateStat("Health", currHealth + amount);
+        }
+    }
+
+    public static boolean death(Player player) throws InterruptedException, IOException {
+        System.out.println("You are dead and we need to take care of that");
+        Thread.sleep(600);
+        if(player.getInventory().get("Revive") != null) {
+            System.out.println("\033[0;34mYou have used your revive to come back with 25% of your max HP, good on you for buying one");
+            player.removeItem("Revive");
+            Thread.sleep(600);
+            player.updateStat("Health", player.getMaxHealth() / 4);
+            return true;
+        } else {
+            System.out.println("What!? You do not have any revives.. well...");
+            Thread.sleep(600);
+            System.out.println("\033[0;31mGame over");
+            fileReader.saveRecord(player, gambler);
+            return false;
+        }
     }
 
     public static void pushUpWork(Player player, Gambler gambler, FileReader saveWriter) throws IOException {
