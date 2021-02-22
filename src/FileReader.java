@@ -69,17 +69,15 @@ public class FileReader {
             statList.append(stat.getKey()).append(" ").append(stat.getValue()).append("\n");
         }
         writeToLog(player.getName() + " as a " + player.getType() + " won " + player.getVictories() + " battles at level " + player.getLevel() + " played at : " + new Date());
-        writeToLog("You had " + gambler.getStorage() + " saved up");
-        writeToLog("Wallet : " + player.getWallet());
         writeToLog("Your stats : " + statList.toString());
         writeToLog("Max Health : " + player.getMaxHealth());
         writeToLog("Mp : " + player.getMp() + "/" + player.getMaxMp());
-        writeToLog("exp : " + player.getExp());
-        writeToLog("exp Req : " + player.getExpRequirement());
+        writeToLog("You had " + gambler.getStorage() + " saved up");
+        writeToLog("Wallet : " + player.getWallet());
         writeToLog("Rate : " + gambler.getRate());
         writeToLog("Gambler lvl : " + gambler.getLevel());
         writeToLog("Inventory : \n" + player.getInventory());
-        writeToLog("%");
+        writeToLog("=================================================");
     }
 
 
@@ -98,7 +96,7 @@ public class FileReader {
         for(Map.Entry<String, Integer> stat : player.getStats().entrySet()){
             statList.append(stat.getKey()).append(" ").append(stat.getValue()).append("\n");
         }
-        fullSave.append(player.getName()).append(" as a ").append(player.getType()).append(" won ").append(player.getVictories()).append(" battles at level ").append(player.getLevel()).append(" played at : ").append(new Date()).append("\n");
+        fullSave.append(player.getName()).append(" as a ").append(player.getType()).append(" won ").append(player.getVictories()).append(" battles at level ").append(player.getLevel()).append(" saved at : ").append(new Date()).append("\n");
         fullSave.append("You had ").append(gambler.getStorage()).append(" saved up").append("\n");
         fullSave.append("Wallet : ").append(player.getWallet()).append("\n");
         fullSave.append("Your stats : ").append(statList.toString());
