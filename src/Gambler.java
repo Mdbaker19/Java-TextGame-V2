@@ -67,7 +67,7 @@ public class Gambler {
         gameMenu();
         String choice = sc.getInput("What would you like to play?", gameOptions, false);
         if(choice.equalsIgnoreCase("e")){
-            gamble(player);
+            account(player);
             return;
         } else if (choice.equalsIgnoreCase("i")){
             gambleInfo();

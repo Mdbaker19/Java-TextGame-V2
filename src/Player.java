@@ -184,6 +184,12 @@ public class Player {
             Thread.sleep(200);
             System.out.printf("You deal %d%n", damage);
             enemy.setHealth(enemy.getHealth() - damage);
+        } else if(item.equalsIgnoreCase("upset")){
+            List<String> currAilments = enemy.getAilments();
+            currAilments.add("upset");
+            System.out.println("upset added.. yeah yeah");
+            Thread.sleep(200);
+            enemy.setAilments(currAilments);
         } else if(item.equalsIgnoreCase("ether")){
 
             if(currMp + recoveredMp > maxMp){

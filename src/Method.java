@@ -36,7 +36,7 @@ public class Method {
         return damage > 5 ? damage : 5;
     }
 
-    public boolean successfulCast(int magic){
+    public boolean successfulCast(int magic) { // or speed if it is steal
         int chance = magic * 2;
         if(chance >= 100){
             chance = 100;

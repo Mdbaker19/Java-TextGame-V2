@@ -54,12 +54,12 @@ public class Art {
         System.out.println("Special contains a few different options, all of which last through the battle if it was a successfully cast.");
         System.out.println("Magic Summon calls an ally into battle that deals 3% of enemy health per turn and has a 20% chance to block for you");
         System.out.println("Blind increases you dodge rate by 2x");
-        System.out.println("Poison causes 5% enemy damage per turn");
+        System.out.println("Poison causes 5% of max HP damage per turn");
         System.out.println("If you are poisoned you are indefinitely until an antidote is used");
         System.out.println("Normal enemies have a 5% chance to poison you, a more venomous enemy, 'cough' has 10x the chance to poison you");
         System.out.println("Some enemies are smarter than others and it is impossible to dodge them but, they can not poison you");
         System.out.println("Some enemies can put you to sleep, you need a clock to wake up or try you luck every turn with a 35% chance to wake up");
-        System.out.println("Steal the enemy to steal 50% of their coin reward, reduces coin reward by 25% each time");
+        System.out.println("Steal 50% of the enemy's coin reward, reduces coin reward by 25% each time. Success based off Speed Stat");
         System.out.println("Confuse the enemy to have a 35% chance of them hitting themselves");
         System.out.println("Defend to reduce damage by 1/2");
         System.out.println("Time to reduce enemy dodge by 1/2");
@@ -68,20 +68,21 @@ public class Art {
     public void shopMenu(Player player) throws InterruptedException {
         do {
             System.out.printf("\033[0;32m|%-69s|%n", " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[A]ntidote", " ", 10, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[P]otion", " ", 10, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[H]igh Potion", " ", 30, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[M]ega Potion", " ", 65, " ");
-            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[A]ntidote", " ", 10, " ");
-            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[E]ther", " ", 25, " ");
-            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[C]lock", " ", 15, " ");
-            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[B]omb", " ", 35, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[R]evive", " ", 100, " ");
-            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[W]eapon", " ", 95, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[E]ther", " ", 25, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[B]omb", " ", 35, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[U]pset", " ", 35, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[C]lock", " ", 15, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[D]evelop", " ", 95, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[G]uard", " ", 95, " ");
-            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[S]tudy", " ", 95, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[F]ade", " ", 95, " ");
             System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[L]earn", " ", 95, " ");
-            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[D]evelop", " ", 95, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[S]tudy", " ", 95, " ");
+            System.out.printf("|%-20s%-20s%-5s%-4d%-20s|%n", " ", "[W]eapon", " ", 95, " ");
             System.out.printf("|%-20s%-20s%-5s%-24s|%n", " ", "[I]nfo", " ", " ");
             System.out.printf("|%-20s%-20s%-5s%-24s|%n", " ", "[Q]uit", " ", " ");
             System.out.printf("|%-69s|%n\033[0;38m", " ");
@@ -123,6 +124,10 @@ public class Art {
         } else if (choice.equalsIgnoreCase("b") && savings >= 35) {
             simplified = new HowMany(35, "Bomb", player);
             quantity(simplified.getAmount(), 35, player, "Bomb");
+
+        } else if (choice.equalsIgnoreCase("u") && savings >= 35) {
+            simplified = new HowMany(35, "Upset", player);
+            quantity(simplified.getAmount(), 35, player, "Upset");
 
         } else if (choice.equalsIgnoreCase("m") && savings >= 65) {
             simplified = new HowMany(65, "Mega Potion", player);
@@ -235,13 +240,13 @@ public class Art {
 
     public void specials(){
         System.out.printf("\033[0;35m|%-70s|%n", " ");
-        System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[M]agic Summon", 15, " ");
         System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[B]lind", 15, " ");
-        System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[P]oison", 15, " ");
-        System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[S]teal", 0, " ");
         System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[C]onfuse", 25, " ");
         System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[D]efend", 25, " ");
         System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[F]racture", 20, " ");
+        System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[M]agic Summon", 15, " ");
+        System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[P]oison", 15, " ");
+        System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[S]teal", 0, " ");
         System.out.printf("|%-20s%-22s%-3d%-25s|%n", " ", "[T]ime", 15, " ");
         System.out.printf("|%-20s%-22s%-28s|%n", " ", "[Q]uit", " ");
         System.out.printf("|%-70s|%n\033[0;38m", " ");
@@ -261,6 +266,7 @@ public class Art {
     private static void info(){
         System.out.println("Potion heals for 25, High Potion heals for 55, Mega Potion heals 35% max health, Antidote cures poison, Revive cures death, Bomb deals 20% of enemy Max HP");
         System.out.println("Ether recovers 35% mp");
+        System.out.println("Upset to prevent an enemy from healing");
         System.out.println("Each of the stat boosters give a +1 permanent boost to that stat");
         System.out.println("Weapon boosts attack, Guard boost defense, Fade boost speed, Study boosts magic");
         System.out.println("Learn and increase your max Mp by 5, Develop to increase your max Hp by 5");
