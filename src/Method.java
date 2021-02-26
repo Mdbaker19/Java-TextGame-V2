@@ -9,7 +9,10 @@ public class Method {
         if(speed >= 80){
             speed = 80;
         }
-        speed -= (attackersSpeed / 5);
+        speed -= (attackersSpeed / 4);
+        if (speed < 0){
+            speed = 6;
+        }
         if(slowed){
             speed /= 2;
         }
@@ -37,7 +40,7 @@ public class Method {
     }
 
     public boolean successfulCast(int magic) { // or speed if it is steal
-        int chance = magic * 2;
+        int chance = (int) (magic * 1.5);
         if(chance >= 100){
             chance = 100;
         }
