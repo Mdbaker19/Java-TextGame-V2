@@ -71,7 +71,7 @@ public class Enemy {
             Thread.sleep(600);
             this.infect *= 10;
             this.expValue *= 1.3;
-        } else if (randomizer <= 83) {  // can put you to sleep, immune to some spells and 90% resist to physical
+        } else if (randomizer <= 83) {  // can put you to sleep, immune to some spells and 80% resist to physical but, attacks based off magic stat
             System.out.println("\033[0;34mMmmmaagic");
             Thread.sleep(600);
             this.caster = true;

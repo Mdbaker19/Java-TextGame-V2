@@ -1,12 +1,6 @@
 more items from shop ( armour and weapons )
 
-steal speed based ( ? )
-
-mp currently not being used unless successful cast ( ? )
-
 allocate stat points at level up ( ? )
-
-spell or item to prevent enemy from healing ( ? )
 
 ======ISSUES======
 issue with poison damage even when checking inventory or scanning enemy     ==> quick fix implemented for now ( undo the damage ) -> really not sure what else to do
